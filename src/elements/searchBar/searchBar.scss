@@ -1,0 +1,32 @@
+.search-bar {
+  background-color: $backgroundTheme;
+  outline: none;
+  color: #e3e3e3;
+  border: #e3e3e3 solid 2px;
+  border-radius: 10px;
+  padding-left: 0.5rem;
+}
+
+.search-list {
+  z-index: 1;
+  position: absolute;
+  background-color: black;
+
+  ul {
+    margin: 0;
+    padding: 0.25rem 0;
+    list-style: none;
+    width: 10rem;
+    text-align: center;
+
+    li {
+      padding: 0.25rem 0;
+    }
+  }
+}
+
+.search-wrapper {
+  position: relative;
+  margin: 1rem auto;
+  width: fit-content;
+}
