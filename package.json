@@ -46,8 +46,11 @@
     "@babel/preset-react": "^7.16.0",
     "@babel/preset-typescript": "^7.16.0",
     "@types/express": "^4.17.13",
-    "@types/react": "^17.0.36",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.8",
+    "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2",
     "@types/webpack-dev-server": "^4.5.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
@@ -101,7 +104,7 @@
     "terser-webpack-plugin": "^5.2.5",
     "ts-loader": "^9.2.6",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
-    "typescript": "^4.5.2",
+    "typescript": "^4.5.4",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.5.0",
@@ -110,6 +113,10 @@
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-dropdown": "^1.9.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "react-router-native": "^5.2.1"
   }
 }
