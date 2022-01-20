@@ -3,16 +3,26 @@
 @import "fontface.css";
 
 body {
-  font-family: "OpenSans-Regular", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
+h1,
 h2 {
-  font-size: 50px;
-  display: block;
-  background-color: white;
+  font-weight: 400;
 }
 
 ::placeholder {
   /*test for autoprefixer in postcss*/
   color: antiquewhite;
+}
+
+#app {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh; */
 }
