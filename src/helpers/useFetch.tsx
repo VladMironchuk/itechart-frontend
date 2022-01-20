@@ -1,0 +1,35 @@
+import { useCallback, useState } from "react";
+
+export const useHttp = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const sendRequest = useCallback(async (reqConfig, applyData) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(reqConfig.url, {
+        method: reqConfig.method || "GET",
+        headers: reqConfig.headers || {},
+        body: JSON.stringify(reqConfig.body) || null,
+      });
+
+      if (!response.ok) {
+        throw new Error("Request failed!");
+      }
+
+      const data = await response.json();
+
+      applyData(data);
+    } catch (err: any) {
+      setError(err.message || "Something went wrong!");
+    }
+    setIsLoading(false);
+  }, []);
+
+  return {
+    isLoading,
+    error,
+    sendRequest,
+  };
+};
