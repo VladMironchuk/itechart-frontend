@@ -1,0 +1,43 @@
+input {
+  display: block;
+  width: 40rem;
+  height: 2.5rem;
+}
+
+.section {
+  width: 50rem;
+  margin: 0.5rem auto;
+  background-color: $backgroundTheme;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+
+  h3 {
+    font-weight: 200;
+    font-size: 16px;
+    margin: 0;
+
+    &::after {
+      display: block;
+      content: "";
+      width: 100%;
+      background-color: white;
+      height: 1px;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__categoriesCards {
+    justify-content: space-between;
+    margin: 2rem 0 1rem;
+  }
+
+  &__gamesCards {
+    padding: 2rem 1rem;
+  }
+}
+
+.cards_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
