@@ -18,8 +18,11 @@
     list-style: none;
     width: 10rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 
-    li {
+    button {
+      all: inherit;
       padding: 0.25rem 0;
     }
   }
@@ -29,4 +32,12 @@
   position: relative;
   margin: 1rem auto;
   width: fit-content;
+}
+
+.loader__wrapper {
+  width: 160px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

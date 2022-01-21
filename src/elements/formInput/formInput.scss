@@ -1,0 +1,15 @@
+.input__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0;
+
+  & input {
+    border: white 2px solid;
+    outline: none;
+    background: none;
+    color: white;
+    width: 15rem;
+  }
+}

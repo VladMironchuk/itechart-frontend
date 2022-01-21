@@ -14,8 +14,7 @@
   }
 
   &__default {
-    width: inherit;
-    height: inherit;
+    all: inherit;
     display: flex;
     align-items: center;
     justify-content: center;

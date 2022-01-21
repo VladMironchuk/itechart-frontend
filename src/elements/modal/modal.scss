@@ -1,0 +1,50 @@
+.modal {
+  position: absolute;
+  z-index: 1;
+  top: 15vw;
+  left: 35vw;
+  width: 25rem;
+  height: 20rem;
+  background: black;
+  padding: 2rem 1rem;
+
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cancel {
+    width: 40px;
+    height: auto;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__title {
+    font-size: 25px;
+    color: white;
+    font-weight: 200;
+    margin: 0;
+  }
+
+  &__button {
+    display: block;
+    margin: 0 auto;
+    background-color: #9933cc;
+    outline: none;
+    color: white;
+    padding: 0.8rem 4rem;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+.cancel-button {
+  background: none;
+  outline: none;
+  border: none;
+}

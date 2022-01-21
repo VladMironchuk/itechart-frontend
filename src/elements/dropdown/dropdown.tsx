@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "./dropdown.scss";
 
-export const Dropdown = () => {
+const Dropdown: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null)!;
-  const titleRef = useRef<HTMLDivElement>(null)!;
+  const titleRef = useRef<HTMLButtonElement>(null)!;
 
   const clickHandler = () => {
     listRef.current?.classList.toggle("hidden");
@@ -13,9 +13,9 @@ export const Dropdown = () => {
 
   return (
     <div className="dropdown">
-      <div ref={titleRef} className="dropdown__default" onClick={clickHandler}>
+      <button ref={titleRef} type="button" className="dropdown__default" onClick={clickHandler}>
         Products
-      </div>
+      </button>
       <div ref={listRef} className="dropdown__list hidden">
         <ul>
           <li>
@@ -38,3 +38,5 @@ export const Dropdown = () => {
     </div>
   );
 };
+
+export default Dropdown;

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export const useHttp = () => {
+const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,10 +21,10 @@ export const useHttp = () => {
       const data = await response.json();
 
       applyData(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || "Something went wrong!");
     }
-    setIsLoading(false);
+    setTimeout(() => setIsLoading(false), 300);
   }, []);
 
   return {
@@ -33,3 +33,5 @@ export const useHttp = () => {
     sendRequest,
   };
 };
+
+export default useHttp;

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import webpackMockServer from "webpack-mock-server";
 
 const games = [
@@ -65,9 +64,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/search/:text", (req, res) => {
-    if (req.params.text.trim() === "") {
-      res.json({ games: [] });
-    }
     res.json({
       games: games.map((game) => game.gameTitle).filter((game) => game.includes(req.params.text)),
     });
@@ -79,5 +75,9 @@ export default webpackMockServer.add((app, helper) => {
 
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });
+  });
+
+  app.post("/api/auth/signIn/", (req, res) => {
+    res.status(200).json(req.body);
   });
 });

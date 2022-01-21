@@ -17,6 +17,11 @@
 
       &:hover {
         background-color: #272727;
+        cursor: pointer;
+      }
+
+      & button {
+        all: inherit;
       }
     }
   }
