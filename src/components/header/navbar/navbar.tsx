@@ -5,7 +5,7 @@ import Dropdown from "@/elements/dropdown/dropdown";
 import AppContext from "@/context/context";
 
 const NavBar: React.FC = () => {
-  const { setIsVisible } = useContext(AppContext);
+  const { toggleSignIn, toggleSignUp, isLogged } = useContext(AppContext);
 
   return (
     <nav className="header__nav">
@@ -15,11 +15,20 @@ const NavBar: React.FC = () => {
         <Dropdown />
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <Link linkPath="/about" linkText="About" />
-        <li>
-          <button type="button" onClick={setIsVisible}>
-            Sign In
-          </button>
-        </li>
+        {!isLogged && (
+          <>
+            <li>
+              <button type="button" onClick={toggleSignIn}>
+                Sign In
+              </button>
+            </li>
+            <li>
+              <button type="button" onClick={toggleSignUp}>
+                Sign Up
+              </button>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

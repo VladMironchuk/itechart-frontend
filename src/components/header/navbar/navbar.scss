@@ -1,5 +1,5 @@
 .header__nav {
-  width: 18rem;
+  width: auto;
   font-size: 14px;
 
   &__ul {
@@ -10,10 +10,12 @@
     height: 48px;
 
     & li {
-      width: inherit;
+      width: 64px;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      flex-wrap: wrap-reverse;
 
       &:hover {
         background-color: #272727;
@@ -22,6 +24,8 @@
 
       & button {
         all: inherit;
+        padding: 0;
+        width: 4rem;
       }
     }
   }
