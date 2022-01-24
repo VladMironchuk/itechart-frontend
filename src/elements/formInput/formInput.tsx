@@ -1,10 +1,14 @@
 import "./formInput.scss";
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 
-const Input: React.FC<{ label: string }> = ({ label }) => (
+const Input: React.FC<{ label: string; value: string; changeHandler: ChangeEventHandler }> = ({
+  label,
+  value,
+  changeHandler,
+}) => (
   <div className="input__wrapper">
     <label htmlFor={label}>{label}</label>
-    <input type="text" name={label} />
+    <input onChange={changeHandler} value={value} type="text" name={label} />
   </div>
 );
 

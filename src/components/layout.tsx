@@ -3,20 +3,16 @@ import { ReactNode, useContext } from "react";
 import Header from "./header/header";
 import Footer from "./footer/footer";
 import AppContext from "@/context/context";
-import Modal from "@/elements/modal/modal";
-import Input from "@/elements/formInput/formInput";
+import SignInModal from "@/elements/modal/signInModal";
+import SignUpModal from "@/elements/modal/signUpModal";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { isVisible } = useContext(AppContext);
+  const { isSignInVisible, isSignUpVisible } = useContext(AppContext);
 
   return (
     <>
-      {isVisible && (
-        <Modal title="Authorization">
-          <Input label="Login" />
-          <Input label="Password" />
-        </Modal>
-      )}
+      {isSignInVisible && <SignInModal />}
+      {isSignUpVisible && <SignUpModal />}
       <Header />
       <main>{children}</main>
       <Footer />
