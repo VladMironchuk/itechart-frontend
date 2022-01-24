@@ -78,6 +78,10 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/auth/signIn/", (req, res) => {
-    res.status(200).json(req.body);
+    res.status(200).send(req.body);
+  });
+
+  app.put("/api/auth/signUp/", (req, res) => {
+    res.status(200).send(req.body);
   });
 });
