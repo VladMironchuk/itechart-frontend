@@ -1,10 +1,10 @@
 import "./searchBar.scss";
-import { useHttp } from "@/helpers/useFetch";
 import { useState, useEffect } from "react";
+import { useHttp } from "@/helpers/useFetch";
 
 export const SearchBar: React.FC<{ name: string; placeholder: string }> = ({ name, placeholder }) => {
   const [inputValue, setInputValue] = useState("");
-  const [{ games }, setGames] = useState<{ games: any[] }>({ games: [] });
+  const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });
 
   const { isLoading, error, sendRequest } = useHttp();
 

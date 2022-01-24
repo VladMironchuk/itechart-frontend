@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "./dropdown.scss";
 
-export const Dropdown = () => {
+export function Dropdown() {
   const listRef = useRef<HTMLDivElement>(null)!;
   const titleRef = useRef<HTMLDivElement>(null)!;
 
@@ -37,4 +37,4 @@ export const Dropdown = () => {
       </div>
     </div>
   );
-};
+}

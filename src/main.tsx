@@ -5,9 +5,8 @@ import ReactDom from "react-dom";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import { Layout } from "./components/layout";
 import { HomePage } from "./components/pages/homePage/homePage";
-import { AboutPage } from "./components/pages/aboutPage/aboutPage";
+import AboutPage from "./components/pages/aboutPage/aboutPage";
 import { ProductsPage } from "./components/pages/productsPage/productsPage";
-import { AuthPage } from "./components/pages/authPage/authPage";
 
 class AppComponent extends Component {
   componentDidCatch() {
@@ -23,9 +22,6 @@ class AppComponent extends Component {
           </Route>
           <Route path="/products/:category">
             <ProductsPage />
-          </Route>
-          <Route path="/auth">
-            <AuthPage />
           </Route>
           <Route path="/">
             <HomePage />

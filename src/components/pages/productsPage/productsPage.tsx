@@ -1,6 +1,5 @@
 import "./productsPage.scss";
 import "react-dropdown/style.css";
-import "./productsPage.scss";
 import { useParams } from "react-router";
 
 export const ProductsPage: React.FC = () => {
