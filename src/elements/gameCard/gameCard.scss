@@ -1,14 +1,3 @@
-.game-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: fit-content;
-
-  &:hover > .game {
-    transform: rotateY(180deg);
-  }
-}
-
 .game {
   position: relative;
   width: 12rem;
@@ -90,11 +79,22 @@
 .rating__wrapper {
   display: flex;
   flex-direction: row;
-  width: fit-content;
+  width: auto;
   margin-left: 0.5rem;
 }
 
 .rating {
   width: 10px;
   height: auto;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+
+  &:hover > .game {
+    transform: rotateY(180deg);
+  }
 }

@@ -23,6 +23,7 @@
   &__list {
     width: inherit;
     background-color: #121212;
+
     & ul {
       list-style: none;
       text-align: center;
@@ -32,6 +33,8 @@
 
       & li {
         padding: 0.5rem 0;
+        margin: 0;
+        width: 100%;
 
         a {
           color: inherit;

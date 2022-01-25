@@ -1,21 +1,17 @@
 import React from "react";
 
 export type IAppContext = {
-  isSignInVisible: boolean;
-  toggleSignIn: () => void;
-  isSignUpVisible: boolean;
-  toggleSignUp: () => void;
   isLogged: boolean;
   toggleLogging: () => void;
+  login: string;
+  updateLogin: (login: string) => void;
 };
 
 const AppContext = React.createContext<IAppContext>({
-  isSignInVisible: false,
-  toggleSignIn: () => {},
-  isSignUpVisible: false,
-  toggleSignUp: () => {},
   isLogged: false,
   toggleLogging: () => {},
+  login: "",
+  updateLogin: () => {},
 });
 
 export default AppContext;

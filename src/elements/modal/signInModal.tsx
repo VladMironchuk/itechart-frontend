@@ -5,8 +5,8 @@ import crossIcon from "@/assets/images/cross-icon.png";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 
-const SignInModal: React.FC = () => {
-  const { toggleSignIn, toggleLogging } = useContext(AppContext);
+const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
+  const { toggleLogging, updateLogin } = useContext(AppContext);
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,8 @@ const SignInModal: React.FC = () => {
       return;
     }
 
-    toggleSignIn();
+    signInHandler();
+    updateLogin(login);
     toggleLogging();
   };
 
@@ -38,7 +39,7 @@ const SignInModal: React.FC = () => {
     <Modal url="/api/auth/signIn/" cb={submitHandler} body={{ login, password }}>
       <div className="wrapper">
         <h3 className="modal__title">Authorization</h3>
-        <button type="button" className="cancel-button" onClick={toggleSignIn}>
+        <button type="button" className="cancel-button" onClick={signInHandler}>
           <img className="cancel" src={crossIcon} alt="cancel" />
         </button>
       </div>

@@ -29,9 +29,10 @@
 }
 
 .search-wrapper {
+  display: block;
   position: relative;
   margin: 1rem auto;
-  width: fit-content;
+  width: max-content;
 }
 
 .loader__wrapper {

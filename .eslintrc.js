@@ -31,7 +31,9 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-use-before-define": "error",
+    "jsx-a11y/anchor-is-valid": 0,
 
     "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
     "react/destructuring-assignment": 0,

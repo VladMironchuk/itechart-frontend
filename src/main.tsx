@@ -11,6 +11,7 @@ import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import AppProvider from "./context/provider";
+import PrivateRoute from "./elements/privateRoute/privateRoute";
 
 class AppComponent extends Component {
   componentDidCatch() {
@@ -21,15 +22,15 @@ class AppComponent extends Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/about">
+          <PrivateRoute path="/about" isLogged={this.context.isLogged}>
             <AboutPage />
-          </Route>
-          <Route path="/products/:category">
+          </PrivateRoute>
+          <PrivateRoute path="products/:category" isLogged={this.context.isLogged}>
             <ProductsPage />
-          </Route>
-          <Route path="/profile">
+          </PrivateRoute>
+          <PrivateRoute path="/profile" isLogged={this.context.isLogged}>
             <ProfilePage />
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <HomePage />
           </Route>

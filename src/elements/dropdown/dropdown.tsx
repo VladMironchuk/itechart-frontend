@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import "./dropdown.scss";
 
 const Dropdown: React.FC = () => {
-  const listRef = useRef<HTMLDivElement>(null)!;
-  const titleRef = useRef<HTMLButtonElement>(null)!;
+  const listRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLButtonElement>(null);
 
   const clickHandler = () => {
     listRef.current?.classList.toggle("hidden");

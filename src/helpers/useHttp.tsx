@@ -21,7 +21,7 @@ const useHttp = () => {
       const data = await response.json();
 
       applyData(data);
-    } catch (err: unknown) {
+    } catch (err: any) {
       setError(err.message || "Something went wrong!");
     }
     setTimeout(() => setIsLoading(false), 300);
