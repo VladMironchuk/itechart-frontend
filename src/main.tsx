@@ -25,7 +25,7 @@ class AppComponent extends Component {
           <PrivateRoute path="/about" isLogged={this.context.isLogged}>
             <AboutPage />
           </PrivateRoute>
-          <PrivateRoute path="products/:category" isLogged={this.context.isLogged}>
+          <PrivateRoute path="/products/:category" isLogged={this.context.isLogged}>
             <ProductsPage />
           </PrivateRoute>
           <PrivateRoute path="/profile" isLogged={this.context.isLogged}>

@@ -47,7 +47,7 @@ const NavBar: React.FC<{ signInHandler: () => void; signUpHandler: () => void }>
     <nav className="header__nav">
       <ul className="header__nav__ul">
         <Link linkPath="/" linkText="Home" />
-        <Dropdown />
+        <Dropdown isLogged={isLogged} cb={signInHandler} />
         <Link linkPath="/about" linkText="About" isLogged={isLogged} cb={signInHandler} />
         {navbarContent}
       </ul>

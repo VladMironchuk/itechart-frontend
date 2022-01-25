@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import { NavLink } from "react-router-dom";
+import Link from "../navlink/navlink";
 import "./dropdown.scss";
 
-const Dropdown: React.FC = () => {
+const Dropdown: React.FC<{ isLogged: boolean; cb: () => void }> = ({ isLogged, cb }) => {
   const listRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLButtonElement>(null);
 
@@ -18,21 +18,9 @@ const Dropdown: React.FC = () => {
       </button>
       <div ref={listRef} className="dropdown__list hidden">
         <ul>
-          <li>
-            <NavLink to="/products/pc" exact>
-              PC
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/products/ps" exact>
-              PS
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/products/xbox" exact>
-              XBox
-            </NavLink>
-          </li>
+          <Link linkPath="/products/pc" linkText="PC" isLogged={isLogged} cb={cb} />
+          <Link linkPath="/products/pc" linkText="PS" isLogged={isLogged} cb={cb} />
+          <Link linkPath="/products/pc" linkText="XBox" isLogged={isLogged} cb={cb} />
         </ul>
       </div>
     </div>
