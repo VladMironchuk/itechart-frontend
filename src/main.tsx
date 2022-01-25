@@ -4,10 +4,12 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { StrictMode, Component } from "react";
 import ReactDom from "react-dom";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
+import AppContext from "./context/context";
 import Layout from "./components/layout";
 import HomePage from "./components/pages/homePage/homePage";
 import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
+import ProfilePage from "./components/pages/profilePage/profilePage";
 import AppProvider from "./context/provider";
 
 class AppComponent extends Component {
@@ -25,6 +27,9 @@ class AppComponent extends Component {
           <Route path="/products/:category">
             <ProductsPage />
           </Route>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
           <Route path="/">
             <HomePage />
           </Route>
@@ -36,6 +41,8 @@ class AppComponent extends Component {
     );
   }
 }
+
+AppComponent.contextType = AppContext;
 
 ReactDom.render(
   <StrictMode>

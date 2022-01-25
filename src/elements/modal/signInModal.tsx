@@ -6,7 +6,7 @@ import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 
 const SignInModal: React.FC = () => {
-  const { toggleSignIn } = useContext(AppContext);
+  const { toggleSignIn, toggleLogging } = useContext(AppContext);
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +25,13 @@ const SignInModal: React.FC = () => {
       return;
     }
 
-    if (!password.match(/.*[/d][a-z][A-Z][!*?<>]/)) {
+    if (!password.match(/.*/)) {
       alert("password must be alphanumeric");
       return;
     }
 
     toggleSignIn();
+    toggleLogging();
   };
 
   return (

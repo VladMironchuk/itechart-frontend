@@ -28,6 +28,18 @@
         width: 4rem;
       }
     }
+
+    .profile {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: auto;
+
+      li {
+        width: auto;
+      }
+    }
   }
 
   &__link {
@@ -42,4 +54,9 @@
       border-bottom: 4px solid #9933cc;
     }
   }
+}
+
+.logo {
+  width: 20px;
+  height: auto;
 }

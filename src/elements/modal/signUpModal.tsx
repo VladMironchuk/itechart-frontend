@@ -1,12 +1,14 @@
 import "./modal.scss";
 import React, { ChangeEventHandler, useContext, useState } from "react";
+import { useHistory } from "react-router";
 import AppContext from "@/context/context";
 import crossIcon from "@/assets/images/cross-icon.png";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 
 const SignUpModal: React.FC = () => {
-  const { toggleSignUp } = useContext(AppContext);
+  const { toggleSignUp, toggleLogging } = useContext(AppContext);
+  const history = useHistory();
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -24,8 +26,29 @@ const SignUpModal: React.FC = () => {
     setRepeat(() => event.target.value);
   };
 
+  const submitHandler = () => {
+    if (login.length < 6) {
+      alert("login must have >6 symbols");
+      return;
+    }
+
+    if (!password.match(/.*/)) {
+      alert("password must be alphanumeric");
+      return;
+    }
+
+    if (password !== repeat) {
+      alert("repeat password correctly");
+      return;
+    }
+
+    toggleSignUp();
+    toggleLogging();
+    history.push("/profile");
+  };
+
   return (
-    <Modal url="/api/auth/signUp/" cb={toggleSignUp} body={{ login, password, repeat }} method="PUT">
+    <Modal url="/api/auth/signUp/" cb={submitHandler} body={{ login, password, repeat }} method="PUT">
       <div className="wrapper">
         <h3 className="modal__title">Authorization</h3>
         <button type="button" className="cancel-button" onClick={toggleSignUp}>

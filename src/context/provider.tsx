@@ -17,6 +17,8 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         return () => {
           setSignUpIsVisible((prevState) => !prevState);
         };
+      default:
+        return () => {};
     }
   };
 
