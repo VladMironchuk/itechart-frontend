@@ -1,4 +1,3 @@
-import "./productsPage.scss";
 import "react-dropdown/style.css";
 
 import { useParams } from "react-router";
