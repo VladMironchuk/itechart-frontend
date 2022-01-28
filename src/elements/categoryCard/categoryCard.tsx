@@ -1,10 +1,16 @@
 import "./categoryCard.scss";
 
-const CategoryCard: React.FC<{ cardLogo: string; cardTitle: string }> = ({ cardLogo, cardTitle }) => (
-  <div className="categoryCard">
-    <img src={cardLogo} alt="" />
-    <h6>{cardTitle}</h6>
-  </div>
-);
+type CategoryCardProps = { cardLogo: string; cardTitle: string };
+
+const CategoryCard: React.FC<CategoryCardProps> = (props) => {
+  const { cardLogo, cardTitle } = props;
+
+  return (
+    <div className="categoryCard">
+      <img src={cardLogo} alt="" />
+      <h6>{cardTitle}</h6>
+    </div>
+  );
+};
 
 export default CategoryCard;

@@ -5,30 +5,27 @@ import Footer from "./footer/footer";
 import SignInModal from "@/elements/modal/signInModal";
 import SignUpModal from "@/elements/modal/signUpModal";
 
-const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
+type LayoutProps = { children: ReactNode };
+
+const Layout: React.FC<LayoutProps> = (props) => {
+  const { children } = props;
+
   const [isSignInVisible, setSignInIsVisible] = useState(false);
   const [isSignUpVisible, setSignUpIsVisible] = useState(false);
 
-  const toggleModal = (param: "in" | "up") => {
-    switch (param) {
-      case "in":
-        return () => {
-          setSignInIsVisible((prevState) => !prevState);
-        };
-      case "up":
-        return () => {
-          setSignUpIsVisible((prevState) => !prevState);
-        };
-      default:
-        return () => {};
-    }
+  const toggleSignInModal = () => {
+    setSignInIsVisible((prevState) => !prevState);
+  };
+
+  const toggleSignUpModal = () => {
+    setSignUpIsVisible((prevState) => !prevState);
   };
 
   return (
     <>
-      {isSignInVisible && <SignInModal signInHandler={toggleModal("in")} />}
-      {isSignUpVisible && <SignUpModal signUpHandler={toggleModal("up")} />}
-      <Header signInHandler={toggleModal("in")} signUpHandler={toggleModal("up")} />
+      {isSignInVisible && <SignInModal signInHandler={toggleSignInModal} />}
+      {isSignUpVisible && <SignUpModal signUpHandler={toggleSignUpModal} />}
+      <Header signInHandler={toggleSignInModal} signUpHandler={toggleSignUpModal} />
       <main>{children}</main>
       <Footer />
     </>

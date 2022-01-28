@@ -1,7 +1,10 @@
 import React, { FormEventHandler } from "react";
-import useHttp from "@/helpers/useHttp";
+import useHttp from "@/hooks/useHttp";
 
-const FormButton: React.FC<{ url: string; method: string }> = ({ method, url }) => {
+type FormButtonProps = { url: string; method: string };
+
+const FormButton: React.FC<FormButtonProps> = (props) => {
+  const { method, url } = props;
   const { sendRequest } = useHttp();
 
   const submitHandler: FormEventHandler<HTMLButtonElement> = (event) => {

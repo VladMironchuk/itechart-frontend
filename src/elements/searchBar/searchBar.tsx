@@ -1,9 +1,13 @@
 import "./searchBar.scss";
 import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
-import useHttp from "@/helpers/useHttp";
+import useHttp from "@/hooks/useHttp";
 
-const SearchBar: React.FC<{ name: string; placeholder: string }> = ({ name, placeholder }) => {
+type SearchBarProps = { name: string; placeholder: string };
+
+const SearchBar: React.FC<SearchBarProps> = (props) => {
+  const { name, placeholder } = props;
+
   const [inputValue, setInputValue] = useState("");
   const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });
 

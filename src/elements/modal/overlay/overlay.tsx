@@ -1,14 +1,18 @@
 import { FormEventHandler, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import useHttp from "@/helpers/useHttp";
+import useHttp from "@/hooks/useHttp";
 
-const ModalOverlay: React.FC<{
+type ModalOverlayProps = {
   url: string;
   method?: string;
   body: { [keyof: string]: string };
   cb: () => void;
   children: ReactNode[];
-}> = ({ children, url, method = "POST", cb, body }) => {
+};
+
+const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
+  const { children, url, method = "POST", cb, body } = props;
+
   const { sendRequest } = useHttp();
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
@@ -31,13 +35,7 @@ const ModalOverlay: React.FC<{
   );
 };
 
-const Modal: React.FC<{
-  url: string;
-  method?: string;
-  body: { [keyof: string]: string };
-  cb: () => void;
-  children: ReactNode[];
-}> = ({ children, url, method, cb, body }) => (
+const Modal: React.FC<ModalOverlayProps> = ({ children, url, method, cb, body }) => (
   <>
     {ReactDOM.createPortal(
       <ModalOverlay url={url} method={method} body={body} cb={cb}>

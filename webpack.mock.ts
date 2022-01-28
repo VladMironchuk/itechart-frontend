@@ -3,9 +3,9 @@ import webpackMockServer from "webpack-mock-server";
 const games = [
   {
     gameTitle: "Owerwatch",
-    gameLogo: "../../../assets/images/overwatch.jpg",
+    gameLogo: "https://s1.gaming-cdn.com/images/products/2208/271x377/game-battle-net-overwatch-cover.jpg",
     gamePrice: 23.99,
-    gamePlatforms: ["../../../assets/images/icone-windows-gris.png"],
+    gamePlatforms: ["https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png"],
     gameDescription:
       "Overwatch is a 2016 team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
     ageLimit: 12,
@@ -14,12 +14,12 @@ const games = [
   },
   {
     gameTitle: "Minecraft",
-    gameLogo: "../../../assets/images/mine.jpg",
+    gameLogo: "https://s2.gaming-cdn.com/images/products/442/271x377/minecraft-java-edition-pc-game-cover.jpg",
     gamePrice: 25.99,
     gamePlatforms: [
-      "../../../assets/images/icone-windows-gris.png",
-      "../../../assets/images/ps.png",
-      "../../../assets/images/xbox.png",
+      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
+      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
     ],
     gameDescription:
       "Overwatch is a  team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
@@ -29,12 +29,12 @@ const games = [
   },
   {
     gameTitle: "Terraria",
-    gameLogo: "../../../assets/images/terraria.jpg",
+    gameLogo: "https://s3.gaming-cdn.com/images/products/932/271x377/game-steam-terraria-cover.jpg",
     gamePrice: 4.99,
     gamePlatforms: [
-      "../../../assets/images/icone-windows-gris.png",
-      "../../../assets/images/ps.png",
-      "../../../assets/images/xbox.png",
+      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
+      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
     ],
     ageLimit: 12,
     rating: 5,
