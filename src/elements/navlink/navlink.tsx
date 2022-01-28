@@ -1,6 +1,6 @@
-import AppContext from "@/context/context";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import AppContext from "@/context/context";
 
 type LinkProps = { linkText: string; linkPath: string; modalToggler?: () => void };
 
