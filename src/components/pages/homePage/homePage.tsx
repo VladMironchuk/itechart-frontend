@@ -33,6 +33,7 @@ const HomePage: React.FC = () => {
           {!error &&
             games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
               <GameCard
+                key={gameTitle}
                 rating={rating}
                 gameLogo={gameLogo}
                 gameTitle={gameTitle}

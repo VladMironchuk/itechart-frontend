@@ -11,17 +11,17 @@ const Footer: React.FC = () => (
       <ul>
         <li>
           <a href="http://blizzard.com/" target="_blank" rel="noreferrer">
-            <img src={blizzardLogo} alt="" />
+            <img src={blizzardLogo} alt="Blizzard" />
           </a>
         </li>
         <li>
           <a href="https://www.sega.com/" target="_blank" rel="noreferrer">
-            <img src={segaLogo} alt="" />
+            <img src={segaLogo} alt="Sega" />
           </a>
         </li>
         <li>
           <a href="https://gsc-game.com/" target="_blank" rel="noreferrer">
-            <img src={gscLogo} alt="" />
+            <img src={gscLogo} alt="GSC" />
           </a>
         </li>
       </ul>

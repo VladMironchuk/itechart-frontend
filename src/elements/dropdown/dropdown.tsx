@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { MouseEventHandler, useRef, useState } from "react";
 import Link from "../navlink/navlink";
 import "./dropdown.scss";
 
@@ -11,7 +11,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
   const titleRef = useRef<HTMLButtonElement>(null);
 
-  const clickHandler = () => {
+  const clickHandler: MouseEventHandler = () => {
     titleRef.current?.classList.toggle("active_title");
     toggleDropdownVisibility((prevState) => !prevState);
   };

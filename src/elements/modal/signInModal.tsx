@@ -1,15 +1,20 @@
 import "./modal.scss";
-import React, { ChangeEventHandler, useContext, useState } from "react";
+import React, { ChangeEventHandler, useContext, useState, FormEventHandler } from "react";
 import AppContext from "@/context/context";
-import crossIcon from "@/assets/images/cross-icon.png";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
+import useHttp from "@/hooks/useHttp";
 
 const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
   const { toggleLogging, updateLogin } = useContext(AppContext);
 
+  const { error: reqError, sendRequest } = useHttp();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const loginChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
     setLogin(() => event.target.value);
@@ -19,35 +24,53 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
     setPassword(() => event.target.value);
   };
 
-  const submitHandler = () => {
+  const submitHandler: FormEventHandler = async (event) => {
+    event.preventDefault();
+
     if (login.length < 6) {
-      alert("login must have >6 symbols");
+      setLoginErrorMessage("Login length must be more then 6 symbols.");
       return;
     }
+    setLoginErrorMessage("");
 
-    if (!password.match(/.*/)) {
-      alert("password must be alphanumeric");
+    if (!/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(password)) {
+      setPasswordErrorMessage("Password must contain letters and numbers.");
       return;
     }
+    setPasswordErrorMessage("");
 
-    signInHandler();
-    updateLogin(login);
-    toggleLogging();
+    await sendRequest(
+      {
+        url: "/api/auth/signIn/",
+        method: "POST",
+        body: {
+          login,
+          password,
+        },
+      },
+      () => {
+        signInHandler();
+        updateLogin(login);
+        toggleLogging();
+      }
+    );
+    console.log(reqError);
   };
 
   return (
-    <Modal url="/api/auth/signIn/" cb={submitHandler} body={{ login, password }}>
-      <div className="wrapper">
-        <h3 className="modal__title">Authorization</h3>
-        <button type="button" className="cancel-button" onClick={signInHandler}>
-          <img className="cancel" src={crossIcon} alt="cancel" />
+    <Modal onClose={signInHandler} title="Authorization">
+      <form action="/" onSubmit={submitHandler}>
+        <Input label="Login" changeHandler={loginChangeHandler} value={login} errorMessage={loginErrorMessage} />
+        <Input
+          label="Password"
+          changeHandler={passwordChangeHandler}
+          value={password}
+          errorMessage={passwordErrorMessage}
+        />
+        <button type="submit" className="modal__button">
+          Submit
         </button>
-      </div>
-      <Input label="Login" changeHandler={loginChangeHandler} value={login} />
-      <Input label="Password" changeHandler={passwordChangeHandler} value={password} />
-      <button type="submit" className="modal__button">
-        Submit
-      </button>
+      </form>
     </Modal>
   );
 };

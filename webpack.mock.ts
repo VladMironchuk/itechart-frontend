@@ -52,6 +52,13 @@ const games = [
   },
 ];
 
+type User = {
+  login: string;
+  password: string;
+};
+
+const users: User[] = [];
+
 export default webpackMockServer.add((app, helper) => {
   app.get("/testMock", (_req, res) => {
     const response = {
@@ -78,10 +85,21 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/auth/signIn/", (req, res) => {
-    res.status(200).send(req.body);
+    try {
+      const { login, password } = JSON.parse(req.body);
+      const index = users.findIndex((item) => item.login === login && item.password === password);
+      if (index === -1) {
+        return res.status(401).json({ message: "wrong credentials" });
+      }
+      return res.status(200).json(req.body);
+    } catch (err: unknown) {
+      return res.status(400).json({ message: err || "Something went wrong" });
+    }
   });
 
-  app.put("/api/auth/signUp/", (req, res) => {
-    res.status(200).send(req.body);
+  app.post("/api/auth/signUp/", (req, res) => {
+    const { login, password } = JSON.parse(req.body);
+    users.push({ login, password });
+    res.status(200).json(req.body);
   });
 });

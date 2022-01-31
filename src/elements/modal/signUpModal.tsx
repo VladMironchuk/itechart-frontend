@@ -1,18 +1,23 @@
 import "./modal.scss";
-import React, { ChangeEventHandler, useContext, useState } from "react";
+import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import AppContext from "@/context/context";
-import crossIcon from "@/assets/images/cross-icon.png";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
+import useHttp from "@/hooks/useHttp";
 
 const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler }) => {
-  const { toggleLogging } = useContext(AppContext);
+  const { updateLogin, toggleLogging } = useContext(AppContext);
+  const { sendRequest } = useHttp();
   const history = useHistory();
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [repeat, setRepeat] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
+
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [repeatedPasswordErrorMessage, setRepeatedPasswordErrorMessage] = useState("");
 
   const loginChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
     setLogin(() => event.target.value);
@@ -23,44 +28,68 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
   };
 
   const repeatPasswordChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setRepeat(() => event.target.value);
+    setRepeatedPassword(() => event.target.value);
   };
 
-  const submitHandler = () => {
+  const submitHandler: FormEventHandler = (event) => {
+    event.preventDefault();
+
     if (login.length < 6) {
-      alert("login must have >6 symbols");
+      setLoginErrorMessage("Login length must be more then 6 symbols.");
       return;
     }
+    setLoginErrorMessage("");
 
-    if (!password.match(/.*/)) {
-      alert("password must be alphanumeric");
+    if (!/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(password)) {
+      setPasswordErrorMessage("Password must contain letters and numbers.");
       return;
     }
+    setPasswordErrorMessage("");
 
-    if (password !== repeat) {
-      alert("repeat password correctly");
+    if (password !== repeatedPassword) {
+      setRepeatedPasswordErrorMessage("Repeat password correctly.");
       return;
     }
+    setRepeatedPasswordErrorMessage("");
 
-    signUpHandler();
-    toggleLogging();
-    history.push("/profile");
+    sendRequest(
+      {
+        url: "api/auth/signUp",
+        method: "POST",
+        body: {
+          login,
+          password,
+        },
+      },
+      () => {
+        signUpHandler();
+        updateLogin(login);
+        toggleLogging();
+        history.push("/profile");
+      }
+    );
   };
 
   return (
-    <Modal url="/api/auth/signUp/" cb={submitHandler} body={{ login, password, repeat }} method="PUT">
-      <div className="wrapper">
-        <h3 className="modal__title">Authorization</h3>
-        <button type="button" className="cancel-button" onClick={signUpHandler}>
-          <img className="cancel" src={crossIcon} alt="cancel" />
+    <Modal onClose={signUpHandler} title="Registration">
+      <form onSubmit={submitHandler}>
+        <Input label="Login" changeHandler={loginChangeHandler} value={login} errorMessage={loginErrorMessage} />
+        <Input
+          label="Password"
+          changeHandler={passwordChangeHandler}
+          value={password}
+          errorMessage={passwordErrorMessage}
+        />
+        <Input
+          label="Repeat password"
+          changeHandler={repeatPasswordChangeHandler}
+          value={repeatedPassword}
+          errorMessage={repeatedPasswordErrorMessage}
+        />
+        <button type="submit" className="modal__button">
+          Submit
         </button>
-      </div>
-      <Input label="Login" changeHandler={loginChangeHandler} value={login} />
-      <Input label="Password" changeHandler={passwordChangeHandler} value={password} />
-      <Input label="Repeat password" changeHandler={repeatPasswordChangeHandler} value={repeat} />
-      <button type="submit" className="modal__button">
-        Submit
-      </button>
+      </form>
     </Modal>
   );
 };

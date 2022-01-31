@@ -7,7 +7,7 @@ const CategoryCard: React.FC<CategoryCardProps> = (props) => {
 
   return (
     <div className="categoryCard">
-      <img src={cardLogo} alt="" />
+      <img src={cardLogo} alt="logo" />
       <h6>{cardTitle}</h6>
     </div>
   );

@@ -1,49 +1,32 @@
-import { FormEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import ReactDOM from "react-dom";
-import useHttp from "@/hooks/useHttp";
+import crossIcon from "@/assets/images/cross-icon.png";
 
-type ModalOverlayProps = {
-  url: string;
-  method?: string;
-  body: { [keyof: string]: string };
-  cb: () => void;
-  children: ReactNode[];
+type ModalProps = {
+  onClose: () => void;
+  title: string;
+  children: ReactNode;
 };
 
-const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
-  const { children, url, method = "POST", cb, body } = props;
-
-  const { sendRequest } = useHttp();
-
-  const submitHandler: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    sendRequest(
-      {
-        url,
-        method,
-        body,
-      },
-      null
-    );
-    cb();
-  };
+const Modal: React.FC<ModalProps> = (props) => {
+  const { title, onClose, children } = props;
 
   return (
-    <form className="modal" onSubmit={submitHandler}>
-      {children}
-    </form>
+    <>
+      {ReactDOM.createPortal(
+        <div className="modal">
+          <div className="wrapper">
+            <h3 className="modal__title">{title}</h3>
+            <button type="button" className="cancel-button" onClick={onClose}>
+              <img className="cancel" src={crossIcon} alt="cancel" />
+            </button>
+          </div>
+          {children}
+        </div>,
+        document.getElementById("modal") as HTMLElement
+      )}
+    </>
   );
 };
-
-const Modal: React.FC<ModalOverlayProps> = ({ children, url, method, cb, body }) => (
-  <>
-    {ReactDOM.createPortal(
-      <ModalOverlay url={url} method={method} body={body} cb={cb}>
-        {children}
-      </ModalOverlay>,
-      document.getElementById("modal") as HTMLElement
-    )}
-  </>
-);
 
 export default Modal;
