@@ -1,12 +1,21 @@
 import "./modal.scss";
-import React, { ChangeEventHandler, useContext, useState, FormEventHandler } from "react";
-import AppContext from "@/context/context";
+import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
+import { useDispatch } from "react-redux";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
+import { userActions } from "@/redux/redux";
 
 const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
-  const { toggleLogging, updateLogin } = useContext(AppContext);
+  const dispatch = useDispatch();
+
+  const updateLogin = (login: string) => {
+    dispatch(userActions.updateLogin({ login }));
+  };
+
+  const toggleLogging = () => {
+    dispatch(userActions.toggleLogging());
+  };
 
   const { error: reqError, sendRequest } = useHttp();
 

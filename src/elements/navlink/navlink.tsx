@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import AppContext from "@/context/context";
+import { AppProps } from "@/redux/redux";
 
 type LinkProps = { linkText: string; linkPath: string; modalToggler?: () => void };
 
 const Link: React.FC<LinkProps> = (props) => {
   const { linkText, linkPath, modalToggler } = props;
 
-  const { isLogged } = useContext(AppContext);
+  const isLogged = useSelector((state: { user: AppProps }) => state.user.isLogged);
 
   return (
     <li>
