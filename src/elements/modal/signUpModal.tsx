@@ -1,13 +1,23 @@
 import "./modal.scss";
-import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from "react";
+import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useHistory } from "react-router";
-import AppContext from "@/context/context";
+import { useDispatch } from "react-redux";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
+import { userActions } from "@/redux/redux";
 
 const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler }) => {
-  const { updateLogin, toggleLogging } = useContext(AppContext);
+  const dispatch = useDispatch();
+
+  // const updateLogin = (login: string) => {
+  //   dispatch(userActions.updateLogin({ login }));
+  // };
+
+  // const toggleLogging = () => {
+  //   dispatch(userActions.toggleLogging());
+  // };
+
   const { sendRequest } = useHttp();
   const history = useHistory();
 
@@ -63,8 +73,8 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
       },
       () => {
         signUpHandler();
-        updateLogin(login);
-        toggleLogging();
+        dispatch(userActions.updateLogin({ login }));
+        dispatch(userActions.toggleLogging());
         history.push("/profile");
       }
     );

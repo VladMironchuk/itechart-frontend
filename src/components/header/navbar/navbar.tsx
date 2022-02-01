@@ -1,18 +1,27 @@
 import "./navbar.scss";
-import React, { useContext } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "@/elements/navlink/navlink";
 import Dropdown from "@/elements/dropdown/dropdown";
-import AppContext from "@/context/context";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
+import { AppProps, userActions } from "@/redux/redux";
 
 type NavbarProps = { signInHandler: () => void; signUpHandler: () => void };
 
 const NavBar: React.FC<NavbarProps> = (props) => {
   const { signInHandler, signUpHandler } = props;
 
-  const { isLogged, toggleLogging, login } = useContext(AppContext);
+  const dispatch = useDispatch();
+
+  const isLogged = useSelector((state: { user: AppProps }) => state.user.isLogged);
+
+  const login = useSelector((state: { user: AppProps }) => state.user.login);
+
+  const toggleLogging = () => {
+    dispatch(userActions.toggleLogging());
+  };
 
   const navbarContent = isLogged ? (
     <>
