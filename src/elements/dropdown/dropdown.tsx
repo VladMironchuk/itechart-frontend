@@ -9,16 +9,16 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
   const [isDropdownVibisble, toggleDropdownVisibility] = useState(false);
 
-  const titleRef = useRef<HTMLButtonElement>(null);
+  const productsNavLinkRef = useRef<HTMLButtonElement>(null);
 
   const clickHandler: MouseEventHandler = () => {
-    titleRef.current?.classList.toggle("active_title");
+    productsNavLinkRef.current?.classList.toggle("active_title");
     toggleDropdownVisibility((prevState) => !prevState);
   };
 
   return (
     <div className="dropdown">
-      <button ref={titleRef} type="button" className="dropdown__default" onClick={clickHandler}>
+      <button ref={productsNavLinkRef} type="button" className="dropdown__default" onClick={clickHandler}>
         Products
       </button>
       {isDropdownVibisble && (
