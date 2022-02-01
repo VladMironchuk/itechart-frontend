@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import ReactDOM from "react-dom";
 import crossIcon from "@/assets/images/cross-icon.png";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 type ModalProps = {
   onClose: () => void;
@@ -11,10 +12,13 @@ type ModalProps = {
 const Modal: React.FC<ModalProps> = (props) => {
   const { title, onClose, children } = props;
 
+  const modalRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(modalRef, onClose);
+
   return (
     <>
       {ReactDOM.createPortal(
-        <div className="modal">
+        <div ref={modalRef} className="modal">
           <div className="wrapper">
             <h3 className="modal__title">{title}</h3>
             <button type="button" className="cancel-button" onClick={onClose}>
