@@ -10,13 +10,13 @@ import { userActions } from "@/redux/redux";
 const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler }) => {
   const dispatch = useDispatch();
 
-  // const updateLogin = (login: string) => {
-  //   dispatch(userActions.updateLogin({ login }));
-  // };
+  const updateLogin = (login: string) => {
+    dispatch(userActions.updateLogin({ login }));
+  };
 
-  // const toggleLogging = () => {
-  //   dispatch(userActions.toggleLogging());
-  // };
+  const toggleLogging = () => {
+    dispatch(userActions.toggleLogging());
+  };
 
   const { sendRequest } = useHttp();
   const history = useHistory();
@@ -73,8 +73,8 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
       },
       () => {
         signUpHandler();
-        dispatch(userActions.updateLogin({ login }));
-        dispatch(userActions.toggleLogging());
+        updateLogin(login);
+        toggleLogging();
         history.push("/profile");
       }
     );
