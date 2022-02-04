@@ -5,6 +5,7 @@ import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
 import { userActions } from "@/redux/redux";
+import Button from "../button/button";
 
 const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
   const dispatch = useDispatch();
@@ -76,9 +77,7 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
           inputValue={password}
           errorMessage={passwordErrorMessage}
         />
-        <button type="submit" className="modal__button">
-          Submit
-        </button>
+        <Button type="submit" className="modal__button" title="Submit" />
       </form>
     </Modal>
   );
