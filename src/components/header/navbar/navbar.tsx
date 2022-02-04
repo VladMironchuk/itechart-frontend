@@ -1,5 +1,5 @@
 import "./navbar.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "webpack.mock";
 import Link from "@/elements/navlink/navlink";
@@ -15,11 +15,10 @@ type NavbarProps = { signInHandler: () => void; signUpHandler: () => void };
 const NavBar: React.FC<NavbarProps> = (props) => {
   const { signInHandler, signUpHandler } = props;
 
-  const [username, setUsername] = useState("");
-
   const dispatch = useDispatch();
   const isLogged = useSelector((state: { user: AppProps }) => state.user.isLogged);
   const login = useSelector((state: { user: AppProps }) => state.user.login);
+  const username = useSelector((state: { user: AppProps }) => state.user.username);
 
   const { sendRequest } = useHttp();
 
@@ -33,7 +32,7 @@ const NavBar: React.FC<NavbarProps> = (props) => {
         url: `/api/getProfile/${login}`,
       },
       (user: User) => {
-        setUsername(user.username);
+        dispatch(userActions.updateUsername({ username: user.username }));
       }
     );
   }, [sendRequest, isLogged]);

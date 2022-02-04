@@ -15,6 +15,10 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
     dispatch(userActions.updateLogin({ login }));
   };
 
+  const updateUsername = (username: string) => {
+    dispatch(userActions.updateUsername({ username }));
+  };
+
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
@@ -75,6 +79,7 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
       () => {
         signUpHandler();
         updateLogin(login);
+        updateUsername(login);
         toggleLogging();
         history.push("/profile");
       }

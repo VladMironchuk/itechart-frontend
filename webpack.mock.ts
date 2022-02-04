@@ -118,10 +118,11 @@ export default webpackMockServer.add((app, helper) => {
     res.json(currentUser);
   });
 
-  app.post("/api/saveProfile", (req) => {
+  app.post("/api/saveProfile", (req, res) => {
     const { username, description, login } = JSON.parse(req.body);
     const currentUser = users.find((user) => user.login === login)!;
     currentUser.username = username;
     currentUser.description = description;
+    res.json(currentUser);
   });
 });

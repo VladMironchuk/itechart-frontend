@@ -3,11 +3,13 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 export type AppProps = {
   isLogged: boolean;
   login: string;
+  username: string;
 };
 
 const initialState = {
   login: "",
   isLogged: false,
+  username: "",
 };
 
 const userSlice = createSlice({
@@ -21,6 +23,10 @@ const userSlice = createSlice({
     toggleLogging(state) {
       const appState = state;
       appState.isLogged = !state.isLogged;
+    },
+    updateUsername(state, action) {
+      const appState = state;
+      appState.username = action.payload.username;
     },
   },
 });

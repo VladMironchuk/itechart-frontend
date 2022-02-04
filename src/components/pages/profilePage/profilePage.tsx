@@ -1,9 +1,9 @@
 import "./profilePage.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import { User } from "webpack.mock";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import { AppProps } from "@/redux/redux";
+import { AppProps, userActions } from "@/redux/redux";
 import Button from "@/elements/button/button";
 import Input from "@/elements/formInput/formInput";
 import ChangePasswordModal from "@/elements/modal/changePasswordModal";
@@ -11,20 +11,22 @@ import useHttp from "@/hooks/useHttp";
 
 const ProfilePage = () => {
   const login = useSelector((state: { user: AppProps }) => state.user.login);
+  const currentUserName = useSelector((state: { user: AppProps }) => state.user.username);
+  const dispatch = useDispatch();
 
   const { sendRequest } = useHttp();
 
   const [isChangePasswordModalVisible, setIsChangePasswordModalVisible] = useState(false);
 
-  const [username, setUsername] = useState("");
-  const [description, setDescription] = useState("");
+  const [usernameInputValue, setUsernameInputValue] = useState("");
+  const [descriptionInputValue, setDescriptionInputValue] = useState("");
 
   const changeUsernameHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setUsername(() => event.target.value);
+    setUsernameInputValue(() => event.target.value);
   };
 
   const changeUserDescriptionHandler: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    setDescription(() => event.target.value);
+    setDescriptionInputValue(() => event.target.value);
   };
 
   const changePasswordModalToggler = () => {
@@ -39,12 +41,14 @@ const ProfilePage = () => {
         url: "/api/saveProfile",
         method: "POST",
         body: {
-          username,
-          description,
+          usernameInputValue,
+          descriptionInputValue,
           login,
         },
       },
-      () => {}
+      ({ username }: User) => {
+        dispatch(userActions.updateUsername({ username }));
+      }
     );
   };
 
@@ -54,8 +58,8 @@ const ProfilePage = () => {
         url: `/api/getProfile/${login}`,
       },
       (user: User) => {
-        setUsername(user.username);
-        setDescription(user.description);
+        setUsernameInputValue(user.username);
+        setDescriptionInputValue(user.description);
       }
     );
   }, [sendRequest]);
@@ -63,7 +67,7 @@ const ProfilePage = () => {
   return (
     <>
       {isChangePasswordModalVisible && <ChangePasswordModal changePasswordToggler={changePasswordModalToggler} />}
-      <SectionContainer classname="profile-page" title={`Profile page: ${login}`}>
+      <SectionContainer classname="profile-page" title={`Profile page: ${currentUserName}`}>
         <div className="user-profile">
           <div className="user-profile__image">
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png" alt="profile" />
@@ -71,16 +75,22 @@ const ProfilePage = () => {
           </div>
           <div>
             <form onSubmit={saveUserInfoHandler} className="user-profile__description">
-              <Input label="Username" inputValue={username} changeHandler={changeUsernameHandler} errorMessage="" />
+              <Input
+                label="Username"
+                inputValue={usernameInputValue}
+                changeHandler={changeUsernameHandler}
+                errorMessage=""
+              />
               <p>Profile description</p>
               <textarea
-                value={description}
+                value={descriptionInputValue}
                 onChange={changeUserDescriptionHandler}
                 name="description"
                 id="description"
                 cols={30}
                 rows={10}
               />
+              <input type="hidden" name="xiu" value="bich" />
               <Button className="profile-page__button" isSubmit title="Save profile" />
             </form>
             <Button
