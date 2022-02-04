@@ -31,7 +31,9 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-use-before-define": "error",
+    "jsx-a11y/anchor-is-valid": 0,
 
     "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
     "react/destructuring-assignment": 0,
@@ -44,7 +46,10 @@ module.exports = {
     "react/jsx-curly-newline": 0, // it conflicts with prettier
     "react/jsx-wrap-multilines": ["error", { arrow: true, return: true, declaration: true }],
     // watch bug: https://github.com/airbnb/javascript/pull/2501
-    "react/function-component-definition": [2, { namedComponents: "function-declaration" }],
+    "react/function-component-definition": [
+      2,
+      { namedComponents: "arrow-function", unnamedComponents: "arrow-function" },
+    ],
 
     "prettier/prettier": ["error"],
 
@@ -84,6 +89,7 @@ module.exports = {
         tsx: "never",
       },
     ],
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
   },
   settings: {
     "import/parsers": {

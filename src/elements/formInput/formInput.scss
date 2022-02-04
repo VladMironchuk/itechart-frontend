@@ -1,0 +1,23 @@
+.input__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+
+  & input {
+    border: white 2px solid;
+    outline: none;
+    background: none;
+    color: white;
+    width: 15rem;
+  }
+
+  .error {
+    color: red;
+    font-size: 10px;
+    margin-top: 0.5rem;
+    padding-left: 8rem;
+  }
+}

@@ -1,40 +1,43 @@
-import { useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { useRef, useState } from "react";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
+import Link from "../navlink/navlink";
 import "./dropdown.scss";
+type DropdownProps = { modalToggler: () => void };
 
-export function Dropdown() {
-  const listRef = useRef<HTMLDivElement>(null)!;
-  const titleRef = useRef<HTMLDivElement>(null)!;
+const Dropdown: React.FC<DropdownProps> = (props) => {
+  const { modalToggler } = props;
+
+  const [isDropdownVibisble, toggleDropdownVisibility] = useState(false);
+
+  const productsNavLinkRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const clickHandler = () => {
-    listRef.current?.classList.toggle("hidden");
-    titleRef.current?.classList.toggle("active_title");
+    productsNavLinkRef.current?.classList.toggle("active_title");
+    toggleDropdownVisibility((prevState) => !prevState);
   };
 
+  useOnClickOutside(dropdownRef, () => {
+    toggleDropdownVisibility(() => false);
+    productsNavLinkRef.current?.classList.remove("active_title");
+  });
+
   return (
-    <div className="dropdown">
-      <div ref={titleRef} className="dropdown__default" onClick={clickHandler}>
+    <div ref={dropdownRef} className="dropdown">
+      <button ref={productsNavLinkRef} type="button" className="dropdown__default" onClick={clickHandler}>
         Products
-      </div>
-      <div ref={listRef} className="dropdown__list hidden">
-        <ul>
-          <li>
-            <NavLink to="/products/pc" exact>
-              PC
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/products/ps" exact>
-              PS
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/products/xbox" exact>
-              XBox
-            </NavLink>
-          </li>
-        </ul>
-      </div>
+      </button>
+      {isDropdownVibisble && (
+        <div className="dropdown__list">
+          <ul>
+            <Link linkPath="/products/pc" linkText="PC" modalToggler={modalToggler} />
+            <Link linkPath="/products/pc" linkText="PS" modalToggler={modalToggler} />
+            <Link linkPath="/products/pc" linkText="XBox" modalToggler={modalToggler} />
+          </ul>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Dropdown;

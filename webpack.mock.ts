@@ -1,12 +1,11 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import webpackMockServer from "webpack-mock-server";
 
 const games = [
   {
     gameTitle: "Owerwatch",
-    gameLogo: "../../../assets/images/overwatch.jpg",
+    gameLogo: "https://s1.gaming-cdn.com/images/products/2208/271x377/game-battle-net-overwatch-cover.jpg",
     gamePrice: 23.99,
-    gamePlatforms: ["../../../assets/images/icone-windows-gris.png"],
+    gamePlatforms: ["https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png"],
     gameDescription:
       "Overwatch is a 2016 team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
     ageLimit: 12,
@@ -15,12 +14,12 @@ const games = [
   },
   {
     gameTitle: "Minecraft",
-    gameLogo: "../../../assets/images/mine.jpg",
+    gameLogo: "https://s2.gaming-cdn.com/images/products/442/271x377/minecraft-java-edition-pc-game-cover.jpg",
     gamePrice: 25.99,
     gamePlatforms: [
-      "../../../assets/images/icone-windows-gris.png",
-      "../../../assets/images/ps.png",
-      "../../../assets/images/xbox.png",
+      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
+      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
     ],
     gameDescription:
       "Overwatch is a  team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
@@ -30,12 +29,12 @@ const games = [
   },
   {
     gameTitle: "Terraria",
-    gameLogo: "../../../assets/images/terraria.jpg",
+    gameLogo: "https://s3.gaming-cdn.com/images/products/932/271x377/game-steam-terraria-cover.jpg",
     gamePrice: 4.99,
     gamePlatforms: [
-      "../../../assets/images/icone-windows-gris.png",
-      "../../../assets/images/ps.png",
-      "../../../assets/images/xbox.png",
+      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
+      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
     ],
     ageLimit: 12,
     rating: 5,
@@ -53,6 +52,13 @@ const games = [
   },
 ];
 
+type User = {
+  login: string;
+  password: string;
+};
+
+const users: User[] = [];
+
 export default webpackMockServer.add((app, helper) => {
   app.get("/testMock", (_req, res) => {
     const response = {
@@ -65,9 +71,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/search/:text", (req, res) => {
-    if (req.params.text.trim() === "") {
-      res.json({ games: [] });
-    }
     res.json({
       games: games.map((game) => game.gameTitle).filter((game) => game.includes(req.params.text)),
     });
@@ -79,5 +82,24 @@ export default webpackMockServer.add((app, helper) => {
 
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });
+  });
+
+  app.post("/api/auth/signIn/", (req, res) => {
+    try {
+      const { login, password } = JSON.parse(req.body);
+      const index = users.findIndex((item) => item.login === login && item.password === password);
+      if (index === -1) {
+        return res.status(401).json({ message: "wrong credentials" });
+      }
+      return res.status(200).json(req.body);
+    } catch (err: unknown) {
+      return res.status(400).json({ message: err || "Something went wrong" });
+    }
+  });
+
+  app.post("/api/auth/signUp/", (req, res) => {
+    const { login, password } = JSON.parse(req.body);
+    users.push({ login, password });
+    res.status(200).json(req.body);
   });
 });

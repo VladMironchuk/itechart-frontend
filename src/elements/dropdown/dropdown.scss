@@ -14,8 +14,7 @@
   }
 
   &__default {
-    width: inherit;
-    height: inherit;
+    all: inherit;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,6 +23,7 @@
   &__list {
     width: inherit;
     background-color: #121212;
+
     & ul {
       list-style: none;
       text-align: center;
@@ -33,9 +33,13 @@
 
       & li {
         padding: 0.5rem 0;
+        margin: 0;
+        width: 100%;
+        height: auto !important;
 
         a {
           color: inherit;
+          height: auto;
         }
       }
     }

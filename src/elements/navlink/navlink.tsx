@@ -1,9 +1,31 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import AppContext from "@/context/context";
 
-export const Link: React.FC<{ linkText: string; linkPath: string }> = ({ linkText, linkPath }) => (
-  <li>
-    <NavLink className="header__nav__link" to={linkPath} exact>
-      {linkText}
-    </NavLink>
-  </li>
-);
+type LinkProps = { linkText: string; linkPath: string; modalToggler?: () => void };
+
+const Link: React.FC<LinkProps> = (props) => {
+  const { linkText, linkPath, modalToggler } = props;
+
+  const { isLogged } = useContext(AppContext);
+
+  return (
+    <li>
+      <NavLink
+        onClick={() => {
+          if (modalToggler) {
+            !isLogged && modalToggler();
+          }
+        }}
+        rel="noreferrer"
+        className="header__nav__link"
+        to={linkPath}
+        exact
+      >
+        {linkText}
+      </NavLink>
+    </li>
+  );
+};
+
+export default Link;

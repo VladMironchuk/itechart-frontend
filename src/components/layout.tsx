@@ -1,12 +1,35 @@
 import "./layout.scss";
-import { ReactNode } from "react";
-import { Header } from "./header/header";
-import { Footer } from "./footer/footer";
+import { ReactNode, useState } from "react";
+import Header from "./header/header";
+import Footer from "./footer/footer";
+import SignInModal from "@/elements/modal/signInModal";
+import SignUpModal from "@/elements/modal/signUpModal";
 
-export const Layout: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <>
-    <Header />
-    <main>{children}</main>
-    <Footer />
-  </>
-);
+type LayoutProps = { children: ReactNode };
+
+const Layout: React.FC<LayoutProps> = (props) => {
+  const { children } = props;
+
+  const [isSignInVisible, setSignInIsVisible] = useState(false);
+  const [isSignUpVisible, setSignUpIsVisible] = useState(false);
+
+  const toggleSignInModal = () => {
+    setSignInIsVisible((prevState) => !prevState);
+  };
+
+  const toggleSignUpModal = () => {
+    setSignUpIsVisible((prevState) => !prevState);
+  };
+
+  return (
+    <>
+      {isSignInVisible && <SignInModal signInHandler={toggleSignInModal} />}
+      {isSignUpVisible && <SignUpModal signUpHandler={toggleSignUpModal} />}
+      <Header signInHandler={toggleSignInModal} signUpHandler={toggleSignUpModal} />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
+};
+
+export default Layout;

@@ -1,31 +1,24 @@
 import "./searchBar.scss";
 import { useState, useEffect } from "react";
-import { useHttp } from "@/helpers/useFetch";
+import { Oval } from "react-loader-spinner";
+import useHttp from "@/hooks/useHttp";
 
-export const SearchBar: React.FC<{ name: string; placeholder: string }> = ({ name, placeholder }) => {
+type SearchBarProps = { name: string; placeholder: string };
+
+const SearchBar: React.FC<SearchBarProps> = (props) => {
+  const { name, placeholder } = props;
+
   const [inputValue, setInputValue] = useState("");
   const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });
 
   const { isLoading, error, sendRequest } = useHttp();
-
-  let content;
-
-  if (isLoading) {
-    content = <p>Loading...</p>;
-  }
-
-  if (error) {
-    content = <p>{error}</p>;
-  }
 
   useEffect(() => {
     if (inputValue === "") {
       setGames({ games: [] });
       return;
     }
-    console.log(inputValue);
     sendRequest({ url: `/api/search/${inputValue}` }, setGames);
-    console.log(games);
   }, [inputValue, sendRequest]);
 
   return (
@@ -41,19 +34,29 @@ export const SearchBar: React.FC<{ name: string; placeholder: string }> = ({ nam
         placeholder={placeholder}
       />
       <div className="search-list">
-        <ul>
-          {games.map((game) => (
-            <li
-              onClick={() => {
-                alert("got product");
-              }}
-              key={game}
-            >
-              {game}
-            </li>
-          ))}
-        </ul>
+        {isLoading && (
+          <div className="loader__wrapper">
+            <Oval secondaryColor="black" ariaLabel="Loading..." color="white" width={50} height={50} />
+          </div>
+        )}
+        {!error && !isLoading && (
+          <ul>
+            {games.map((game) => (
+              <button
+                type="button"
+                onClick={() => {
+                  alert("got product");
+                }}
+                key={game}
+              >
+                {game}
+              </button>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
 };
+
+export default SearchBar;
