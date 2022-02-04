@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
 
-type ReqOptions = { url: string; body?: unknown; method?: string; headers?: { [keyof: string]: string } };
+type ReqOptions = { url: string; body?: any; method?: string; headers?: { [keyof: string]: string } };
 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = useCallback(async (options: ReqOptions, onData: (...args: unknown[]) => unknown) => {
+  const sendRequest = useCallback(async (options: ReqOptions, onData: (...args: any[]) => any) => {
     const { method, url, body, headers } = options;
 
     setIsLoading(true);
@@ -30,7 +30,7 @@ const useHttp = () => {
 
       const data = await response.json();
       onData(data);
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.log(err.message);
     }
   }, []);

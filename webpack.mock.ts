@@ -102,4 +102,8 @@ export default webpackMockServer.add((app, helper) => {
     users.push({ login, password });
     res.status(200).json(req.body);
   });
+
+  app.post("api/changePassword", (req, res) => {
+    res.status(200).json(req.body);
+  });
 });

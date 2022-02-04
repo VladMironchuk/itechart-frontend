@@ -1,5 +1,6 @@
 import "./gameCard.scss";
 import star from "../../assets/images/star.png";
+import Button from "../button/button";
 
 export type GameCardContent = {
   gameLogo: string;
@@ -38,9 +39,7 @@ const GameCard: React.FC<GameCardContent> = (props) => {
           <div className="game__back_wrapper">
             <p className="game__back_wrapper_text">{gameDescription}</p>
             <p className="game__back_wrapper_age">{ageLimit}+</p>
-            <button type="button" className="game__back_wrapper_button">
-              Add to Cart
-            </button>
+            <Button type="button" className="game__back_wrapper_button" title="Add to Cart" />
           </div>
         </div>
       </div>
