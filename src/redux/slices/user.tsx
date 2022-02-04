@@ -3,10 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export type userState = {
   isLogged: boolean;
   login: string;
+  username: string;
 };
 
 const initialState = {
   login: "",
+  username: "",
   isLogged: false,
 };
 
@@ -21,6 +23,10 @@ const userSlice = createSlice({
     toggleLogging(state) {
       const appState = state;
       appState.isLogged = !state.isLogged;
+    },
+    updateUsername(state, action) {
+      const appState = state;
+      appState.username = action.payload.username;
     },
   },
 });

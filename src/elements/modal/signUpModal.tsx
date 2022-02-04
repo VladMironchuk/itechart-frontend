@@ -16,6 +16,10 @@ const SignUpModal: React.FC = () => {
     dispatch(userActions.updateLogin({ login }));
   };
 
+  const updateUsername = (username: string) => {
+    dispatch(userActions.updateUsername({ username }));
+  };
+
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
@@ -82,6 +86,7 @@ const SignUpModal: React.FC = () => {
       if (response.ok) {
         onSignUp();
         updateLogin(login);
+        updateUsername(login);
         toggleLogging();
         history.push("/profile");
       }
