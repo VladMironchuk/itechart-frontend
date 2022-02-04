@@ -97,7 +97,7 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
           inputValue={repeatedPassword}
           errorMessage={repeatedPasswordErrorMessage}
         />
-        <Button type="submit" className="modal__button" title="Submit" />
+        <Button isSubmit className="modal__button" title="Submit" />
       </form>
     </Modal>
   );

@@ -1,33 +1,48 @@
 import "./navbar.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { User } from "webpack.mock";
 import Link from "@/elements/navlink/navlink";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { AppProps, userActions } from "@/redux/redux";
+import useHttp from "@/hooks/useHttp";
 
 type NavbarProps = { signInHandler: () => void; signUpHandler: () => void };
 
 const NavBar: React.FC<NavbarProps> = (props) => {
   const { signInHandler, signUpHandler } = props;
 
+  const [username, setUsername] = useState("");
+
   const dispatch = useDispatch();
-
   const isLogged = useSelector((state: { user: AppProps }) => state.user.isLogged);
-
   const login = useSelector((state: { user: AppProps }) => state.user.login);
+
+  const { sendRequest } = useHttp();
 
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
 
+  useEffect(() => {
+    sendRequest(
+      {
+        url: `/api/getProfile/${login}`,
+      },
+      (user: User) => {
+        setUsername(user.username);
+      }
+    );
+  }, [sendRequest, isLogged]);
+
   const navbarContent = isLogged ? (
     <>
       <div className="profile">
         <img className="logo" src={profileLogo} alt="profile-icon" />
-        <Link linkPath="/profile" linkText={login} />
+        <Link linkPath="/profile" linkText={username} />
       </div>
       <li>
         <img className="logo" src={cartLogo} alt="cart-logo" />0

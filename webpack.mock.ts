@@ -52,9 +52,11 @@ const games = [
   },
 ];
 
-type User = {
+export type User = {
   login: string;
   password: string;
+  description: string;
+  username: string;
 };
 
 const users: User[] = [];
@@ -99,11 +101,27 @@ export default webpackMockServer.add((app, helper) => {
 
   app.post("/api/auth/signUp/", (req, res) => {
     const { login, password } = JSON.parse(req.body);
-    users.push({ login, password });
+    users.push({ login, password, description: "", username: login });
     res.status(200).json(req.body);
   });
 
-  app.post("api/changePassword", (req, res) => {
-    res.status(200).json(req.body);
+  app.post("/api/changePassword", (req, res) => {
+    const { login, password } = JSON.parse(req.body);
+    const currentUser = users.find((user) => user.login === login);
+    currentUser!.password = password;
+    res.status(200).send(req.body);
+  });
+
+  app.get("/api/getProfile/:login", (req, res) => {
+    const { login } = req.params;
+    const currentUser = users.find((user) => user.login === login)!;
+    res.json(currentUser);
+  });
+
+  app.post("/api/saveProfile", (req) => {
+    const { username, description, login } = JSON.parse(req.body);
+    const currentUser = users.find((user) => user.login === login)!;
+    currentUser.username = username;
+    currentUser.description = description;
   });
 });
