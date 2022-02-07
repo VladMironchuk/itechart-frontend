@@ -70,10 +70,10 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
   return (
     <Modal onClose={signInHandler} title="Authorization">
       <form action="/" onSubmit={submitHandler}>
-        <Input label="Login" changeHandler={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
+        <Input label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
         <Input
           label="Password"
-          changeHandler={passwordChangeHandler}
+          onChange={passwordChangeHandler}
           inputValue={password}
           errorMessage={passwordErrorMessage}
         />
