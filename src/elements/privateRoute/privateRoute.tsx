@@ -9,8 +9,9 @@ const PrivateRoute: React.FC<Props> = (props) => {
   return (
     <Route
       path={path}
-      render={({ location }) =>
-        isLogged ? (
+      render={({ location }) => {
+        console.log(location);
+        return isLogged ? (
           children
         ) : (
           <Redirect
@@ -19,8 +20,8 @@ const PrivateRoute: React.FC<Props> = (props) => {
               state: { from: location },
             }}
           />
-        )
-      }
+        );
+      }}
     />
   );
 };

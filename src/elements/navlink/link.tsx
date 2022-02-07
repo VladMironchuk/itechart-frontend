@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { AppProps } from "@/redux/redux";
+import { AppProps } from "@/redux/slices/user";
 
 type Props = { linkText: string; linkPath: string; modalToggler?: () => void };
 

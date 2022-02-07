@@ -10,14 +10,18 @@ import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
-import { AppProps } from "./redux/redux";
+import { AppProps } from "./redux/slices/user";
+import { ModalState } from "./redux/slices/modal";
 
-function mapStateToProps(state: { user: AppProps }) {
+function mapStateToProps(state: { user: AppProps } & { modal: ModalState }) {
   const { isLogged, login } = state.user;
+  const { isSignInVisible, isSignUpVisible } = state.modal;
 
   return {
     isLogged,
     login,
+    isSignInVisible,
+    isSignUpVisible,
   };
 }
 

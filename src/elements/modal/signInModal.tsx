@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
-import { userActions } from "@/redux/redux";
+import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
 
 const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
