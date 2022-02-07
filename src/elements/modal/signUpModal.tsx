@@ -84,16 +84,16 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
   return (
     <Modal onClose={signUpHandler} title="Registration">
       <form onSubmit={submitHandler}>
-        <Input label="Login" changeHandler={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
+        <Input label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
         <Input
           label="Password"
-          changeHandler={passwordChangeHandler}
+          onChange={passwordChangeHandler}
           inputValue={password}
           errorMessage={passwordErrorMessage}
         />
         <Input
           label="Repeat password"
-          changeHandler={repeatPasswordChangeHandler}
+          onChange={repeatPasswordChangeHandler}
           inputValue={repeatedPassword}
           errorMessage={repeatedPasswordErrorMessage}
         />
