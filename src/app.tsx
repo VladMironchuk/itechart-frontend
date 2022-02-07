@@ -21,7 +21,7 @@ function mapStateToProps(state: { user: AppProps }) {
   };
 }
 
-class AppComponent extends Component<AppProps> {
+class App extends Component<AppProps> {
   componentDidCatch() {
     console.error("error");
   }
@@ -51,4 +51,4 @@ class AppComponent extends Component<AppProps> {
   }
 }
 
-export default connect(mapStateToProps)(AppComponent);
+export default connect(mapStateToProps)(App);

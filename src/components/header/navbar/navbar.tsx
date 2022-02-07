@@ -1,7 +1,7 @@
 import "./navbar.scss";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "@/elements/navlink/navlink";
+import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";

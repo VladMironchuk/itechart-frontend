@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
-import Link from "../navlink/navlink";
+import Link from "../navlink/link";
 import "./dropdown.scss";
 
 type Props = { modalToggler: () => void };

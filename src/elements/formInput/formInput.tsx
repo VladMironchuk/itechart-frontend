@@ -3,7 +3,7 @@ import React, { ChangeEventHandler } from "react";
 
 type Props = { label: string; inputValue: string; onChange: ChangeEventHandler; errorMessage: string };
 
-const Input: React.FC<Props> = (props) => {
+const FormInput: React.FC<Props> = (props) => {
   const { label, inputValue, onChange, errorMessage } = props;
 
   return (
@@ -15,4 +15,4 @@ const Input: React.FC<Props> = (props) => {
   );
 };
 
-export default Input;
+export default FormInput;

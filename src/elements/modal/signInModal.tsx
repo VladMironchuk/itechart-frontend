@@ -1,8 +1,8 @@
 import "./modal.scss";
 import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
 import { useDispatch } from "react-redux";
-import Modal from "./overlay/overlay";
-import Input from "../formInput/formInput";
+import Modal from "./overlay/modal";
+import FormInput from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
 import { userActions } from "@/redux/redux";
 import Button from "../button/button";
@@ -70,8 +70,8 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
   return (
     <Modal onClose={signInHandler} title="Authorization">
       <form action="/" onSubmit={submitHandler}>
-        <Input label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
-        <Input
+        <FormInput label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
+        <FormInput
           label="Password"
           onChange={passwordChangeHandler}
           inputValue={password}
