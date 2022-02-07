@@ -5,9 +5,9 @@ import Footer from "./footer/footer";
 import SignInModal from "@/elements/modal/signInModal";
 import SignUpModal from "@/elements/modal/signUpModal";
 
-type LayoutProps = { children: ReactNode };
+type Props = { children: ReactNode };
 
-const Layout: React.FC<LayoutProps> = (props) => {
+const Layout: React.FC<Props> = (props) => {
   const { children } = props;
 
   const [isSignInVisible, setSignInIsVisible] = useState(false);

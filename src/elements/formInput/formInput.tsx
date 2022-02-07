@@ -1,9 +1,9 @@
 import "./formInput.scss";
 import React, { ChangeEventHandler } from "react";
 
-type InputProps = { label: string; inputValue: string; changeHandler: ChangeEventHandler; errorMessage: string };
+type Props = { label: string; inputValue: string; changeHandler: ChangeEventHandler; errorMessage: string };
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC<Props> = (props) => {
   const { label, inputValue, changeHandler, errorMessage } = props;
 
   return (

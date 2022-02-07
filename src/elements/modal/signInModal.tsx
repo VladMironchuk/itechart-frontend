@@ -77,7 +77,7 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
           inputValue={password}
           errorMessage={passwordErrorMessage}
         />
-        <Button type="submit" className="modal__button" title="Submit" />
+        <Button isSubmit className="modal__button" title="Submit" />
       </form>
     </Modal>
   );

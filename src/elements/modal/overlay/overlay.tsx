@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import crossIcon from "@/assets/images/cross-icon.png";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 
-type ModalProps = {
+type Props = {
   onClose: () => void;
   title: string;
   children: ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = (props) => {
+const Modal: React.FC<Props> = (props) => {
   const { title, onClose, children } = props;
 
   const modalRef = useRef<HTMLDivElement>(null);

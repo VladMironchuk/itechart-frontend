@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import useHttp from "@/hooks/useHttp";
 
-type SearchBarProps = { name: string; placeholder: string };
+type Props = { name: string; placeholder: string };
 
-const SearchBar: React.FC<SearchBarProps> = (props) => {
+const SearchBar: React.FC<Props> = (props) => {
   const { name, placeholder } = props;
 
   const [inputValue, setInputValue] = useState("");

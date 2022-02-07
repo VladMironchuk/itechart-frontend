@@ -2,7 +2,7 @@ import "./homePage.scss";
 import { useEffect, useState } from "react";
 import CategoryCard from "@/elements/categoryCard/categoryCard";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import GameCard, { GameCardContent } from "@/elements/gameCard/gameCard";
+import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import SearchBar from "@/elements/searchBar/searchBar";
 import useHttp from "@/hooks/useHttp";
 import windowsLogo from "../../../assets/images/icone-windows-gris.png";
