@@ -10,22 +10,19 @@ const Dropdown: React.FC<Props> = (props) => {
 
   const [isDropdownVibisble, setIsDropdownVisible] = useState(false);
 
-  const productsNavLinkRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const onClick = () => {
-    productsNavLinkRef.current?.classList.toggle("active_title");
     setIsDropdownVisible((prevState) => !prevState);
   };
 
   useOnClickOutside(dropdownRef, () => {
     setIsDropdownVisible(() => false);
-    productsNavLinkRef.current?.classList.remove("active_title");
   });
 
   return (
     <div ref={dropdownRef} className="dropdown">
-      <button ref={productsNavLinkRef} type="button" className="dropdown__default" onClick={onClick}>
+      <button type="button" className={`dropdown__default ${isDropdownVibisble && "active_title"}`} onClick={onClick}>
         Products
       </button>
       {isDropdownVibisble && (
