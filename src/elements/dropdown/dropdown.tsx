@@ -8,18 +8,18 @@ type Props = { modalToggler: () => void };
 const Dropdown: React.FC<Props> = (props) => {
   const { modalToggler } = props;
 
-  const [isDropdownVibisble, toggleDropdownVisibility] = useState(false);
+  const [isDropdownVibisble, setIsDropdownVisible] = useState(false);
 
   const productsNavLinkRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const clickHandler = () => {
     productsNavLinkRef.current?.classList.toggle("active_title");
-    toggleDropdownVisibility((prevState) => !prevState);
+    setIsDropdownVisible((prevState) => !prevState);
   };
 
   useOnClickOutside(dropdownRef, () => {
-    toggleDropdownVisibility(() => false);
+    setIsDropdownVisible(() => false);
     productsNavLinkRef.current?.classList.remove("active_title");
   });
 
