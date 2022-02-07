@@ -13,7 +13,7 @@ const Dropdown: React.FC<Props> = (props) => {
   const productsNavLinkRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const clickHandler = () => {
+  const onClick = () => {
     productsNavLinkRef.current?.classList.toggle("active_title");
     setIsDropdownVisible((prevState) => !prevState);
   };
@@ -25,15 +25,15 @@ const Dropdown: React.FC<Props> = (props) => {
 
   return (
     <div ref={dropdownRef} className="dropdown">
-      <button ref={productsNavLinkRef} type="button" className="dropdown__default" onClick={clickHandler}>
+      <button ref={productsNavLinkRef} type="button" className="dropdown__default" onClick={onClick}>
         Products
       </button>
       {isDropdownVibisble && (
         <div className="dropdown__list">
           <ul>
             <Link linkPath="/products/pc" linkText="PC" modalToggler={modalToggler} />
-            <Link linkPath="/products/pc" linkText="PS" modalToggler={modalToggler} />
-            <Link linkPath="/products/pc" linkText="XBox" modalToggler={modalToggler} />
+            <Link linkPath="/products/ps" linkText="PS" modalToggler={modalToggler} />
+            <Link linkPath="/products/xbox" linkText="XBox" modalToggler={modalToggler} />
           </ul>
         </div>
       )}
