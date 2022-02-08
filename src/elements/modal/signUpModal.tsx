@@ -2,13 +2,14 @@ import "./modal.scss";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
+import useFetch from "use-http";
 import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
 import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
-import useFetch from "use-http";
+import { modalActions } from "@/redux/slices/modal";
 
-const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler }) => {
+const SignUpModal: React.FC = () => {
   const dispatch = useDispatch();
 
   const updateLogin = (login: string) => {
@@ -17,6 +18,10 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
 
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
+  };
+
+  const onSignUp = () => {
+    dispatch(modalActions.toggleSignUp());
   };
 
   const history = useHistory();
@@ -75,7 +80,7 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
       }
 
       if (response.ok) {
-        signUpHandler();
+        onSignUp();
         updateLogin(login);
         toggleLogging();
         history.push("/profile");
@@ -84,7 +89,7 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
   };
 
   return (
-    <Modal onClose={signUpHandler} title="Registration">
+    <Modal onClose={onSignUp} title="Registration">
       <form onSubmit={submitHandler}>
         <FormInput label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
         <FormInput

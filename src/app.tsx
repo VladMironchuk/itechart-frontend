@@ -10,19 +10,10 @@ import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
-import { AppProps } from "./redux/slices/user";
-import { ModalState } from "./redux/slices/modal";
+import { AppProps } from "./redux/redux";
 
-function mapStateToProps(state: { user: AppProps } & { modal: ModalState }) {
-  const { isLogged, login } = state.user;
-  const { isSignInVisible, isSignUpVisible } = state.modal;
-
-  return {
-    isLogged,
-    login,
-    isSignInVisible,
-    isSignUpVisible,
-  };
+function mapStateToProps(state: AppProps) {
+  return state;
 }
 
 class App extends Component<AppProps> {
@@ -34,13 +25,13 @@ class App extends Component<AppProps> {
     return (
       <Layout>
         <Switch>
-          <PrivateRoute path="/about" isLogged={this.props.isLogged}>
+          <PrivateRoute path="/about">
             <AboutPage />
           </PrivateRoute>
-          <PrivateRoute path="/products/:category" isLogged={this.props.isLogged}>
+          <PrivateRoute path="/products/:category">
             <ProductsPage />
           </PrivateRoute>
-          <PrivateRoute path="/profile" isLogged={this.props.isLogged}>
+          <PrivateRoute path="/profile">
             <ProfilePage />
           </PrivateRoute>
           <Route path="/">

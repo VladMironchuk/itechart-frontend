@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type AppProps = {
+export type userState = {
   isLogged: boolean;
   login: string;
 };
