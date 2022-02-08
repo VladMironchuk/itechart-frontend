@@ -4,9 +4,9 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
-import useHttp from "@/hooks/useHttp";
 import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
+import useFetch from "use-http";
 
 const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler }) => {
   const dispatch = useDispatch();
@@ -19,8 +19,9 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
     dispatch(userActions.toggleLogging());
   };
 
-  const { sendRequest } = useHttp();
   const history = useHistory();
+
+  const { post, response, error } = useFetch();
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -63,22 +64,23 @@ const SignUpModal: React.FC<{ signUpHandler: () => void }> = ({ signUpHandler })
     }
     setRepeatedPasswordErrorMessage("");
 
-    sendRequest(
-      {
-        url: "api/auth/signUp",
-        method: "POST",
-        body: {
-          login,
-          password,
-        },
-      },
-      () => {
+    (async () => {
+      await post("/api/auth/signUp", {
+        login,
+        password,
+      });
+
+      if (error) {
+        console.log(error);
+      }
+
+      if (response.ok) {
         signUpHandler();
         updateLogin(login);
         toggleLogging();
         history.push("/profile");
       }
-    );
+    })();
   };
 
   return (

@@ -3,12 +3,14 @@ import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
-import useHttp from "@/hooks/useHttp";
 import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
+import useFetch from "use-http";
 
 const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler }) => {
   const dispatch = useDispatch();
+
+  const { post, response, error } = useFetch();
 
   const updateLogin = (login: string) => {
     dispatch(userActions.updateLogin({ login }));
@@ -17,8 +19,6 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
-
-  const { error: reqError, sendRequest } = useHttp();
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -49,22 +49,23 @@ const SignInModal: React.FC<{ signInHandler: () => void }> = ({ signInHandler })
     }
     setPasswordErrorMessage("");
 
-    await sendRequest(
-      {
-        url: "/api/auth/signIn/",
-        method: "POST",
-        body: {
-          login,
-          password,
-        },
-      },
-      () => {
+    (async () => {
+      await post("/api/auth/signIn", {
+        login,
+        password,
+      });
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (response.ok) {
         signInHandler();
         updateLogin(login);
         toggleLogging();
       }
-    );
-    console.log(reqError);
+    })();
   };
 
   return (

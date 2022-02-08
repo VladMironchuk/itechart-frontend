@@ -1,50 +1,31 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
 type ReqOptions = {
-  url: string;
-  body?: { [keyof: string]: unknown };
+  body?: RequestInit;
   method?: string;
   headers?: { [keyof: string]: string };
 };
 
-const useHttp = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+const useHttp = (url: string, options: ReqOptions) => {
+  const [response, setResponse] = useState<any>();
+  const [error, setError] = useState<unknown>(null);
 
-  const sendRequest = useCallback(async (options: ReqOptions, onData: (...args: unknown[]) => unknown) => {
-    const { method, url, body, headers } = options;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(url, options);
+        const json = await res.json();
 
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(url, {
-        method: method || "GET",
-        headers: headers || {},
-        body: JSON.stringify(body) || null,
-      });
-
-      if (!response.ok) {
-        const { message } = await response.json();
-        setError(() => message || "Something went wrong!");
-
-        throw new Error(message);
+        setResponse(() => json);
+      } catch (error) {
+        setError(error);
       }
+    };
 
-      setIsLoading(false);
-
-      const data = await response.json();
-      onData(data);
-    } catch (err: any) {
-      console.log(err.message);
-    }
+    fetchData();
   }, []);
 
-  return {
-    isLoading,
-    error,
-    sendRequest,
-  };
+  return { response, error };
 };
 
 export default useHttp;
