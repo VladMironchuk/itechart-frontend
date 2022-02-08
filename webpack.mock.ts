@@ -85,7 +85,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/auth/signIn/", (req, res) => {
-    console.log(users);
     try {
       const { login, password } = req.body;
       const index = users.findIndex((item) => item.login === login && item.password === password);

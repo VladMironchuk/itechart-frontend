@@ -12,7 +12,7 @@ const useOnClickOutside = (ref: RefObject<Element>, toggle: () => void) => {
   useEffect(() => {
     document.body.addEventListener("click", handleOutsideClick);
     return () => document.body.removeEventListener("click", handleOutsideClick);
-  });
+  }, []);
 };
 
 export default useOnClickOutside;

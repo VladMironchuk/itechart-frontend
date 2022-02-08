@@ -6,14 +6,14 @@ import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
-import { AppProps, userActions } from "@/redux/slices/user";
+import { userState, userActions } from "@/redux/slices/user";
 import { modalActions } from "@/redux/slices/modal";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
 
-  const isLogged = useSelector((state: { user: AppProps }) => state.user.isLogged);
-  const login = useSelector((state: { user: AppProps }) => state.user.login);
+  const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
+  const login = useSelector((state: { user: userState }) => state.user.login);
 
   const onSignIn = () => {
     dispatch(modalActions.toggleSignIn());

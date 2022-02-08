@@ -1,4 +1,6 @@
 import "./homePage.scss";
+import useFetch from "use-http";
+import { useEffect, useState } from "react";
 import CategoryCard from "@/elements/categoryCard/categoryCard";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
@@ -6,8 +8,6 @@ import SearchBar from "@/elements/searchBar/searchBar";
 import windowsLogo from "../../../assets/images/icone-windows-gris.png";
 import psLogo from "../../../assets/images/ps.png";
 import xboxLogo from "../../../assets/images/xbox.png";
-import useFetch from "use-http";
-import { useEffect, useState } from "react";
 
 const HomePage: React.FC = () => {
   const [{ games }, setGames] = useState<{ games: GameCardContent[] }>({ games: [] });
@@ -16,9 +16,9 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const games = await get("/");
+      const initGames = await get("/");
       if (response.ok) {
-        setGames(games);
+        setGames(initGames);
       }
     })();
   }, []);
