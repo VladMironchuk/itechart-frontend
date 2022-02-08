@@ -6,6 +6,10 @@
   margin: 1rem 0;
   flex-wrap: wrap;
 
+  & label {
+    width: 75px;
+  }
+
   & input {
     border: white 2px solid;
     outline: none;
