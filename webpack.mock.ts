@@ -105,8 +105,30 @@ export default webpackMockServer.add((app, helper) => {
     res.status(200).json(req.body);
   });
 
-  app.post("api/changePassword", (req, res) => {
-    res.status(200).json(req.body);
+  app.post("/api/changePassword", (req, res) => {
+    const { login, password } = JSON.parse(req.body);
+    const currentUser = users.find((user) => user.login === login);
+    if (currentUser) {
+      currentUser.password = password;
+    }
+    res.status(200).send(req.body);
+  });
+
+  app.get("/api/getProfile/:login", (req, res) => {
+    const { login } = req.params;
+    const currentUser = users.find((user) => user.login === login);
+    res.json(currentUser);
+  });
+
+  app.post("/api/saveProfile", (req, res) => {
+    const { username, description, login } = JSON.parse(req.body);
+    const currentUser = users.find((user) => user.login === login);
+    if (currentUser) {
+      currentUser.username = username;
+      currentUser.description = description;
+    }
+
+    res.json(currentUser);
   });
 
   app.get("/api/getProfile/:login", (req, res) => {
