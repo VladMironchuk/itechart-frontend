@@ -85,8 +85,9 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/auth/signIn/", (req, res) => {
+    console.log(users);
     try {
-      const { login, password } = JSON.parse(req.body);
+      const { login, password } = req.body;
       const index = users.findIndex((item) => item.login === login && item.password === password);
       if (index === -1) {
         return res.status(401).json({ message: "wrong credentials" });
@@ -98,7 +99,7 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/auth/signUp/", (req, res) => {
-    const { login, password } = JSON.parse(req.body);
+    const { login, password } = req.body;
     users.push({ login, password });
     res.status(200).json(req.body);
   });

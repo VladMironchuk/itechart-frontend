@@ -1,7 +1,7 @@
 import "./searchBar.scss";
 import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
-import useHttp from "@/hooks/useHttp";
+import useFetch from "use-http";
 
 type Props = { name: string; placeholder: string };
 
@@ -11,15 +11,19 @@ const SearchBar: React.FC<Props> = (props) => {
   const [inputValue, setInputValue] = useState("");
   const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });
 
-  const { isLoading, error, sendRequest } = useHttp();
+  const { get, response, error, loading } = useFetch();
 
   useEffect(() => {
     if (inputValue === "") {
-      setGames({ games: [] });
       return;
     }
-    sendRequest({ url: `/api/search/${inputValue}` }, setGames);
-  }, [inputValue, sendRequest]);
+    (async () => {
+      const initGames = await get(`/api/search/${inputValue}`);
+      if (response.ok) {
+        setGames(initGames);
+      }
+    })();
+  }, [inputValue]);
 
   return (
     <div className="search-wrapper">
@@ -34,12 +38,13 @@ const SearchBar: React.FC<Props> = (props) => {
         placeholder={placeholder}
       />
       <div className="search-list">
-        {isLoading && (
+        {loading && (
           <div className="loader__wrapper">
             <Oval secondaryColor="black" ariaLabel="Loading..." color="white" width={50} height={50} />
           </div>
         )}
-        {!error && !isLoading && (
+        {error && <div>Error</div>}
+        {inputValue && (
           <ul>
             {games.map((game) => (
               <button
