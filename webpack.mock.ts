@@ -117,33 +117,17 @@ export default webpackMockServer.add((app, helper) => {
   app.get("/api/getProfile/:login", (req, res) => {
     const { login } = req.params;
     const currentUser = users.find((user) => user.login === login);
-    res.json(currentUser);
-  });
-
-  app.post("/api/saveProfile", (req, res) => {
-    const { username, description, login } = JSON.parse(req.body);
-    const currentUser = users.find((user) => user.login === login);
-    if (currentUser) {
-      currentUser.username = username;
-      currentUser.description = description;
-    }
-
-    res.json(currentUser);
-  });
-
-  app.get("/api/getProfile/:login", (req, res) => {
-    const { login } = req.params;
-    const currentUser = users.find((user) => user.login === login);
+    console.log(users);
+    console.log(currentUser);
     res.json(currentUser);
   });
 
   app.post("/api/saveProfile", (req, res) => {
     const { username, description, login } = req.body;
-    const currentUser = users.find((user) => user.login === login);
-    if (currentUser) {
-      currentUser.username = username;
-      currentUser.description = description;
-    }
-    res.json(currentUser);
+    const currentUserIndex = users.findIndex((user) => user.login === login);
+    users[currentUserIndex].username = username;
+    users[currentUserIndex].description = description;
+    console.log(users);
+    res.json(users[currentUserIndex]);
   });
 });
