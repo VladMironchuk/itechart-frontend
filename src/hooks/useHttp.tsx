@@ -1,6 +1,11 @@
 import { useCallback, useState } from "react";
 
-type ReqOptions = { url: string; body?: unknown; method?: string; headers?: { [keyof: string]: string } };
+type ReqOptions = {
+  url: string;
+  body?: { [keyof: string]: unknown };
+  method?: string;
+  headers?: { [keyof: string]: string };
+};
 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +35,7 @@ const useHttp = () => {
 
       const data = await response.json();
       onData(data);
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.log(err.message);
     }
   }, []);

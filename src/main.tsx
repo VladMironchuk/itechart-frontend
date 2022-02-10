@@ -5,14 +5,14 @@ import { StrictMode } from "react";
 import ReactDom from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import AppComponent from "@/app";
+import App from "@/app";
 import store from "@/redux/redux";
 
 ReactDom.render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <AppComponent />
+        <App />
       </Provider>
     </BrowserRouter>
   </StrictMode>,
