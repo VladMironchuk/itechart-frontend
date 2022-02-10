@@ -93,7 +93,7 @@ export default webpackMockServer.add((app, helper) => {
       if (index === -1) {
         return res.status(401).json({ message: "wrong credentials" });
       }
-      return res.status(200).json(req.body);
+      return res.status(200).json(users[index]);
     } catch (err: unknown) {
       return res.status(400).json({ message: err || "Something went wrong" });
     }
@@ -106,20 +106,17 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/changePassword", (req, res) => {
-    const { login, password } = JSON.parse(req.body);
-    const currentUser = users.find((user) => user.login === login);
-    if (currentUser) {
-      currentUser.password = password;
-    }
+    const { login, password } = req.body;
+    const currentUserIndex = users.findIndex((user) => user.login === login);
+    users[currentUserIndex].password = password;
     res.status(200).send(req.body);
   });
 
   app.get("/api/getProfile/:login", (req, res) => {
+    console.log("get user");
     const { login } = req.params;
-    const currentUser = users.find((user) => user.login === login);
-    console.log(users);
-    console.log(currentUser);
-    res.json(currentUser);
+    const currentUserIndex = users.findIndex((user) => user.login === login);
+    res.json(users[currentUserIndex]);
   });
 
   app.post("/api/saveProfile", (req, res) => {
@@ -127,7 +124,11 @@ export default webpackMockServer.add((app, helper) => {
     const currentUserIndex = users.findIndex((user) => user.login === login);
     users[currentUserIndex].username = username;
     users[currentUserIndex].description = description;
-    console.log(users);
     res.json(users[currentUserIndex]);
+  });
+
+  app.post("/api/saveImage", (req, res) => {
+    console.log(req.body);
+    res.status(200);
   });
 });
