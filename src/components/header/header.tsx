@@ -2,9 +2,9 @@ import React from "react";
 import "./header.scss";
 import NavBar from "./navbar/navbar";
 
-type HeaderProps = { signInHandler: () => void; signUpHandler: () => void };
+type Props = { signInHandler: () => void; signUpHandler: () => void };
 
-const Header: React.FC<HeaderProps> = (props) => {
+const Header: React.FC<Props> = (props) => {
   const { signInHandler, signUpHandler } = props;
   return (
     <header className="header">

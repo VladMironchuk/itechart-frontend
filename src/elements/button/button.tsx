@@ -1,17 +1,17 @@
 import "./button.scss";
 
-type ButtonProps = {
+type Props = {
   title: string;
-  type: "button" | "submit" | "reset" | undefined;
+  isSubmit?: boolean;
   className?: string;
   onClick?: () => void;
 };
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { title, type, className, onClick } = props;
+const Button: React.FC<Props> = (props) => {
+  const { title, isSubmit, className, onClick } = props;
 
   return (
-    <button onClick={onClick} className={`button ${className || ""}`} type={type}>
+    <button onClick={onClick} className={`button ${className || ""}`} type={isSubmit ? "submit" : "button"}>
       {title}
     </button>
   );

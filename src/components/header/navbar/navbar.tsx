@@ -8,9 +8,9 @@ import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { AppProps, userActions } from "@/redux/redux";
 
-type NavbarProps = { signInHandler: () => void; signUpHandler: () => void };
+type Props = { signInHandler: () => void; signUpHandler: () => void };
 
-const NavBar: React.FC<NavbarProps> = (props) => {
+const NavBar: React.FC<Props> = (props) => {
   const { signInHandler, signUpHandler } = props;
 
   const dispatch = useDispatch();

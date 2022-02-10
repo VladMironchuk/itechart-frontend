@@ -1,10 +1,10 @@
 import "./modal.scss";
 import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
+import { useSelector } from "react-redux";
 import Modal from "./overlay/overlay";
 import Input from "../formInput/formInput";
 import useHttp from "@/hooks/useHttp";
 import Button from "../button/button";
-import { useSelector } from "react-redux";
 import { AppProps } from "@/redux/redux";
 
 const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ changePasswordToggler }) => {
@@ -59,7 +59,7 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
           inputValue={repeatedPassword}
           errorMessage={passwordErrorMessage}
         />
-        <Button type="submit" className="modal__button" title="Submit" />
+        <Button isSubmit className="modal__button" title="Submit" />
       </form>
     </Modal>
   );

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
-type SectionContainerProps = { title: string; children: ReactNode; classname?: string };
+type Props = { title: string; children: ReactNode; classname?: string };
 
-const SectionContainer: React.FC<SectionContainerProps> = (props) => {
+const SectionContainer: React.FC<Props> = (props) => {
   const { title, children, classname } = props;
   return (
     <section className={`section ${classname}`}>

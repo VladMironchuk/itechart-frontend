@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import { Redirect, Route } from "react-router";
 
-type PrivateRouteProps = { path: string; isLogged: boolean; children: ReactNode };
+type Props = { path: string; isLogged: boolean; children: ReactNode };
 
-const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
+const PrivateRoute: React.FC<Props> = (props) => {
   const { path, children, isLogged } = props;
 
   return (
