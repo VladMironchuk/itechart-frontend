@@ -3,11 +3,7 @@ import useOnClickOutside from "@/hooks/useOnClickOutside";
 import Link from "../navlink/link";
 import "./dropdown.scss";
 
-type Props = { modalToggler: () => void };
-
-const Dropdown: React.FC<Props> = (props) => {
-  const { modalToggler } = props;
-
+const Dropdown: React.FC = () => {
   const [isDropdownVibisble, setIsDropdownVisible] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -28,9 +24,9 @@ const Dropdown: React.FC<Props> = (props) => {
       {isDropdownVibisble && (
         <div className="dropdown__list">
           <ul>
-            <Link linkPath="/products/pc" linkText="PC" modalToggler={modalToggler} />
-            <Link linkPath="/products/ps" linkText="PS" modalToggler={modalToggler} />
-            <Link linkPath="/products/xbox" linkText="XBox" modalToggler={modalToggler} />
+            <Link linkPath="/products/pc" linkText="PC" />
+            <Link linkPath="/products/ps" linkText="PS" />
+            <Link linkPath="/products/xbox" linkText="XBox" />
           </ul>
         </div>
       )}
