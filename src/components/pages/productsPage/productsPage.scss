@@ -1,3 +1,9 @@
+.products-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
 .aside {
   background-color: $backgroundTheme;
   width: 18rem;
@@ -58,4 +64,12 @@
       margin-top: 1rem;
     }
   }
+}
+
+.cards_wrapper {
+  flex-wrap: wrap;
+}
+
+.game-container {
+  margin-bottom: 1rem;
 }

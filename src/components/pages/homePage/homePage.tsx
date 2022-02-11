@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <SearchBar name="games" placeholder="Search" />
+      <SearchBar placeholder="Search" />
       <SectionContainer title="Categories">
         <div className="cards_wrapper section__categoriesCards">
           <CategoryCard cardLogo={windowsLogo} cardTitle="PC" />

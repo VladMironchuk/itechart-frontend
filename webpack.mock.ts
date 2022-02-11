@@ -1,54 +1,126 @@
 import webpackMockServer from "webpack-mock-server";
 
+enum GamePlatforms {
+  windows = "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+  ps = "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
+  xbox = "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
+}
+
+const TEST_DESCRIPTION =
+  "Overwatch is a 2016 team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.";
+
 const games = [
   {
     gameTitle: "Owerwatch",
     gameLogo: "https://s1.gaming-cdn.com/images/products/2208/271x377/game-battle-net-overwatch-cover.jpg",
     gamePrice: 23.99,
-    gamePlatforms: ["https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png"],
-    gameDescription:
-      "Overwatch is a 2016 team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
+    gamePlatforms: [GamePlatforms.windows],
+    platform: ["pc"],
+    gameDescription: TEST_DESCRIPTION,
     ageLimit: 12,
-    rating: 5,
+    rating: 3,
     date: Date.now(),
+    genre: "shooter",
   },
   {
     gameTitle: "Minecraft",
     gameLogo: "https://s2.gaming-cdn.com/images/products/442/271x377/minecraft-java-edition-pc-game-cover.jpg",
     gamePrice: 25.99,
-    gamePlatforms: [
-      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
-      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
-      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
-    ],
-    gameDescription:
-      "Overwatch is a  team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.",
-    ageLimit: 12,
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    platform: ["pc", "ps", "xbox"],
+    gameDescription: TEST_DESCRIPTION,
+    ageLimit: 6,
     rating: 5,
     date: Date.now(),
+    genre: "survive",
   },
   {
     gameTitle: "Terraria",
     gameLogo: "https://s3.gaming-cdn.com/images/products/932/271x377/game-steam-terraria-cover.jpg",
     gamePrice: 4.99,
-    gamePlatforms: [
-      "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
-      "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
-      "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
-    ],
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    platform: ["pc", "ps", "xbox"],
     ageLimit: 12,
-    rating: 5,
+    rating: 4,
     date: Date.now(),
     gameDescription:
       "Terraria is a 2D sandbox game with gameplay that revolves around exploration, building, crafting, combat, survival, and mining, playable in both single-player and multiplayer modes. The game is noted for its classic exploration-adventure style of gameplay, similar to games such as the Metroid series and Minecraft.",
+    genre: "survive",
   },
   {
     gameTitle: "CS:GO",
+    gameLogo: "https://cdn.kanobu.ru/games/0e56b18d-b3ac-48d2-be8e-2afb3c52222c.jpg",
+    gamePrice: 4.99,
+    gamePlatforms: [GamePlatforms.windows],
+    platform: ["pc"],
+    ageLimit: 18,
+    rating: 4,
+    gameDescription: TEST_DESCRIPTION,
     date: Date.now() - 1,
+    genre: "shooter",
   },
   {
     gameTitle: "CS 1.6",
+    gameLogo: "https://cs16planet.ru/uploads/posts/2021-11/1637804273_cs16-main-theme.jpg",
+    gamePrice: 3.99,
+    gamePlatforms: [GamePlatforms.windows],
+    platform: ["pc"],
+    ageLimit: 16,
+    rating: 5,
+    gameDescription: TEST_DESCRIPTION,
     date: Date.now() - 2,
+    genre: "shooter",
+  },
+  {
+    gameTitle: "Forza Horizon 5",
+    gameLogo:
+      "https://s2.gaming-cdn.com/images/products/9595/orig/forza-horizon-5-deluxe-edition-pc-xbox-one-xbox-series-xs-deluxe-edition-pc-xbox-one-xbox-series-x-s-game-microsoft-store-cover.jpg",
+    gamePrice: 9.99,
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.xbox],
+    platform: ["pc", "xbox"],
+    ageLimit: 3,
+    rating: 4,
+    gameDescription: TEST_DESCRIPTION,
+    date: Date.now() - 2,
+    genre: "arcade",
+  },
+  {
+    gameTitle: "NFS Underground 2",
+    gameLogo:
+      "https://upload.wikimedia.org/wikipedia/ru/d/d0/%D0%9E%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_Need_for_Speed_Underground_2.jpg",
+    gamePrice: 4.99,
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.xbox, GamePlatforms.ps],
+    platform: ["pc", "ps", "xbox"],
+    ageLimit: 6,
+    rating: 5,
+    gameDescription: TEST_DESCRIPTION,
+    date: Date.now() - 2,
+    genre: "arcade",
+  },
+  {
+    gameTitle: "Don't Starve Together",
+    gameLogo:
+      "https://store-images.s-microsoft.com/image/apps.22128.68986806511725911.f424da40-674e-41a9-878c-7a524fa56895.b17b2cb1-f73d-4df8-9124-7e4a0f770ed2",
+    gamePrice: 7.99,
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.xbox],
+    platform: ["pc", "xbox"],
+    ageLimit: 12,
+    rating: 3,
+    gameDescription: TEST_DESCRIPTION,
+    date: Date.now() - 2,
+    genre: "survive",
+  },
+  {
+    gameTitle: "FlatOut 2",
+    gameLogo: "https://upload.wikimedia.org/wikipedia/ru/thumb/8/8f/FlatOut2Coverart.jpg/274px-FlatOut2Coverart.jpg",
+    gamePrice: 5.99,
+    gamePlatforms: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    platform: ["pc", "ps", "xbox"],
+    ageLimit: 6,
+    rating: 3,
+    gameDescription: TEST_DESCRIPTION,
+    date: Date.now() - 2,
+    genre: "arcade",
   },
 ];
 
@@ -130,5 +202,35 @@ export default webpackMockServer.add((app, helper) => {
   app.post("/api/saveImage", (req, res) => {
     console.log(req.body);
     res.status(200);
+  });
+
+  app.get("/api/products", (req, res) => {
+    const { age, genre, criteria, order, platform } = req.query;
+    let initGames = games;
+    initGames = initGames.filter((game) => game.platform.includes(platform as string));
+    initGames = initGames.filter((game) => game.ageLimit <= +(age as string));
+    initGames = initGames.filter((game) => (genre !== "all" ? game.genre === genre : game));
+    switch (criteria) {
+      case "rating":
+        initGames.sort((firstGame, secondGame) => firstGame.rating - secondGame.rating);
+        break;
+      case "gamePrice":
+        initGames.sort((firstGame, secondGame) => firstGame.gamePrice - secondGame.gamePrice);
+        break;
+      default:
+        initGames.sort((firstGame, secondGame) => {
+          if (firstGame.gameTitle < secondGame.gameTitle) {
+            return -1;
+          }
+          if (firstGame.gameTitle > secondGame.gameTitle) {
+            return 1;
+          }
+          return 0;
+        });
+    }
+    if (order === "desc") {
+      initGames.reverse();
+    }
+    res.json(initGames);
   });
 });
