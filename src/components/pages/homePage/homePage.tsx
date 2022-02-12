@@ -1,6 +1,7 @@
 import "./homePage.scss";
 import useFetch from "use-http";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import CategoryCard from "@/elements/categoryCard/categoryCard";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
@@ -28,9 +29,15 @@ const HomePage: React.FC = () => {
       <SearchBar placeholder="Search" />
       <SectionContainer title="Categories">
         <div className="cards_wrapper section__categoriesCards">
-          <CategoryCard cardLogo={windowsLogo} cardTitle="PC" />
-          <CategoryCard cardLogo={psLogo} cardTitle="Playstation" />
-          <CategoryCard cardLogo={xboxLogo} cardTitle="XBox One" />
+          <NavLink to="/products/pc">
+            <CategoryCard cardLogo={windowsLogo} cardTitle="PC" />
+          </NavLink>
+          <NavLink to="/products/ps">
+            <CategoryCard cardLogo={psLogo} cardTitle="Playstation" />
+          </NavLink>
+          <NavLink to="/products/xbox">
+            <CategoryCard cardLogo={xboxLogo} cardTitle="XBox One" />
+          </NavLink>
         </div>
       </SectionContainer>
       <SectionContainer title="New games">

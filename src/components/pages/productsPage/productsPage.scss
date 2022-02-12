@@ -53,6 +53,12 @@
         width: 8rem;
         font-weight: 500;
         outline: none;
+
+        & * {
+          // background: rgba($color: #000000, $alpha: 0);
+          // background: red;
+          background: rgba(0, 0, 0, 1);
+        }
       }
     }
   }

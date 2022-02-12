@@ -9,7 +9,7 @@ import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
 
-  const [selectedAgeFilter, setSelectedAgeFilter] = useState("100");
+  const [selectedAgeFilter, setSelectedAgeFilter] = useState("18");
   const [selectedGenreFilter, setSelectedGenreFilter] = useState("all");
 
   const [selectedSortCriteria, setSelectedSortCriteria] = useState("gameTitle");
@@ -41,7 +41,7 @@ const ProductsPage: React.FC = () => {
     ).then((data) => {
       setGames(data);
     });
-  }, [selectedAgeFilter, selectedGenreFilter, selectedSortCriteria, selectedSortOrder]);
+  }, [selectedAgeFilter, selectedGenreFilter, selectedSortCriteria, selectedSortOrder, category]);
 
   return (
     <div className="products-wrapper">
