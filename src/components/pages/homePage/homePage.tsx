@@ -1,10 +1,10 @@
 import "./homePage.scss";
+import useFetch from "use-http";
 import { useEffect, useState } from "react";
 import CategoryCard from "@/elements/categoryCard/categoryCard";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import GameCard, { GameCardContent } from "@/elements/gameCard/gameCard";
+import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import SearchBar from "@/elements/searchBar/searchBar";
-import useHttp from "@/hooks/useHttp";
 import windowsLogo from "../../../assets/images/icone-windows-gris.png";
 import psLogo from "../../../assets/images/ps.png";
 import xboxLogo from "../../../assets/images/xbox.png";
@@ -12,11 +12,16 @@ import xboxLogo from "../../../assets/images/xbox.png";
 const HomePage: React.FC = () => {
   const [{ games }, setGames] = useState<{ games: GameCardContent[] }>({ games: [] });
 
-  const { sendRequest, error } = useHttp();
+  const { get, response, loading, error } = useFetch("/api/getTopProducts");
 
   useEffect(() => {
-    sendRequest({ url: "/api/getTopProducts" }, setGames);
-  }, [sendRequest]);
+    (async () => {
+      const initGames = await get("/");
+      if (response.ok) {
+        setGames(initGames);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -30,6 +35,8 @@ const HomePage: React.FC = () => {
       </SectionContainer>
       <SectionContainer title="New games">
         <div className="cards_wrapper section__gamesCards">
+          {loading && <div>Loading</div>}
+          {error && <div>{error.message}</div>}
           {!error &&
             games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
               <GameCard

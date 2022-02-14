@@ -1,18 +1,31 @@
 import "./navbar.scss";
-import React, { useContext } from "react";
-import Link from "@/elements/navlink/navlink";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
-import AppContext from "@/context/context";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
+import { userState, userActions } from "@/redux/slices/user";
+import { modalActions } from "@/redux/slices/modal";
 
-type NavbarProps = { signInHandler: () => void; signUpHandler: () => void };
+const NavBar: React.FC = () => {
+  const dispatch = useDispatch();
 
-const NavBar: React.FC<NavbarProps> = (props) => {
-  const { signInHandler, signUpHandler } = props;
+  const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
+  const login = useSelector((state: { user: userState }) => state.user.login);
 
-  const { isLogged, toggleLogging, login } = useContext(AppContext);
+  const onSignIn = () => {
+    dispatch(modalActions.toggleSignIn());
+  };
+
+  const onSignUp = () => {
+    dispatch(modalActions.toggleSignUp());
+  };
+
+  const toggleLogging = () => {
+    dispatch(userActions.toggleLogging());
+  };
 
   const navbarContent = isLogged ? (
     <>
@@ -32,12 +45,12 @@ const NavBar: React.FC<NavbarProps> = (props) => {
   ) : (
     <>
       <li>
-        <button type="button" onClick={signInHandler}>
+        <button type="button" onClick={onSignIn}>
           Sign In
         </button>
       </li>
       <li>
-        <button type="button" onClick={signUpHandler}>
+        <button type="button" onClick={onSignUp}>
           Sign Up
         </button>
       </li>
@@ -48,8 +61,8 @@ const NavBar: React.FC<NavbarProps> = (props) => {
     <nav className="header__nav">
       <ul className="header__nav__ul">
         <Link linkPath="/" linkText="Home" />
-        <Dropdown modalToggler={signInHandler} />
-        <Link linkPath="/about" linkText="About" modalToggler={signInHandler} />
+        <Dropdown modalToggler={onSignIn} />
+        <Link linkPath="/about" linkText="About" modalToggler={onSignIn} />
         {navbarContent}
       </ul>
     </nav>

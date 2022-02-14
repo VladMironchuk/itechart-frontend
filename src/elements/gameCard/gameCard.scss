@@ -6,7 +6,7 @@
   transition: all 0.5s;
   background-color: black;
   border-radius: 10px;
-  box-shadow: 0 0 1rem #9933cc;
+  box-shadow: 0 0 1rem $purple;
 
   &__front,
   &__back {
@@ -47,10 +47,6 @@
       text-align: center;
 
       &_button {
-        outline: none;
-        background-color: #9933cc;
-        border: none;
-        color: white;
         width: 6rem;
         height: 2rem;
         font-size: 13px;

@@ -1,10 +1,14 @@
 import { ReactNode } from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
+import { userState } from "@/redux/slices/user";
 
-type PrivateRouteProps = { path: string; isLogged: boolean; children: ReactNode };
+type Props = { path: string; children: ReactNode };
 
-const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
-  const { path, children, isLogged } = props;
+const PrivateRoute: React.FC<Props> = (props) => {
+  const { path, children } = props;
+
+  const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
 
   return (
     <Route

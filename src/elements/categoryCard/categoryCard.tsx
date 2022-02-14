@@ -1,8 +1,8 @@
 import "./categoryCard.scss";
 
-type CategoryCardProps = { cardLogo: string; cardTitle: string };
+type Props = { cardLogo: string; cardTitle: string };
 
-const CategoryCard: React.FC<CategoryCardProps> = (props) => {
+const CategoryCard: React.FC<Props> = (props) => {
   const { cardLogo, cardTitle } = props;
 
   return (
