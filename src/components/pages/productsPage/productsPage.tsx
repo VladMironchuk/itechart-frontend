@@ -1,10 +1,12 @@
 import "./productsPage.scss";
 import { useParams } from "react-router";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, Suspense, useEffect, useState } from "react";
 import useFetch from "use-http";
 import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import SearchBar from "@/elements/searchBar/searchBar";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
+
+// const Games = lazy(() => import("./games"));
 
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
@@ -179,21 +181,23 @@ const ProductsPage: React.FC = () => {
         <SearchBar placeholder="Search" />
         <SectionContainer title="Products">
           <div className="cards_wrapper section__gamesCards">
-            {loading && <div>Loading</div>}
-            {error && <div>{error.message}</div>}
-            {!error &&
-              games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
-                <GameCard
-                  key={gameTitle}
-                  rating={rating}
-                  gameLogo={gameLogo}
-                  gameTitle={gameTitle}
-                  gamePrice={gamePrice}
-                  gamePlatforms={gamePlatforms}
-                  ageLimit={ageLimit}
-                  gameDescription={gameDescription}
-                />
-              ))}
+            <Suspense fallback={<div>Loading...</div>}>
+              {error && <div>{error.message}</div>}
+              {!loading && games.length === 0 && <div>No such products</div>}
+              {!error &&
+                games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
+                  <GameCard
+                    key={gameTitle}
+                    rating={rating}
+                    gameLogo={gameLogo}
+                    gameTitle={gameTitle}
+                    gamePrice={gamePrice}
+                    gamePlatforms={gamePlatforms}
+                    ageLimit={ageLimit}
+                    gameDescription={gameDescription}
+                  />
+                ))}
+            </Suspense>
           </div>
         </SectionContainer>
       </div>
