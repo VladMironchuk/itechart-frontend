@@ -45,18 +45,30 @@ const HomePage: React.FC = () => {
           {loading && <div>Loading</div>}
           {error && <div>{error.message}</div>}
           {!error &&
-            games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
-              <GameCard
-                key={gameTitle}
-                rating={rating}
-                gameLogo={gameLogo}
-                gameTitle={gameTitle}
-                gamePrice={gamePrice}
-                gamePlatforms={gamePlatforms}
-                ageLimit={ageLimit}
-                gameDescription={gameDescription}
-              />
-            ))}
+            games.map(
+              ({
+                rating,
+                gameLogo,
+                gameTitle,
+                gamePrice,
+                gamePlatformsImg,
+                ageLimit,
+                gameDescription,
+                gamePlatforms,
+              }) => (
+                <GameCard
+                  key={gameTitle}
+                  rating={rating}
+                  gameLogo={gameLogo}
+                  gameTitle={gameTitle}
+                  gamePrice={gamePrice}
+                  gamePlatforms={gamePlatforms}
+                  ageLimit={ageLimit}
+                  gameDescription={gameDescription}
+                  gamePlatformsImg={gamePlatformsImg}
+                />
+              )
+            )}
         </div>
       </SectionContainer>
     </>

@@ -8,12 +8,15 @@ import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { userState, userActions } from "@/redux/slices/user";
 import { modalActions } from "@/redux/slices/modal";
+import { NavLink } from "react-router-dom";
+import { CartState } from "@/redux/slices/cart";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
   const username = useSelector((state: { user: userState }) => state.user.username);
+  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
 
   const onSignIn = () => {
     console.log("clicked");
@@ -35,7 +38,10 @@ const NavBar: React.FC = () => {
         <Link linkPath="/profile" linkText={username} />
       </div>
       <li>
-        <img className="logo" src={cartLogo} alt="cart-logo" />0
+        <NavLink to="/cart">
+          <img className="logo" src={cartLogo} alt="cart-logo" />
+          {`${cartTotalAmount}$`}
+        </NavLink>
       </li>
       <li>
         <button type="button" onClick={toggleLogging}>

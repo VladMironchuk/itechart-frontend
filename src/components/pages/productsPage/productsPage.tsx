@@ -6,8 +6,6 @@ import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard
 import SearchBar from "@/elements/searchBar/searchBar";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 
-// const Games = lazy(() => import("./games"));
-
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
 
@@ -185,18 +183,30 @@ const ProductsPage: React.FC = () => {
               {error && <div>{error.message}</div>}
               {!loading && games.length === 0 && <div>No such products</div>}
               {!error &&
-                games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
-                  <GameCard
-                    key={gameTitle}
-                    rating={rating}
-                    gameLogo={gameLogo}
-                    gameTitle={gameTitle}
-                    gamePrice={gamePrice}
-                    gamePlatforms={gamePlatforms}
-                    ageLimit={ageLimit}
-                    gameDescription={gameDescription}
-                  />
-                ))}
+                games.map(
+                  ({
+                    rating,
+                    gameLogo,
+                    gameTitle,
+                    gamePrice,
+                    gamePlatforms,
+                    ageLimit,
+                    gameDescription,
+                    gamePlatformsImg,
+                  }) => (
+                    <GameCard
+                      key={gameTitle}
+                      rating={rating}
+                      gameLogo={gameLogo}
+                      gameTitle={gameTitle}
+                      gamePrice={gamePrice}
+                      gamePlatforms={gamePlatforms}
+                      ageLimit={ageLimit}
+                      gameDescription={gameDescription}
+                      gamePlatformsImg={gamePlatformsImg}
+                    />
+                  )
+                )}
             </Suspense>
           </div>
         </SectionContainer>

@@ -1,11 +1,14 @@
 import "./gameCard.scss";
 import star from "../../assets/images/star.png";
 import Button from "../button/button";
+import { useDispatch } from "react-redux";
+import { cartActions } from "@/redux/slices/cart";
 
 export type Props = {
   gameLogo: string;
   gameTitle: string;
   gamePrice: number;
+  gamePlatformsImg: string[];
   gamePlatforms: string[];
   gameDescription: string;
   ageLimit: number;
@@ -13,14 +16,28 @@ export type Props = {
 };
 
 const GameCard: React.FC<Props> = (props) => {
-  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating } = props;
+  const { gameLogo, gameTitle, gamePrice, gamePlatformsImg, gameDescription, ageLimit, rating, gamePlatforms } = props;
+
+  const dispatch = useDispatch();
+
+  const addGameToCart = () => {
+    dispatch(
+      cartActions.addItemToCart({
+        item: {
+          gameTitle,
+          gamePrice,
+          gamePlatforms,
+        },
+      })
+    );
+  };
 
   return (
     <div className="game-container">
       <div className="game">
         <div className="game__front">
           <div className="game-platforms">
-            {gamePlatforms.map((platform) => (
+            {gamePlatformsImg.map((platform) => (
               <img key={Math.random()} className="game-platforms__logo" alt="platform" src={platform} />
             ))}
           </div>
@@ -39,7 +56,7 @@ const GameCard: React.FC<Props> = (props) => {
           <div className="game__back_wrapper">
             <p className="game__back_wrapper_text">{gameDescription}</p>
             <p className="game__back_wrapper_age">{ageLimit}+</p>
-            <Button className="game__back_wrapper_button" title="Add to Cart" />
+            <Button onClick={addGameToCart} className="game__back_wrapper_button" title="Add to Cart" />
           </div>
         </div>
       </div>

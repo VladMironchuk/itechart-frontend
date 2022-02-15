@@ -11,7 +11,7 @@ const initialState = {
   login: "",
   username: "",
   description: "",
-  isLogged: false,
+  isLogged: true,
 };
 
 const userSlice = createSlice({

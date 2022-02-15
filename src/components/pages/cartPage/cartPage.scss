@@ -1,0 +1,38 @@
+.cart-items {
+  width: 90%;
+
+  &__content {
+    &-rows {
+      display: grid;
+      grid-template-columns: 27rem 18rem 9rem 9rem 9rem 9.5rem;
+      text-align: center;
+
+      p {
+        margin: 0 auto;
+        padding: 1rem 0;
+        width: 100%;
+
+        select {
+          background: none;
+          color: white;
+          width: 40%;
+          padding: 0.25rem 0;
+          outline: none;
+          border: 1px solid white;
+
+          & {
+            background: black;
+          }
+        }
+
+        input[type="text"] {
+          width: 45%;
+          background: none;
+          color: white;
+          outline: none;
+          border: 1px solid white;
+        }
+      }
+    }
+  }
+}
