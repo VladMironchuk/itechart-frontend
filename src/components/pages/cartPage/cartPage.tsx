@@ -7,6 +7,7 @@ import { cartActions, CartState } from "@/redux/slices/cart";
 
 import Button from "@/elements/button/button";
 import { userState } from "@/redux/slices/user";
+import SubmitOrderModal from "@/elements/modal/submitOrderModal";
 
 const CartItem: React.FC<{
   cartItem: GameCardContent & { amount: number; orderDate: Date };
@@ -52,6 +53,7 @@ const CartPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const [itemsToRemove, setItemsToRemove] = useState<string[]>([]);
+  const [isOrderModalVisible, setIsOrderModalVisible] = useState(false);
 
   const onSelectItemToBeRemoved: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.checked) {
@@ -67,31 +69,46 @@ const CartPage: React.FC = () => {
   const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
 
   return (
-    <SectionContainer classname="cart-items" title="Cart page">
-      {cartItems.length === 0 ? (
-        <div>Cart is empty</div>
-      ) : (
-        <div className="cart-items__content">
-          <div className="cart-items__content-rows">
-            <p>Name</p>
-            <p>Platform</p>
-            <p>Order date</p>
-            <p>Amount</p>
-            <p>Price($)</p>
-            <p />
-          </div>
-          {cartItems.map((cartItem) => (
-            <CartItem key={cartItem.gameTitle} cartItem={cartItem} onChange={onSelectItemToBeRemoved} />
-          ))}
-          <Button onClick={onRemoveItems} className="cart-items__content__remove" title="Remove" />
-          <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
-            <div>Games cost: {cartTotalAmount}$</div>
-            <div>Your balance: {userBalance}$</div>
-            <Button className="cart-items__content__buy" title="Buy" />
-          </div>
-        </div>
+    <>
+      {isOrderModalVisible && (
+        <SubmitOrderModal
+          onClose={() => {
+            setIsOrderModalVisible(false);
+          }}
+        />
       )}
-    </SectionContainer>
+      <SectionContainer classname="cart-items" title="Cart page">
+        {cartItems.length === 0 ? (
+          <div>Cart is empty</div>
+        ) : (
+          <div className="cart-items__content">
+            <div className="cart-items__content-rows">
+              <p>Name</p>
+              <p>Platform</p>
+              <p>Order date</p>
+              <p>Amount</p>
+              <p>Price($)</p>
+              <p />
+            </div>
+            {cartItems.map((cartItem) => (
+              <CartItem key={cartItem.gameTitle} cartItem={cartItem} onChange={onSelectItemToBeRemoved} />
+            ))}
+            <Button onClick={onRemoveItems} className="cart-items__content__remove" title="Remove" />
+            <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+              <div>Games cost: {cartTotalAmount}$</div>
+              <div>Your balance: {userBalance}$</div>
+              <Button
+                onClick={() => {
+                  setIsOrderModalVisible(true);
+                }}
+                className="cart-items__content__buy"
+                title="Buy"
+              />
+            </div>
+          </div>
+        )}
+      </SectionContainer>
+    </>
   );
 };
 
