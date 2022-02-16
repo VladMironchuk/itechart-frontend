@@ -5,6 +5,7 @@ export type userState = {
   login: string;
   username: string;
   description: string;
+  userBalance: number;
 };
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   username: "",
   description: "",
   isLogged: true,
+  userBalance: 100,
 };
 
 const userSlice = createSlice({

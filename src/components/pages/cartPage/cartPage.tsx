@@ -6,6 +6,7 @@ import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import { cartActions, CartState } from "@/redux/slices/cart";
 
 import Button from "@/elements/button/button";
+import { userState } from "@/redux/slices/user";
 
 const CartItem: React.FC<{
   cartItem: GameCardContent & { amount: number; orderDate: Date };
@@ -29,7 +30,7 @@ const CartItem: React.FC<{
       <p>
         <select>
           {gamePlatforms.map((gamePlatform) => (
-            <option>{gamePlatform}</option>
+            <option key={gameTitle + gamePlatform}>{gamePlatform}</option>
           ))}
         </select>
       </p>
@@ -47,6 +48,7 @@ const CartItem: React.FC<{
 
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cartItems);
+  const userBalance = useSelector((state: { user: userState }) => state.user.userBalance);
   const dispatch = useDispatch();
 
   const [itemsToRemove, setItemsToRemove] = useState<string[]>([]);
@@ -62,7 +64,7 @@ const CartPage: React.FC = () => {
   const onRemoveItems = () => {
     dispatch(cartActions.removeItemsFromCart({ itemsToRemove }));
   };
-  // const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
 
   return (
     <SectionContainer classname="cart-items" title="Cart page">
@@ -82,6 +84,11 @@ const CartPage: React.FC = () => {
             <CartItem key={cartItem.gameTitle} cartItem={cartItem} onChange={onSelectItemToBeRemoved} />
           ))}
           <Button onClick={onRemoveItems} className="cart-items__content__remove" title="Remove" />
+          <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+            <div>Games cost: {cartTotalAmount}$</div>
+            <div>Your balance: {userBalance}$</div>
+            <Button className="cart-items__content__buy" title="Buy" />
+          </div>
         </div>
       )}
     </SectionContainer>
