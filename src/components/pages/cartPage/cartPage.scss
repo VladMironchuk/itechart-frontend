@@ -4,8 +4,16 @@
   &__content {
     &-rows {
       display: grid;
-      grid-template-columns: 27rem 18rem 9rem 9rem 9rem 9.5rem;
+      grid-template-columns: 28.6vw 19.06vw 9.53vw 9.53vw 9.53vw 9.53vw;
       text-align: center;
+
+      &::after {
+        display: block;
+        content: "";
+        background: wheat;
+        width: 84.8vw;
+        height: 1px;
+      }
 
       p {
         margin: 0 auto;
@@ -25,7 +33,7 @@
           }
         }
 
-        input[type="text"] {
+        input[type="number"] {
           width: 45%;
           background: none;
           color: white;
@@ -33,6 +41,11 @@
           border: 1px solid white;
         }
       }
+    }
+
+    &__remove {
+      padding: 0.5rem 1.5rem;
+      margin: 0.5rem 77.5vw;
     }
   }
 }

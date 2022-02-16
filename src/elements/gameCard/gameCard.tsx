@@ -1,7 +1,7 @@
 import "./gameCard.scss";
+import { useDispatch } from "react-redux";
 import star from "../../assets/images/star.png";
 import Button from "../button/button";
-import { useDispatch } from "react-redux";
 import { cartActions } from "@/redux/slices/cart";
 
 export type Props = {

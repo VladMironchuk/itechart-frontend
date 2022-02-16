@@ -1,6 +1,7 @@
 import "./navbar.scss";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
@@ -8,7 +9,6 @@ import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { userState, userActions } from "@/redux/slices/user";
 import { modalActions } from "@/redux/slices/modal";
-import { NavLink } from "react-router-dom";
 import { CartState } from "@/redux/slices/cart";
 
 const NavBar: React.FC = () => {

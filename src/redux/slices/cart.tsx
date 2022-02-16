@@ -1,9 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 
 export type CartState = {
   totalAmount: number;
-  cartItems: (GameCardContent & { amount: number; orderDate: Date })[];
+  cartItems: {
+    gameLogo: string;
+    gameTitle: string;
+    gamePrice: number;
+    gamePlatformsImg: string[];
+    gamePlatforms: string[];
+    gameDescription: string;
+    ageLimit: number;
+    rating: number;
+    amount: number;
+    orderDate: Date;
+  }[];
 };
 
 const initialState: CartState = {
@@ -26,6 +36,22 @@ const cartSlice = createSlice({
         cartState.cartItems[gameIndex].amount++;
         cartState.totalAmount += cartState.cartItems[gameIndex].gamePrice;
       }
+    },
+    changeItemAmount(state, action) {
+      const cartState = state;
+      const { itemTitle, currentItemAmount } = action.payload;
+      const gameIndex = cartState.cartItems.findIndex((item) => item.gameTitle === itemTitle);
+      cartState.totalAmount = +(
+        cartState.totalAmount +
+        (currentItemAmount - cartState.cartItems[gameIndex].amount) * cartState.cartItems[gameIndex].gamePrice
+      ).toPrecision(4);
+      cartState.cartItems[gameIndex].amount = currentItemAmount;
+    },
+    removeItemsFromCart(state, action) {
+      const cartState = state;
+      const { itemsToRemove } = action.payload;
+      cartState.cartItems = cartState.cartItems.filter((item) => !itemsToRemove.includes(item.gameTitle));
+      cartState.totalAmount = cartState.cartItems.reduce((acc, cur) => acc + cur.gamePrice * cur.amount, 0);
     },
   },
 });
