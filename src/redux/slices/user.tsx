@@ -6,14 +6,16 @@ export type userState = {
   username: string;
   description: string;
   userBalance: number;
+  userIsAdmin: boolean;
 };
 
 const initialState = {
   login: "",
   username: "",
   description: "",
-  isLogged: true,
+  isLogged: false,
   userBalance: 100,
+  userIsAdmin: false,
 };
 
 const userSlice = createSlice({
@@ -23,6 +25,7 @@ const userSlice = createSlice({
     updateLogin(state, action) {
       const appState = state;
       appState.login = action.payload.login;
+      appState.userIsAdmin = action.payload.login.includes("admin");
     },
     toggleLogging(state) {
       const appState = state;

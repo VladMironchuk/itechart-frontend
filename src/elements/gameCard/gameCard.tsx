@@ -1,8 +1,9 @@
 import "./gameCard.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import star from "../../assets/images/star.png";
 import Button from "../button/button";
 import { cartActions } from "@/redux/slices/cart";
+import { userState } from "@/redux/slices/user";
 
 export type Props = {
   gameLogo: string;
@@ -17,6 +18,8 @@ export type Props = {
 
 const GameCard: React.FC<Props> = (props) => {
   const { gameLogo, gameTitle, gamePrice, gamePlatformsImg, gameDescription, ageLimit, rating, gamePlatforms } = props;
+
+  const userIsAdmin = useSelector((state: { user: userState }) => state.user.userIsAdmin);
 
   const dispatch = useDispatch();
 
@@ -57,6 +60,7 @@ const GameCard: React.FC<Props> = (props) => {
             <p className="game__back_wrapper_text">{gameDescription}</p>
             <p className="game__back_wrapper_age">{ageLimit}+</p>
             <Button onClick={addGameToCart} className="game__back_wrapper_button" title="Add to Cart" />
+            {userIsAdmin && <Button title="Edit"></Button>}
           </div>
         </div>
       </div>
