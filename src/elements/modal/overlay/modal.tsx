@@ -7,10 +7,11 @@ type Props = {
   onClose: () => void;
   title: string;
   children: ReactNode;
+  className?: string;
 };
 
 const Modal: React.FC<Props> = (props) => {
-  const { title, onClose, children } = props;
+  const { title, onClose, children, className } = props;
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +20,7 @@ const Modal: React.FC<Props> = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <div ref={modalRef} className="modal">
+        <div ref={modalRef} className={`modal ${className}`}>
           <div className="wrapper">
             <h3 className="modal__title">{title}</h3>
             <button type="button" className="cancel-button" onClick={onClose}>

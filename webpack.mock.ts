@@ -233,4 +233,10 @@ export default webpackMockServer.add((app, helper) => {
     }
     res.json(initGames);
   });
+
+  app.get("/api/products/:product", (req, res) => {
+    const { product } = req.params;
+    const gameIndex = games.findIndex((game) => game.gameTitle === product);
+    res.json(games[gameIndex]);
+  });
 });
