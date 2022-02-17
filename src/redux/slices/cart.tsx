@@ -53,6 +53,11 @@ const cartSlice = createSlice({
       cartState.cartItems = cartState.cartItems.filter((item) => !itemsToRemove.includes(item.gameTitle));
       cartState.totalAmount = cartState.cartItems.reduce((acc, cur) => acc + cur.gamePrice * cur.amount, 0);
     },
+    submitOrder(state) {
+      const cartState = state;
+      cartState.totalAmount = 0;
+      cartState.cartItems = [];
+    },
   },
 });
 

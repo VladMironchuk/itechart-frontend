@@ -69,48 +69,56 @@ const ProductsPage: React.FC = () => {
           <h4>Genres</h4>
           <form>
             <div className="aside__filter__option">
-              <input
-                checked={selectedGenreFilter === "all"}
-                value="all"
-                onChange={onGenreValueChange}
-                type="radio"
-                id="all-genres"
-                name="genre"
-              />
-              <label htmlFor="all-genres">All Genres</label>
+              <label htmlFor="all-genres">
+                <input
+                  checked={selectedGenreFilter === "all"}
+                  value="all"
+                  onChange={onGenreValueChange}
+                  type="radio"
+                  id="all-genres"
+                  name="genre"
+                />
+                All Genres
+              </label>
             </div>
             <div className="aside__filter__option">
-              <input
-                checked={selectedGenreFilter === "shooter"}
-                value="shooter"
-                onChange={onGenreValueChange}
-                type="radio"
-                name="genre"
-                id="shooter"
-              />
-              <label htmlFor="shooter">Shooter</label>
+              <label htmlFor="shooter">
+                <input
+                  checked={selectedGenreFilter === "shooter"}
+                  value="shooter"
+                  onChange={onGenreValueChange}
+                  type="radio"
+                  name="genre"
+                  id="shooter"
+                />
+                Shooter
+              </label>
             </div>
             <div className="aside__filter__option">
-              <input
-                checked={selectedGenreFilter === "arcade"}
-                value="arcade"
-                onChange={onGenreValueChange}
-                type="radio"
-                name="genre"
-                id="arcade"
-              />
-              <label htmlFor="arcade">Arcade</label>
+              <label htmlFor="arcade">
+                <input
+                  checked={selectedGenreFilter === "arcade"}
+                  value="arcade"
+                  onChange={onGenreValueChange}
+                  type="radio"
+                  name="genre"
+                  id="arcade"
+                />
+                Arcade
+              </label>
             </div>
             <div className="aside__filter__option">
-              <input
-                checked={selectedGenreFilter === "survive"}
-                value="survive"
-                onChange={onGenreValueChange}
-                type="radio"
-                name="genre"
-                id="survive"
-              />
-              <label htmlFor="survive">Survive</label>
+              <label htmlFor="survive">
+                <input
+                  checked={selectedGenreFilter === "survive"}
+                  value="survive"
+                  onChange={onGenreValueChange}
+                  type="radio"
+                  name="genre"
+                  id="survive"
+                />
+                Survive
+              </label>
             </div>
           </form>
         </div>
@@ -118,59 +126,69 @@ const ProductsPage: React.FC = () => {
           <h4>Ages</h4>
           <form>
             <div>
-              <input
-                checked={selectedAgeFilter === "100"}
-                onChange={onAgeValueChange}
-                value="100"
-                type="radio"
-                name="age"
-                id="all-ages"
-              />
-              <label htmlFor="all-ages">All Ages</label>
+              <label htmlFor="all-ages">
+                <input
+                  checked={selectedAgeFilter === "100"}
+                  onChange={onAgeValueChange}
+                  value="100"
+                  type="radio"
+                  name="age"
+                  id="all-ages"
+                />
+                All Ages
+              </label>
             </div>
             <div>
-              <input
-                checked={selectedAgeFilter === "3"}
-                onChange={onAgeValueChange}
-                value="3"
-                type="radio"
-                name="age"
-                id="3"
-              />
-              <label htmlFor="3">3+</label>
+              <label htmlFor="3">
+                <input
+                  checked={selectedAgeFilter === "3"}
+                  onChange={onAgeValueChange}
+                  value="3"
+                  type="radio"
+                  name="age"
+                  id="3"
+                />
+                3+
+              </label>
             </div>
             <div>
-              <input
-                checked={selectedAgeFilter === "6"}
-                onChange={onAgeValueChange}
-                value="6"
-                type="radio"
-                name="age"
-                id="6"
-              />
-              <label htmlFor="6">6+</label>
+              <label htmlFor="6">
+                <input
+                  checked={selectedAgeFilter === "6"}
+                  onChange={onAgeValueChange}
+                  value="6"
+                  type="radio"
+                  name="age"
+                  id="6"
+                />
+                6+
+              </label>
             </div>
             <div>
-              <input
-                checked={selectedAgeFilter === "12"}
-                onChange={onAgeValueChange}
-                value="12"
-                type="radio"
-                name="age"
-                id="12"
-              />
-              <label htmlFor="12">12+</label>
+              <label htmlFor="12">
+                <input
+                  checked={selectedAgeFilter === "12"}
+                  onChange={onAgeValueChange}
+                  value="12"
+                  type="radio"
+                  name="age"
+                  id="12"
+                />
+                12+
+              </label>
             </div>
             <div>
-              <input
-                checked={selectedAgeFilter === "18"}
-                onChange={onAgeValueChange}
-                value="18"
-                type="radio"
-                name="age"
-                id="18"
-              />
-              <label htmlFor="18">18+</label>
+              <label htmlFor="18">
+                <input
+                  checked={selectedAgeFilter === "18"}
+                  onChange={onAgeValueChange}
+                  value="18"
+                  type="radio"
+                  name="age"
+                  id="18"
+                />
+                18+
+              </label>
             </div>
           </form>
         </div>
