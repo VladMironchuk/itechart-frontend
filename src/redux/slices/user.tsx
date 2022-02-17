@@ -12,7 +12,7 @@ const initialState = {
   login: "",
   username: "",
   description: "",
-  isLogged: true,
+  isLogged: false,
   userBalance: 100,
 };
 
