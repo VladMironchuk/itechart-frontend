@@ -47,15 +47,17 @@ const FilterSidebar: React.FC<Props> = (props) => {
         <form>
           {["all", "shooter", "arcade", "survive"].map((genre) => (
             <div key={genre} className="aside__filter__option">
-              <input
-                type="radio"
-                checked={selectedGenreFilter === genre}
-                value={genre}
-                id={genre}
-                onChange={onChangeGenreValue}
-                name="genre"
-              />
-              <label htmlFor={genre}>{genre}</label>
+              <label htmlFor={genre}>
+                <input
+                  type="radio"
+                  checked={selectedGenreFilter === genre}
+                  value={genre}
+                  id={genre}
+                  onChange={onChangeGenreValue}
+                  name="genre"
+                />
+                {genre}
+              </label>
             </div>
           ))}
         </form>
@@ -65,15 +67,17 @@ const FilterSidebar: React.FC<Props> = (props) => {
         <form>
           {["100", "3", "6", "12", "18"].map((age) => (
             <div key={age}>
-              <input
-                type="radio"
-                onChange={onChangeAgeValue}
-                value={age}
-                name="age"
-                id={age}
-                checked={selectedAgeFilter === age}
-              />
-              <label htmlFor={age}>{age === "100" ? "All" : `${age}+`}</label>
+              <label htmlFor={age}>
+                <input
+                  type="radio"
+                  onChange={onChangeAgeValue}
+                  value={age}
+                  name="age"
+                  id={age}
+                  checked={selectedAgeFilter === age}
+                />
+                {age === "100" ? "All" : `${age}+`}
+              </label>
             </div>
           ))}
         </form>
