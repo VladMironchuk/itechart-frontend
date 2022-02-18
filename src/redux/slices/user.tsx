@@ -15,7 +15,7 @@ const initialState = {
   description: "",
   isLogged: false,
   userBalance: 100,
-  userIsAdmin: true,
+  userIsAdmin: false,
 };
 
 const userSlice = createSlice({

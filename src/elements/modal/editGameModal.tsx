@@ -7,7 +7,7 @@ import Button from "../button/button";
 import FormInput from "../formInput/formInput";
 
 const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) => {
-  const { get, loading, error } = useFetch();
+  const { get, loading, error, delete: deleteReq } = useFetch();
 
   const [gameName, setGameName] = useState("");
   const [gameCategory, setGameCategory] = useState("");
@@ -47,6 +47,13 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
     } else {
       setGamePlatforms((prevState) => prevState.filter((platform) => platform !== event.target.value));
     }
+  };
+
+  const onDeleteCard = () => {
+    deleteReq(`/api/products/${props.game}`).then(() => {
+      console.log("game deleted");
+    });
+    props.onClose();
   };
 
   useEffect(() => {
@@ -89,54 +96,50 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
               </label>
               <label htmlFor="age">
                 Age
-                <select onChange={onChangeGameAgeLimit} id="age">
-                  <option selected={gameAgeLimit === "all"} value="all">
-                    All
-                  </option>
-                  <option selected={gameAgeLimit === "3"} value="3">
-                    3+
-                  </option>
-                  <option selected={gameAgeLimit === "6"} value="6">
-                    6+
-                  </option>
-                  <option selected={gameAgeLimit === "12"} value="12">
-                    12+
-                  </option>
-                  <option selected={gameAgeLimit === "18"} value="18">
-                    18+
-                  </option>
+                <select value={gameAgeLimit} onChange={onChangeGameAgeLimit} id="age">
+                  <option value="all">All</option>
+                  <option value="3">3+</option>
+                  <option value="6">6+</option>
+                  <option value="12">12+</option>
+                  <option value="18">18+</option>
                 </select>
               </label>
               <p>Platform</p>
               <label htmlFor="pc">
+                PC
                 <input
                   onChange={onChangeGamePlatforms}
                   checked={gamePlatforms.includes("pc")}
                   id="pc"
                   type="checkbox"
+                  value="pc"
                 />
               </label>
               <label htmlFor="ps">
+                PS
                 <input
                   onChange={onChangeGamePlatforms}
                   checked={gamePlatforms.includes("ps")}
                   id="ps"
                   type="checkbox"
+                  value="ps"
                 />
               </label>
               <label htmlFor="xbox">
+                XBox
                 <input
                   onChange={onChangeGamePlatforms}
                   checked={gamePlatforms.includes("xbox")}
                   id="xbox"
                   type="checkbox"
+                  value="xbox"
                 />
               </label>
             </form>
           </div>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <Button title="Submit" />
-            <Button title="Delete card" />
+            <Button onClick={onDeleteCard} title="Delete card" />
           </div>
         </div>
       )}

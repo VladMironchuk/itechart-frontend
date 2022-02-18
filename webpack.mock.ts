@@ -9,7 +9,7 @@ enum GamePlatforms {
 const TEST_DESCRIPTION =
   "Overwatch is a 2016 team-based multiplayer first-person shooter game developed and published by Blizzard Entertainment. Described as a 'hero shooter', Overwatch assigns players into two teams of six, with each player selecting from a large roster of characters, known as 'heroes', with unique abilities.";
 
-const games = [
+let games = [
   {
     gameTitle: "Owerwatch",
     gameLogo: "https://s1.gaming-cdn.com/images/products/2208/271x377/game-battle-net-overwatch-cover.jpg",
@@ -238,5 +238,11 @@ export default webpackMockServer.add((app, helper) => {
     const { product } = req.params;
     const gameIndex = games.findIndex((game) => game.gameTitle === product);
     res.json(games[gameIndex]);
+  });
+
+  app.delete("/api/products/:product", (req, res) => {
+    const { product } = req.params;
+    games = games.filter((game) => game.gameTitle !== product);
+    res.status(200);
   });
 });
