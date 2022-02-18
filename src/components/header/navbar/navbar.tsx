@@ -1,6 +1,7 @@
 import "./navbar.scss";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
@@ -15,6 +16,7 @@ const NavBar: React.FC = () => {
 
   const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
   const username = useSelector((state: { user: userState }) => state.user.username);
+  const location = useLocation();
 
   const [isSignInModalVisible, setIsSignInModalVisible] = useState(false);
   const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
@@ -30,6 +32,10 @@ const NavBar: React.FC = () => {
   const onToggleSignUpModal = () => {
     setIsSignUpModalVisible((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (location.hash === "#login") setIsSignInModalVisible(true);
+  }, [location.hash]);
 
   const navbarContent = isLogged ? (
     <>
@@ -60,12 +66,6 @@ const NavBar: React.FC = () => {
       </li>
     </>
   );
-
-  useEffect(() => {
-    if (document.location.hash === "#login") {
-      onToggleSignInModal();
-    }
-  }, [document.location.hash]);
 
   return (
     <>
