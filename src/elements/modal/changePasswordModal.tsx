@@ -1,15 +1,15 @@
 import "./modal.scss";
 import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
 import { useSelector } from "react-redux";
-import Modal from "./overlay/overlay";
+import useFetch from "use-http";
+import Modal from "./overlay/modal";
 import Input from "../formInput/formInput";
-import useHttp from "@/hooks/useHttp";
 import Button from "../button/button";
 import { AppProps } from "@/redux/redux";
 
 const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ changePasswordToggler }) => {
   const login = useSelector((state: { user: AppProps }) => state.user.login);
-  const { error: reqError, sendRequest } = useHttp();
+  const { post, response, error } = useFetch();
 
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
@@ -33,29 +33,28 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
     }
     setPasswordErrorMessage("");
 
-    await sendRequest(
-      {
-        url: "/api/changePassword",
-        method: "POST",
-        body: {
-          login,
-          password,
-        },
-      },
-      () => {
-        changePasswordToggler();
-      }
-    );
-    console.log(reqError);
+    await post("/api/changePassword", {
+      login,
+      password,
+    });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    if (response.ok) {
+      changePasswordToggler();
+    }
   };
 
   return (
     <Modal onClose={changePasswordToggler} title="Change password">
       <form action="/" onSubmit={submitHandler}>
-        <Input label="Password" changeHandler={passwordChangeHandler} inputValue={password} errorMessage="" />
+        <Input label="Password" onChange={passwordChangeHandler} inputValue={password} errorMessage="" />
         <Input
-          label="Repeated password"
-          changeHandler={repeatedPasswordChangeHandler}
+          label="Repeate password"
+          onChange={repeatedPasswordChangeHandler}
           inputValue={repeatedPassword}
           errorMessage={passwordErrorMessage}
         />
