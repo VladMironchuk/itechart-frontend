@@ -1,6 +1,6 @@
 import "./profilePage.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import useFetch from "use-http";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import Button from "@/elements/button/button";
@@ -11,14 +11,16 @@ import { userActions, userState } from "@/redux/slices/user";
 const ProfilePage = () => {
   const login = useSelector((state: { user: userState }) => state.user.login);
   const currentUserName = useSelector((state: { user: userState }) => state.user.username);
+  const currentUserDescription = useSelector((state: { user: userState }) => state.user.description);
+
   const dispatch = useDispatch();
 
-  const { post, get } = useFetch();
+  const { post: saveUserInfo } = useFetch();
 
   const [isChangePasswordModalVisible, setIsChangePasswordModalVisible] = useState(false);
 
-  const [usernameInputValue, setUsernameInputValue] = useState("");
-  const [descriptionInputValue, setDescriptionInputValue] = useState("");
+  const [usernameInputValue, setUsernameInputValue] = useState(currentUserName);
+  const [descriptionInputValue, setDescriptionInputValue] = useState(currentUserDescription);
 
   const changeUsernameHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
     setUsernameInputValue(() => event.target.value);
@@ -32,26 +34,18 @@ const ProfilePage = () => {
     setIsChangePasswordModalVisible((prevState) => !prevState);
   };
 
-  const saveUserInfoHandler: FormEventHandler = (event) => {
+  const saveUserInfoHandler: FormEventHandler = async (event) => {
     event.preventDefault();
 
-    (async () => {
-      const user = await post("/api/saveProfile", {
-        username: usernameInputValue,
-        description: descriptionInputValue,
-        login,
-      });
-      dispatch(userActions.updateUsername({ username: user.username }));
-    })();
-  };
+    const user = await saveUserInfo("/api/saveProfile", {
+      username: usernameInputValue,
+      description: descriptionInputValue,
+      login,
+    });
 
-  useEffect(() => {
-    (async () => {
-      const initUser = await get(`/api/getProfile/${login}`);
-      setUsernameInputValue(initUser.username);
-      setDescriptionInputValue(initUser.description);
-    })();
-  }, []);
+    dispatch(userActions.updateUsername({ username: user.username }));
+    dispatch(userActions.updateDescription({ description: user.description }));
+  };
 
   return (
     <>

@@ -1,7 +1,6 @@
 import "./navbar.scss";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useFetch from "use-http";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
@@ -12,13 +11,12 @@ import { modalActions } from "@/redux/slices/modal";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
-  const { get } = useFetch();
 
   const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
-  const login = useSelector((state: { user: userState }) => state.user.login);
   const username = useSelector((state: { user: userState }) => state.user.username);
 
   const onSignIn = () => {
+    console.log("clicked");
     dispatch(modalActions.toggleSignIn());
   };
 
@@ -29,13 +27,6 @@ const NavBar: React.FC = () => {
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
-
-  useEffect(() => {
-    (async () => {
-      const initUser = await get(`/api/getProfile/${login}`);
-      dispatch(userActions.updateUsername({ username: initUser.username }));
-    })();
-  }, []);
 
   const navbarContent = isLogged ? (
     <>

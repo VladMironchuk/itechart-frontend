@@ -54,13 +54,13 @@ const SignInModal: React.FC = () => {
     }
     setPasswordErrorMessage("");
 
-    await post("/api/auth/signIn", {
+    const userRes = await post("/api/auth/signIn", {
       login,
       password,
     });
 
     if (error) {
-      console.log(error);
+      alert(userRes.message);
       return;
     }
 
@@ -68,6 +68,8 @@ const SignInModal: React.FC = () => {
       onSignIn();
       updateLogin(login);
       toggleLogging();
+      dispatch(userActions.updateUsername({ username: userRes.username }));
+      dispatch(userActions.updateDescription({ description: userRes.description }));
     }
   };
 
