@@ -23,6 +23,14 @@ const NavBar: React.FC = () => {
     dispatch(modalActions.toggleSignUp());
   };
 
+  const onSignIn = () => {
+    dispatch(modalActions.toggleSignIn());
+  };
+
+  const onSignUp = () => {
+    dispatch(modalActions.toggleSignUp());
+  };
+
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };

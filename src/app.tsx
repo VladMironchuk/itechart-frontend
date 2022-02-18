@@ -10,7 +10,7 @@ import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
-import { AppProps } from "./redux/redux";
+import { AppProps } from "./redux/slices/user";
 
 function mapStateToProps(state: AppProps) {
   return state;
