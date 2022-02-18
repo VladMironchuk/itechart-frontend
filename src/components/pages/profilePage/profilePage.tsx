@@ -37,8 +37,8 @@ const ProfilePage = () => {
 
     (async () => {
       const user = await post("/api/saveProfile", {
-        usernameInputValue,
-        descriptionInputValue,
+        username: usernameInputValue,
+        description: descriptionInputValue,
         login,
       });
       dispatch(userActions.updateUsername({ username: user.username }));
@@ -51,7 +51,7 @@ const ProfilePage = () => {
       setUsernameInputValue(initUser.username);
       setDescriptionInputValue(initUser.description);
     })();
-  }, [usernameInputValue, descriptionInputValue]);
+  }, []);
 
   return (
     <>
@@ -79,7 +79,6 @@ const ProfilePage = () => {
                 cols={30}
                 rows={10}
               />
-              <input type="hidden" name="xiu" value="bich" />
               <Button className="profile-page__button" isSubmit title="Save profile" />
             </form>
             <Button
