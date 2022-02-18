@@ -35,7 +35,7 @@ const useHttp = () => {
 
       const data = await response.json();
       onData(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err.message);
     }
   }, []);
