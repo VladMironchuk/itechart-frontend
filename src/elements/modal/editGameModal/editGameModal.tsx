@@ -1,9 +1,11 @@
 import "./editGameModal.scss";
 import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import useFetch from "use-http";
-import Modal from "./overlay/modal";
-import Button from "../button/button";
-import FormInput from "../formInput/formInput";
+import Modal from "../overlay/modal";
+import Button from "../../button/button";
+import FormInput from "../../formInput/formInput";
+import crossIcon from "@/assets/images/cross-icon.png";
+import "@/elements/modal/modal.scss";
 
 type GameCardContent = {
   gameLogo: string;
@@ -26,6 +28,8 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
   const [gameDescription, setGameDescription] = useState("");
   const [gameAgeLimit, setGameAgeLimit] = useState("all");
   const [gamePlatforms, setGamePlatforms] = useState<string[]>([]);
+
+  const [isSubmitDeletingModalVisible, setIsSubmitDeletingModalVisible] = useState(false);
 
   const onChangeGameName: ChangeEventHandler<HTMLInputElement> = (event) => {
     setGameName(event.target.value);
@@ -95,6 +99,29 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
 
   return (
     <Modal className="edit-game" title="Edit card" onClose={props.onClose}>
+      {isSubmitDeletingModalVisible && (
+        <div className="modal submit-deleting">
+          <div className="wrapper">
+            <h3 className="modal__title">Submit deleting</h3>
+            <button
+              type="button"
+              onClick={() => {
+                setIsSubmitDeletingModalVisible(false);
+              }}
+              className="cancel-button"
+            >
+              <img className="cancel" src={crossIcon} alt="cancel" />
+            </button>
+          </div>
+          <Button onClick={onDeleteCard} title="Yes" />
+          <Button
+            onClick={() => {
+              setIsSubmitDeletingModalVisible(false);
+            }}
+            title="No"
+          />
+        </div>
+      )}
       {loading && <div>Loading...</div>}
       {!loading && !error && (
         <div>
@@ -162,8 +189,12 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
               </label>
               <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <Button isSubmit title="Submit" />
-                {/* TODO: modal to submit deleting*/}
-                <Button onClick={onDeleteCard} title="Delete card" />
+                <Button
+                  onClick={() => {
+                    setIsSubmitDeletingModalVisible(true);
+                  }}
+                  title="Delete card"
+                />
               </div>
             </form>
           </div>

@@ -5,7 +5,7 @@ import star from "../../assets/images/star.png";
 import Button from "../button/button";
 import { cartActions } from "@/redux/slices/cart";
 import { userState } from "@/redux/slices/user";
-import EditGameModal from "../modal/editGameModal";
+import EditGameModal from "../modal/editGameModal/editGameModal";
 
 export type Props = {
   gameLogo: string;

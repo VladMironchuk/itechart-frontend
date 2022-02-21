@@ -245,7 +245,6 @@ export default webpackMockServer.add((app, helper) => {
     res.status(200);
   });
 
-  // TODO: app.put: edit exisiting game
   app.put("/api/products/:product", (req, res) => {
     const { product } = req.params;
     delete req.body.product;
@@ -258,5 +257,11 @@ export default webpackMockServer.add((app, helper) => {
     res.json(games[currentGameIndex]);
   });
 
-  // TODO: app.post: create new game
+  app.post("/api/products", (req, res) => {
+    games.push({
+      ...req.body,
+      gamePlatformsImg: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
+    });
+    res.status(201).json({ message: "game was created" });
+  });
 });
