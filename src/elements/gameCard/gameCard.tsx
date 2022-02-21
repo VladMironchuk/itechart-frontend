@@ -1,10 +1,10 @@
 import "./gameCard.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import star from "../../assets/images/star.png";
 import Button from "../button/button";
 import { cartActions } from "@/redux/slices/cart";
 import { userState } from "@/redux/slices/user";
-import { useState } from "react";
 import EditGameModal from "../modal/editGameModal";
 
 export type Props = {
@@ -70,7 +70,7 @@ const GameCard: React.FC<Props> = (props) => {
               <p className="game__back_wrapper_text">{gameDescription}</p>
               <p className="game__back_wrapper_age">{ageLimit}+</p>
               <Button onClick={addGameToCart} className="game__back_wrapper_button" title="Add to Cart" />
-              {userIsAdmin && <Button onClick={onToggleEditGameModal} title="Edit"></Button>}
+              {userIsAdmin && <Button onClick={onToggleEditGameModal} title="Edit" />}
             </div>
           </div>
         </div>

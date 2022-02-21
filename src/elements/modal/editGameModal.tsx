@@ -1,13 +1,23 @@
 import "./editGameModal.scss";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
-import Modal from "./overlay/modal";
+import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import useFetch from "use-http";
+import Modal from "./overlay/modal";
 import Button from "../button/button";
 import FormInput from "../formInput/formInput";
 
+type GameCardContent = {
+  gameLogo: string;
+  gameTitle: string;
+  gamePrice: number;
+  gamePlatformsImg: string[];
+  gamePlatforms: string[];
+  gameDescription: string;
+  ageLimit: number;
+  rating: number;
+};
+
 const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) => {
-  const { get, loading, error, delete: deleteReq } = useFetch();
+  const { get, loading, error, delete: deleteReq, put } = useFetch();
 
   const [gameName, setGameName] = useState("");
   const [gameCategory, setGameCategory] = useState("");
@@ -56,6 +66,21 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
     props.onClose();
   };
 
+  const onSaveGameInfo: FormEventHandler = (event) => {
+    event.preventDefault();
+    put(`/api/products/${props.game}`, {
+      gameTitle: gameName,
+      gameLogo: gameImg,
+      gamePrice,
+      gamePlatforms,
+      gameDescription,
+      ageLimit: gameAgeLimit,
+      genre: gameCategory,
+    }).then(() => {
+      props.onClose();
+    });
+  };
+
   useEffect(() => {
     get(`/api/products/${props.game}`).then((game: GameCardContent & { genre: string }) => {
       setGameName(game.gameTitle);
@@ -78,7 +103,7 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
               <p>Cart Image</p>
               <img src={gameImg} alt="game" style={{ width: "150px", height: "200px" }} />
             </div>
-            <form>
+            <form onSubmit={onSaveGameInfo}>
               <p>Information</p>
               <FormInput label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
               <FormInput label="Category" inputValue={gameCategory} onChange={onChangeGameCategory} errorMessage="" />
@@ -92,7 +117,7 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
                   value={gameDescription}
                   onChange={onChangeGameDescription}
                   id="description"
-                ></textarea>
+                />
               </label>
               <label htmlFor="age">
                 Age
@@ -135,11 +160,12 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
                   value="xbox"
                 />
               </label>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <Button isSubmit title="Submit" />
+                {/* TODO: modal to submit deleting*/}
+                <Button onClick={onDeleteCard} title="Delete card" />
+              </div>
             </form>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button title="Submit" />
-            <Button onClick={onDeleteCard} title="Delete card" />
           </div>
         </div>
       )}

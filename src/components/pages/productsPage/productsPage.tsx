@@ -1,15 +1,20 @@
 import "./productsPage.scss";
 import { useParams } from "react-router";
-import { ChangeEventHandler, Suspense, useEffect, useState } from "react";
+import { ChangeEventHandler, Suspense, useCallback, useEffect, useState } from "react";
 import useFetch from "use-http";
+import { useSelector } from "react-redux";
 import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import SearchBar from "@/elements/searchBar/searchBar";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
+import { userState } from "@/redux/slices/user";
+import Button from "@/elements/button/button";
 
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
 
-  const [selectedAgeFilter, setSelectedAgeFilter] = useState("18");
+  const userIsAdmin = useSelector((state: { user: userState }) => state.user.userIsAdmin);
+
+  const [selectedAgeFilter, setSelectedAgeFilter] = useState("100");
   const [selectedGenreFilter, setSelectedGenreFilter] = useState("all");
 
   const [selectedSortCriteria, setSelectedSortCriteria] = useState("gameTitle");
@@ -20,7 +25,8 @@ const ProductsPage: React.FC = () => {
   const { get, loading, error } = useFetch();
 
   const onAgeValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSelectedAgeFilter(event.target.value);
+    setSelectedAgeFilter(() => event.target.value);
+    console.log(selectedAgeFilter);
   };
 
   const onGenreValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -35,13 +41,17 @@ const ProductsPage: React.FC = () => {
     setSelectedSortOrder(event.target.value);
   };
 
-  useEffect(() => {
+  const getProducts = useCallback(() => {
     get(
       `/api/products?age=${selectedAgeFilter}&genre=${selectedGenreFilter}&criteria=${selectedSortCriteria}&order=${selectedSortOrder}&platform=${category}`
     ).then((data) => {
       setGames(data);
     });
-  }, [selectedAgeFilter, selectedGenreFilter, selectedSortCriteria, selectedSortOrder, category]);
+  }, [selectedAgeFilter, selectedGenreFilter, selectedSortCriteria, selectedSortOrder, category, games]);
+
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
 
   return (
     <div className="products-wrapper">
@@ -194,7 +204,10 @@ const ProductsPage: React.FC = () => {
         </div>
       </aside>
       <div>
-        <SearchBar placeholder="Search" />
+        <div style={{ display: "flex" }}>
+          <SearchBar placeholder="Search" />
+          {userIsAdmin && <Button title="Create card" />}
+        </div>
         <SectionContainer title="Products">
           <div className="cards_wrapper section__gamesCards">
             <Suspense fallback={<div>Loading...</div>}>

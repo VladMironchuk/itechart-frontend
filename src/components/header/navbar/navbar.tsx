@@ -19,7 +19,6 @@ const NavBar: React.FC = () => {
   const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
 
   const onSignIn = () => {
-    console.log("clicked");
     dispatch(modalActions.toggleSignIn());
   };
 

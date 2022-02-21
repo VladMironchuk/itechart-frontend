@@ -1,7 +1,7 @@
 import webpackMockServer from "webpack-mock-server";
 
 enum GamePlatforms {
-  windows = "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
+  pc = "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
   ps = "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
   xbox = "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
 }
@@ -14,7 +14,7 @@ let games = [
     gameTitle: "Owerwatch",
     gameLogo: "https://s1.gaming-cdn.com/images/products/2208/271x377/game-battle-net-overwatch-cover.jpg",
     gamePrice: 23.99,
-    gamePlatformsImg: [GamePlatforms.windows],
+    gamePlatformsImg: [GamePlatforms.pc],
     gamePlatforms: ["pc"],
     gameDescription: TEST_DESCRIPTION,
     ageLimit: 12,
@@ -26,7 +26,7 @@ let games = [
     gameTitle: "Minecraft",
     gameLogo: "https://s2.gaming-cdn.com/images/products/442/271x377/minecraft-java-edition-pc-game-cover.jpg",
     gamePrice: 25.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.ps, GamePlatforms.xbox],
     gamePlatforms: ["pc", "ps", "xbox"],
     gameDescription: TEST_DESCRIPTION,
     ageLimit: 6,
@@ -38,7 +38,7 @@ let games = [
     gameTitle: "Terraria",
     gameLogo: "https://s3.gaming-cdn.com/images/products/932/271x377/game-steam-terraria-cover.jpg",
     gamePrice: 4.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.ps, GamePlatforms.xbox],
     gamePlatforms: ["pc", "ps", "xbox"],
     ageLimit: 12,
     rating: 4,
@@ -51,7 +51,7 @@ let games = [
     gameTitle: "CS:GO",
     gameLogo: "https://cdn.kanobu.ru/games/0e56b18d-b3ac-48d2-be8e-2afb3c52222c.jpg",
     gamePrice: 4.99,
-    gamePlatformsImg: [GamePlatforms.windows],
+    gamePlatformsImg: [GamePlatforms.pc],
     gamePlatforms: ["pc"],
     ageLimit: 18,
     rating: 4,
@@ -63,7 +63,7 @@ let games = [
     gameTitle: "CS 1.6",
     gameLogo: "https://cs16planet.ru/uploads/posts/2021-11/1637804273_cs16-main-theme.jpg",
     gamePrice: 3.99,
-    gamePlatformsImg: [GamePlatforms.windows],
+    gamePlatformsImg: [GamePlatforms.pc],
     gamePlatforms: ["pc"],
     ageLimit: 16,
     rating: 5,
@@ -76,7 +76,7 @@ let games = [
     gameLogo:
       "https://s2.gaming-cdn.com/images/products/9595/orig/forza-horizon-5-deluxe-edition-pc-xbox-one-xbox-series-xs-deluxe-edition-pc-xbox-one-xbox-series-x-s-game-microsoft-store-cover.jpg",
     gamePrice: 9.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.xbox],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.xbox],
     gamePlatforms: ["pc", "xbox"],
     ageLimit: 3,
     rating: 4,
@@ -89,7 +89,7 @@ let games = [
     gameLogo:
       "https://upload.wikimedia.org/wikipedia/ru/d/d0/%D0%9E%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_Need_for_Speed_Underground_2.jpg",
     gamePrice: 4.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.xbox, GamePlatforms.ps],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.xbox, GamePlatforms.ps],
     gamePlatforms: ["pc", "ps", "xbox"],
     ageLimit: 6,
     rating: 5,
@@ -102,7 +102,7 @@ let games = [
     gameLogo:
       "https://store-images.s-microsoft.com/image/apps.22128.68986806511725911.f424da40-674e-41a9-878c-7a524fa56895.b17b2cb1-f73d-4df8-9124-7e4a0f770ed2",
     gamePrice: 7.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.xbox],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.xbox],
     gamePlatforms: ["pc", "xbox"],
     ageLimit: 12,
     rating: 3,
@@ -114,7 +114,7 @@ let games = [
     gameTitle: "FlatOut 2",
     gameLogo: "https://upload.wikimedia.org/wikipedia/ru/thumb/8/8f/FlatOut2Coverart.jpg/274px-FlatOut2Coverart.jpg",
     gamePrice: 5.99,
-    gamePlatformsImg: [GamePlatforms.windows, GamePlatforms.ps, GamePlatforms.xbox],
+    gamePlatformsImg: [GamePlatforms.pc, GamePlatforms.ps, GamePlatforms.xbox],
     gamePlatforms: ["pc", "ps", "xbox"],
     ageLimit: 6,
     rating: 3,
@@ -185,7 +185,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/getProfile/:login", (req, res) => {
-    console.log("get user");
     const { login } = req.params;
     const currentUserIndex = users.findIndex((user) => user.login === login);
     res.json(users[currentUserIndex]);
@@ -245,4 +244,19 @@ export default webpackMockServer.add((app, helper) => {
     games = games.filter((game) => game.gameTitle !== product);
     res.status(200);
   });
+
+  // TODO: app.put: edit exisiting game
+  app.put("/api/products/:product", (req, res) => {
+    const { product } = req.params;
+    delete req.body.product;
+    const currentGameIndex = games.findIndex((game) => game.gameTitle === product);
+    games[currentGameIndex] = {
+      ...req.body,
+      gamePlatformsImg: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
+      rating: games[currentGameIndex].rating,
+    };
+    res.json(games[currentGameIndex]);
+  });
+
+  // TODO: app.post: create new game
 });
