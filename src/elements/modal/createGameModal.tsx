@@ -12,7 +12,7 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
 
   const [gameName, setGameName] = useState("");
   const [gameCategory, setGameCategory] = useState("");
-  const [gamePrice, setGamePrice] = useState(0);
+  const [gamePrice, setGamePrice] = useState("0");
   const [gameRating, setGameRating] = useState(0);
   const [gameImg, setGameImg] = useState("");
   const [gameDescription, setGameDescription] = useState("");
@@ -26,9 +26,9 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
   const onChangeGameCategory: ChangeEventHandler<HTMLInputElement> = (event) => {
     setGameCategory(event.target.value);
   };
-
+  //TODO: add validation
   const onChangeGamePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGamePrice(+event.target.value);
+    setGamePrice(event.target.value);
   };
 
   const onChangeGameImg: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -52,7 +52,7 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
   };
 
   const onChangeGameRating: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameRating(+(+event.target.value).toPrecision(4));
+    setGameRating(+event.target.value);
   };
 
   const onSubmitHandler: FormEventHandler = (event) => {
@@ -60,7 +60,7 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
     post("/api/products", {
       gameTitle: gameName,
       gameLogo: gameImg,
-      gamePrice,
+      gamePrice: +gamePrice,
       gamePlatforms,
       gameDescription,
       ageLimit: gameAgeLimit,

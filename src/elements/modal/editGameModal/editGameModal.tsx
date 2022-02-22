@@ -18,7 +18,14 @@ type GameCardContent = {
   rating: number;
 };
 
-const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) => {
+type Props = {
+  onClose: () => void;
+  game: string;
+};
+
+const EditGameModal: React.FC<Props> = (props) => {
+  const { onClose, game } = props;
+
   const { get, loading, error, delete: deleteReq, put } = useFetch();
 
   const [gameName, setGameName] = useState("");
@@ -64,15 +71,15 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
   };
 
   const onDeleteCard = () => {
-    deleteReq(`/api/products/${props.game}`).then(() => {
+    deleteReq(`/api/products/${game}`).then(() => {
       console.log("game deleted");
     });
-    props.onClose();
+    onClose();
   };
 
   const onSaveGameInfo: FormEventHandler = (event) => {
     event.preventDefault();
-    put(`/api/products/${props.game}`, {
+    put(`/api/products/${game}`, {
       gameTitle: gameName,
       gameLogo: gameImg,
       gamePrice,
@@ -81,12 +88,12 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
       ageLimit: gameAgeLimit,
       genre: gameCategory,
     }).then(() => {
-      props.onClose();
+      onClose();
     });
   };
 
   useEffect(() => {
-    get(`/api/products/${props.game}`).then((game: GameCardContent & { genre: string }) => {
+    get(`/api/products/${game}`).then((game: GameCardContent & { genre: string }) => {
       setGameName(game.gameTitle);
       setGameCategory(game.genre);
       setGamePrice(game.gamePrice);
@@ -98,7 +105,7 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
   }, []);
 
   return (
-    <Modal className="edit-game" title="Edit card" onClose={props.onClose}>
+    <Modal className="edit-game" title="Edit card" onClose={onClose}>
       {isSubmitDeletingModalVisible && (
         <div className="modal submit-deleting">
           <div className="wrapper">
@@ -130,13 +137,13 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
               <p>Cart Image</p>
               <img src={gameImg} alt="game" style={{ width: "150px", height: "200px" }} />
             </div>
-            <form onSubmit={onSaveGameInfo}>
+            <form className="game-info" onSubmit={onSaveGameInfo}>
               <p>Information</p>
               <FormInput label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
               <FormInput label="Category" inputValue={gameCategory} onChange={onChangeGameCategory} errorMessage="" />
               <FormInput label="Price" inputValue={gamePrice.toString()} onChange={onChangeGamePrice} errorMessage="" />
               <FormInput label="Image" inputValue={gameImg} onChange={onChangeGameImg} errorMessage="" />
-              <label htmlFor="description">
+              <label className="game-info__description" htmlFor="description">
                 Description
                 <textarea
                   cols={30}
@@ -148,7 +155,7 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
               </label>
               <label htmlFor="age">
                 Age
-                <select value={gameAgeLimit} onChange={onChangeGameAgeLimit} id="age">
+                <select className="game_info__age" value={gameAgeLimit} onChange={onChangeGameAgeLimit} id="age">
                   <option value="all">All</option>
                   <option value="3">3+</option>
                   <option value="6">6+</option>
@@ -156,37 +163,21 @@ const EditGameModal: React.FC<{ onClose: () => void; game: string }> = (props) =
                   <option value="18">18+</option>
                 </select>
               </label>
-              <p>Platform</p>
-              <label htmlFor="pc">
-                PC
-                <input
-                  onChange={onChangeGamePlatforms}
-                  checked={gamePlatforms.includes("pc")}
-                  id="pc"
-                  type="checkbox"
-                  value="pc"
-                />
-              </label>
-              <label htmlFor="ps">
-                PS
-                <input
-                  onChange={onChangeGamePlatforms}
-                  checked={gamePlatforms.includes("ps")}
-                  id="ps"
-                  type="checkbox"
-                  value="ps"
-                />
-              </label>
-              <label htmlFor="xbox">
-                XBox
-                <input
-                  onChange={onChangeGamePlatforms}
-                  checked={gamePlatforms.includes("xbox")}
-                  id="xbox"
-                  type="checkbox"
-                  value="xbox"
-                />
-              </label>
+              <div style={{ display: "flex" }}>
+                <p>Platform</p>
+                {["pc", "ps", "xbox"].map((platform) => (
+                  <label key={platform}>
+                    {platform.toUpperCase()}
+                    <input
+                      onChange={onChangeGamePlatforms}
+                      checked={gamePlatforms.includes(platform)}
+                      id={platform}
+                      type="checkbox"
+                      value={platform}
+                    />
+                  </label>
+                ))}
+              </div>
               <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <Button isSubmit title="Submit" />
                 <Button

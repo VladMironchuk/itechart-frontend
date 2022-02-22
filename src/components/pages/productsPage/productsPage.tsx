@@ -44,6 +44,10 @@ const ProductsPage: React.FC = () => {
     setSelectedSortOrder(event.target.value);
   };
 
+  const onToggleCreateGameModal = () => {
+    setIsCreateGameModalVisible((prevState) => !prevState);
+  };
+
   const getProducts = useCallback(() => {
     get(
       `/api/products?age=${selectedAgeFilter}&genre=${selectedGenreFilter}&criteria=${selectedSortCriteria}&order=${selectedSortOrder}&platform=${category}`
@@ -58,13 +62,7 @@ const ProductsPage: React.FC = () => {
 
   return (
     <>
-      {isCreateGameModalVisible && (
-        <CreateGameModal
-          onClose={() => {
-            setIsCreateGameModalVisible(false);
-          }}
-        />
-      )}
+      {isCreateGameModalVisible && <CreateGameModal onClose={onToggleCreateGameModal} />}
       <div className="products-wrapper">
         <aside className="aside">
           <h3>{category}</h3>
@@ -215,15 +213,10 @@ const ProductsPage: React.FC = () => {
           </div>
         </aside>
         <div>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <SearchBar placeholder="Search" />
             {userIsAdmin && (
-              <Button
-                onClick={() => {
-                  setIsCreateGameModalVisible(true);
-                }}
-                title="Create card"
-              />
+              <Button className="create-game-modal" onClick={onToggleCreateGameModal} title="Create card" />
             )}
           </div>
           <SectionContainer title="Products">

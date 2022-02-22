@@ -9,3 +9,23 @@
   top: 0;
   left: 0;
 }
+
+.game-info {
+  margin-left: 4rem;
+
+  &__description {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+#age {
+  margin-left: 7.5rem;
+
+  & {
+    background: black;
+    outline: none;
+    color: white;
+    border: 1px solid white;
+  }
+}
