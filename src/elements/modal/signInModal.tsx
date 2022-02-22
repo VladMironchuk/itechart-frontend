@@ -20,10 +20,6 @@ const SignInModal: React.FC<{ onClose: () => void }> = (props) => {
     dispatch(userActions.toggleLogging());
   };
 
-  // const onSignIn = () => {
-  //   dispatch(modalActions.toggleSignIn());
-  // };
-
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 

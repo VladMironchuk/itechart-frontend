@@ -113,7 +113,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/getProfile/:login", (req, res) => {
-    console.log("get user");
     const { login } = req.params;
     const currentUserIndex = users.findIndex((user) => user.login === login);
     res.json(users[currentUserIndex]);
@@ -128,7 +127,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/saveImage", (req, res) => {
-    console.log(req.body);
     res.status(200);
   });
 });

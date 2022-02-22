@@ -14,7 +14,6 @@ const PrivateRoute: React.FC<Props> = (props) => {
     <Route
       path={path}
       render={({ location }) => {
-        console.log(location);
         return isLogged ? (
           children
         ) : (

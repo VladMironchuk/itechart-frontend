@@ -39,7 +39,6 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
     });
 
     if (error) {
-      console.log(error);
       return;
     }
 
