@@ -51,6 +51,7 @@ const FilterCriteria: React.FC<FilterCriteriaProps> = (props) => {
   return (
     <label htmlFor={filterCriteriaItem}>
       <input
+        style={{ marginRight: "5px" }}
         type="radio"
         checked={checkedCondition === filterCriteriaItem}
         value={filterCriteriaItem}
@@ -94,7 +95,7 @@ const FilterSidebar: React.FC<Props> = (props) => {
                 onChange={onChangeGenreValue}
                 checkedCondition={selectedGenreFilter}
               >
-                {genre}
+                {genre === "all" ? "all genres" : genre}
               </FilterCriteria>
             </div>
           ))}
@@ -111,7 +112,7 @@ const FilterSidebar: React.FC<Props> = (props) => {
                 onChange={onChangeAgeValue}
                 checkedCondition={selectedAgeFilter}
               >
-                {age === "100" ? "All" : `${age}+`}
+                {age === "100" ? "All ages" : `${age}+`}
               </FilterCriteria>
             </div>
           ))}
