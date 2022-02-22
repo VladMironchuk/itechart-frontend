@@ -145,8 +145,9 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/search/:text", (req, res) => {
+    const regex = new RegExp(`${req.params.text}`, "i");
     res.json({
-      games: games.map((game) => game.gameTitle).filter((game) => game.includes(req.params.text)),
+      games: games.map((game) => game.gameTitle).filter((game) => game.match(regex)),
     });
   });
 

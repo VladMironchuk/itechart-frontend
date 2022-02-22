@@ -1,7 +1,7 @@
 import "./productsPage.scss";
 import "react-dropdown/style.css";
 import { useParams } from "react-router";
-import { ChangeEventHandler, lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { Oval } from "react-loader-spinner";
 import SearchBar from "@/elements/searchBar/searchBar";
 import FilterSidebar from "./filterSidebar";
@@ -11,51 +11,15 @@ const Games = lazy(() => new Promise((resolve) => setTimeout(resolve, 5000)).the
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
 
-  const [selectedAgeFilter, setSelectedAgeFilter] = useState("18");
-  const [selectedGenreFilter, setSelectedGenreFilter] = useState("all");
-
-  const [selectedSortCriteria, setSelectedSortCriteria] = useState("gameTitle");
-  const [selectedSortOrder, setSelectedSortOrder] = useState("asc");
-
-  const onChangeAgeValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSelectedAgeFilter(event.target.value);
-  };
-
-  const onChangeGenreValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSelectedGenreFilter(event.target.value);
-  };
-
-  const onChangeSortCriteria: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setSelectedSortCriteria(event.target.value);
-  };
-
-  const onChangeSortOrder: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setSelectedSortOrder(event.target.value);
-  };
-
   return (
     <div className="products-wrapper">
-      <FilterSidebar
-        category={category}
-        onChangeAgeValue={onChangeAgeValue}
-        onChangeGenreValue={onChangeGenreValue}
-        onChangeSortCriteria={onChangeSortCriteria}
-        onChangeSortOrder={onChangeSortOrder}
-        selectedAgeFilter={selectedAgeFilter}
-        selectedGenreFilter={selectedGenreFilter}
-      />
+      <FilterSidebar category={category} />
       <div>
         <SearchBar placeholder="Search" />
         <Suspense
           fallback={<Oval secondaryColor="black" ariaLabel="Loading..." color="white" width={50} height={50} />}
         >
-          <Games
-            selectedAgeFilter={selectedAgeFilter}
-            selectedGenreFilter={selectedGenreFilter}
-            selectedSortCriteria={selectedSortCriteria}
-            selectedSortOrder={selectedSortOrder}
-            category={category}
-          />
+          <Games category={category} />
         </Suspense>
       </div>
     </div>

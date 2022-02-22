@@ -11,7 +11,7 @@ import psLogo from "../../../assets/images/ps.png";
 import xboxLogo from "../../../assets/images/xbox.png";
 
 const HomePage: React.FC = () => {
-  const [{ games }, setGames] = useState<{ games: GameCardContent[] }>({ games: [] });
+  const [{ games }, setGames] = useState<{ games: GameCardContent["game"][] }>({ games: [] });
 
   const { get, response, loading, error } = useFetch("/api/getTopProducts");
 
@@ -44,19 +44,7 @@ const HomePage: React.FC = () => {
         <div className="cards_wrapper section__gamesCards">
           {loading && <div>Loading</div>}
           {error && <div>{error.message}</div>}
-          {!error &&
-            games.map(({ rating, gameLogo, gameTitle, gamePrice, gamePlatforms, ageLimit, gameDescription }) => (
-              <GameCard
-                key={gameTitle}
-                rating={rating}
-                gameLogo={gameLogo}
-                gameTitle={gameTitle}
-                gamePrice={gamePrice}
-                gamePlatforms={gamePlatforms}
-                ageLimit={ageLimit}
-                gameDescription={gameDescription}
-              />
-            ))}
+          {!error && games.map((game) => <GameCard key={game.gameTitle} game={game} />)}
         </div>
       </SectionContainer>
     </>
