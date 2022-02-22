@@ -80,7 +80,7 @@ const CartPage: React.FC = () => {
       {isOrderModalVisible && <SubmitOrderModal onClose={onToggleOrderModal} />}
       <SectionContainer classname="cart-items" title="Cart page">
         {cartItems.length === 0 ? (
-          <div>Cart is empty</div>
+          <div style={{ marginTop: "1rem" }}>Cart is empty</div>
         ) : (
           <div className="cart-items__content">
             <div className="cart-items__content-rows">
