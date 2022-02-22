@@ -6,9 +6,8 @@ import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
 import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
-import { modalActions } from "@/redux/slices/modal";
 
-const SignInModal: React.FC = () => {
+const SignInModal: React.FC<{ onClose: () => void }> = (props) => {
   const dispatch = useDispatch();
 
   const { post, response, error } = useFetch();
@@ -19,10 +18,6 @@ const SignInModal: React.FC = () => {
 
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
-  };
-
-  const onSignIn = () => {
-    dispatch(modalActions.toggleSignIn());
   };
 
   const [login, setLogin] = useState("");
@@ -54,25 +49,27 @@ const SignInModal: React.FC = () => {
     }
     setPasswordErrorMessage("");
 
-    await post("/api/auth/signIn", {
+    const userRes = await post("/api/auth/signIn", {
       login,
       password,
     });
 
     if (error) {
-      console.log(error);
+      alert(userRes.message);
       return;
     }
 
     if (response.ok) {
-      onSignIn();
+      props.onClose();
       updateLogin(login);
       toggleLogging();
+      dispatch(userActions.updateUsername({ username: userRes.username }));
+      dispatch(userActions.updateDescription({ description: userRes.description }));
     }
   };
 
   return (
-    <Modal onClose={onSignIn} title="Authorization">
+    <Modal onClose={props.onClose} title="Authorization">
       <form action="/" onSubmit={submitHandler}>
         <FormInput label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
         <FormInput

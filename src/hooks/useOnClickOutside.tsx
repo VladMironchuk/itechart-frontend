@@ -1,11 +1,10 @@
 import { RefObject, useEffect } from "react";
 
-const useOnClickOutside = (ref: RefObject<Element>, toggle: () => void) => {
+const useOnClickOutside = (ref: RefObject<Element>, onClose: () => void) => {
   const handleOutsideClick = (event: MouseEvent) => {
     const path = event.composedPath();
-
     if (ref.current && !path.includes(ref.current)) {
-      toggle();
+      onClose();
     }
   };
 

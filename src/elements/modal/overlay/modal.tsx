@@ -13,6 +13,7 @@ const Modal: React.FC<Props> = (props) => {
   const { title, onClose, children } = props;
 
   const modalRef = useRef<HTMLDivElement>(null);
+
   useOnClickOutside(modalRef, onClose);
 
   return (
