@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import useFetch from "use-http";
 
-type Props = { placeholder: string };
+type Props = { name: string; placeholder: string };
 
 const SearchBar: React.FC<Props> = (props) => {
-  const { placeholder } = props;
+  const { name, placeholder } = props;
 
   const [inputValue, setInputValue] = useState("");
   const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });

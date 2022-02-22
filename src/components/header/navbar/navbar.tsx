@@ -1,32 +1,41 @@
 import "./navbar.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { userState, userActions } from "@/redux/slices/user";
-import { modalActions } from "@/redux/slices/modal";
+import SignInModal from "@/elements/modal/signInModal";
+import SignUpModal from "@/elements/modal/signUpModal";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
   const username = useSelector((state: { user: userState }) => state.user.username);
+  const location = useLocation();
 
-  const onSignIn = () => {
-    console.log("clicked");
-    dispatch(modalActions.toggleSignIn());
-  };
-
-  const onSignUp = () => {
-    dispatch(modalActions.toggleSignUp());
-  };
+  const [isSignInModalVisible, setIsSignInModalVisible] = useState(false);
+  const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
 
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
   };
+
+  const onToggleSignInModal = () => {
+    setIsSignInModalVisible((prevState) => !prevState);
+  };
+
+  const onToggleSignUpModal = () => {
+    setIsSignUpModalVisible((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (location.hash === "#login") setIsSignInModalVisible(true);
+  }, [location.hash]);
 
   const navbarContent = isLogged ? (
     <>
@@ -46,12 +55,12 @@ const NavBar: React.FC = () => {
   ) : (
     <>
       <li>
-        <button type="button" onClick={onSignIn}>
+        <button onClick={onToggleSignInModal} type="button">
           Sign In
         </button>
       </li>
       <li>
-        <button type="button" onClick={onSignUp}>
+        <button onClick={onToggleSignUpModal} type="button">
           Sign Up
         </button>
       </li>
@@ -59,14 +68,18 @@ const NavBar: React.FC = () => {
   );
 
   return (
-    <nav className="header__nav">
-      <ul className="header__nav__ul">
-        <Link linkPath="/" linkText="Home" />
-        <Dropdown modalToggler={onSignIn} />
-        <Link linkPath="/about" linkText="About" modalToggler={onSignIn} />
-        {navbarContent}
-      </ul>
-    </nav>
+    <>
+      {isSignInModalVisible && <SignInModal onClose={onToggleSignInModal} />}
+      {isSignUpModalVisible && <SignUpModal onClose={onToggleSignUpModal} />}
+      <nav className="header__nav">
+        <ul className="header__nav__ul">
+          <Link linkPath="/" linkText="Home" />
+          <Dropdown />
+          <Link linkPath="/about" linkText="About" />
+          {navbarContent}
+        </ul>
+      </nav>
+    </>
   );
 };
 

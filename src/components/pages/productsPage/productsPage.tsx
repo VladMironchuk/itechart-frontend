@@ -1,4 +1,5 @@
 import "./productsPage.scss";
+import "react-dropdown/style.css";
 import { useParams } from "react-router";
 import { ChangeEventHandler, lazy, Suspense, useState } from "react";
 import { Oval } from "react-loader-spinner";

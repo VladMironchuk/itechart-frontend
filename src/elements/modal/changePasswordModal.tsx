@@ -5,10 +5,10 @@ import useFetch from "use-http";
 import Modal from "./overlay/modal";
 import Input from "../formInput/formInput";
 import Button from "../button/button";
-import { userState } from "@/redux/slices/user";
+import { AppProps } from "@/redux/redux";
 
 const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ changePasswordToggler }) => {
-  const login = useSelector((state: { user: userState }) => state.user.login);
+  const login = useSelector((state: { user: AppProps }) => state.user.login);
   const { post, response, error } = useFetch();
 
   const [password, setPassword] = useState("");
@@ -39,7 +39,6 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
     });
 
     if (error) {
-      console.log(error);
       return;
     }
 

@@ -7,9 +7,8 @@ import Modal from "./overlay/modal";
 import FormInput from "../formInput/formInput";
 import { userActions } from "@/redux/slices/user";
 import Button from "../button/button";
-import { modalActions } from "@/redux/slices/modal";
 
-const SignUpModal: React.FC = () => {
+const SignUpModal: React.FC<{ onClose: () => void }> = (props) => {
   const dispatch = useDispatch();
 
   const updateLogin = (login: string) => {
@@ -22,10 +21,6 @@ const SignUpModal: React.FC = () => {
 
   const toggleLogging = () => {
     dispatch(userActions.toggleLogging());
-  };
-
-  const onSignUp = () => {
-    dispatch(modalActions.toggleSignUp());
   };
 
   const history = useHistory();
@@ -80,11 +75,11 @@ const SignUpModal: React.FC = () => {
       });
 
       if (error) {
-        console.log(error);
+        return;
       }
 
       if (response.ok) {
-        onSignUp();
+        props.onClose();
         updateLogin(login);
         updateUsername(login);
         toggleLogging();
@@ -94,7 +89,7 @@ const SignUpModal: React.FC = () => {
   };
 
   return (
-    <Modal onClose={onSignUp} title="Registration">
+    <Modal onClose={props.onClose} title="Registration">
       <form onSubmit={submitHandler}>
         <FormInput label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
         <FormInput
