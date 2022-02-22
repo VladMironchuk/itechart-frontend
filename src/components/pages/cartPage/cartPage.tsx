@@ -9,10 +9,12 @@ import Button from "@/elements/button/button";
 import { userState } from "@/redux/slices/user";
 import SubmitOrderModal from "@/elements/modal/submitOrderModal";
 
-const CartItem: React.FC<{
+type Props = {
   cartItem: GameCardContent & { amount: number; orderDate: Date };
   onChange: ChangeEventHandler<HTMLInputElement>;
-}> = (props) => {
+};
+
+const CartItem: React.FC<Props> = (props) => {
   const { gameTitle, amount, gamePlatforms, orderDate, gamePrice } = props.cartItem;
   const { onChange } = props;
 
@@ -50,6 +52,8 @@ const CartItem: React.FC<{
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cartItems);
   const userBalance = useSelector((state: { user: userState }) => state.user.userBalance);
+  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+
   const dispatch = useDispatch();
 
   const [itemsToRemove, setItemsToRemove] = useState<string[]>([]);
@@ -66,17 +70,14 @@ const CartPage: React.FC = () => {
   const onRemoveItems = () => {
     dispatch(cartActions.removeItemsFromCart({ itemsToRemove }));
   };
-  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+
+  const onToggleOrderModal = () => {
+    setIsOrderModalVisible((prevState) => !prevState);
+  };
 
   return (
     <>
-      {isOrderModalVisible && (
-        <SubmitOrderModal
-          onClose={() => {
-            setIsOrderModalVisible(false);
-          }}
-        />
-      )}
+      {isOrderModalVisible && <SubmitOrderModal onClose={onToggleOrderModal} />}
       <SectionContainer classname="cart-items" title="Cart page">
         {cartItems.length === 0 ? (
           <div>Cart is empty</div>
@@ -97,13 +98,7 @@ const CartPage: React.FC = () => {
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
               <div>Games cost: {cartTotalAmount}$</div>
               <div>Your balance: {userBalance}$</div>
-              <Button
-                onClick={() => {
-                  setIsOrderModalVisible(true);
-                }}
-                className="cart-items__content__buy"
-                title="Buy"
-              />
+              <Button onClick={onToggleOrderModal} className="cart-items__content__buy" title="Buy" />
             </div>
           </div>
         )}
