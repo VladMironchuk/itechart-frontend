@@ -97,12 +97,14 @@ const SignUpModal: React.FC<{ onClose: () => void }> = (props) => {
           onChange={passwordChangeHandler}
           inputValue={password}
           errorMessage={passwordErrorMessage}
+          isPassword
         />
         <FormInput
           label="Repeat password"
           onChange={repeatPasswordChangeHandler}
           inputValue={repeatedPassword}
           errorMessage={repeatedPasswordErrorMessage}
+          isPassword
         />
         <Button isSubmit className="modal__button" title="Submit" />
       </form>

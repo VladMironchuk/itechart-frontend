@@ -77,6 +77,7 @@ const SignInModal: React.FC<{ onClose: () => void }> = (props) => {
           onChange={passwordChangeHandler}
           inputValue={password}
           errorMessage={passwordErrorMessage}
+          isPassword
         />
         <Button isSubmit className="modal__button" title="Submit" />
       </form>

@@ -1,7 +1,7 @@
-import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
-import { cartActions } from "@/redux/slices/cart";
 import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
+import { cartActions } from "@/redux/slices/cart";
 
 type Props = {
   cartItem: GameCardContent["game"] & { amount: number; orderDate: Date };
@@ -17,6 +17,10 @@ const CartItem: React.FC<Props> = (props) => {
   const [itemAmount, setItemAmount] = useState(amount);
 
   const changeItemAmount: ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (+event.target.value < 1) {
+      onChange(event);
+      dispatch(cartActions.removeItemsFromCart({ itemsToRemove: [gameTitle] }));
+    }
     setItemAmount(+event.target.value);
     dispatch(cartActions.changeItemAmount({ itemTitle: event.target.name, currentItemAmount: +event.target.value }));
   };
@@ -33,7 +37,7 @@ const CartItem: React.FC<Props> = (props) => {
       </p>
       <p>{orderDate.toLocaleDateString("en-US")}</p>
       <p>
-        <input onChange={changeItemAmount} type="number" name={gameTitle} min={1} value={itemAmount} />
+        <input onChange={changeItemAmount} type="number" name={gameTitle} min={0} value={itemAmount} />
       </p>
       <p>{gamePrice}</p>
       <p>
