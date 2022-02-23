@@ -2,52 +2,12 @@ import "./cartPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeEventHandler, useState } from "react";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import { cartActions, CartState } from "@/redux/slices/cart";
 
 import Button from "@/elements/button/button";
 import { userState } from "@/redux/slices/user";
 import SubmitOrderModal from "@/elements/modal/submitOrderModal";
-
-type Props = {
-  cartItem: GameCardContent["game"] & { amount: number; orderDate: Date };
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
-
-const CartItem: React.FC<Props> = (props) => {
-  const { gameTitle, amount, gamePlatforms, orderDate, gamePrice } = props.cartItem;
-  const { onChange } = props;
-
-  const dispatch = useDispatch();
-
-  const [itemAmount, setItemAmount] = useState(amount);
-
-  const changeItemAmount: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setItemAmount(+event.target.value);
-    dispatch(cartActions.changeItemAmount({ itemTitle: event.target.name, currentItemAmount: +event.target.value }));
-  };
-
-  return (
-    <div className="cart-items__content-rows">
-      <p>{gameTitle}</p>
-      <p>
-        <select>
-          {gamePlatforms.map((gamePlatform) => (
-            <option key={gameTitle + gamePlatform}>{gamePlatform}</option>
-          ))}
-        </select>
-      </p>
-      <p>{orderDate.toLocaleDateString("en-US")}</p>
-      <p>
-        <input onChange={changeItemAmount} type="number" name={gameTitle} min={1} value={itemAmount} />
-      </p>
-      <p>{gamePrice}</p>
-      <p>
-        <input onChange={onChange} value={gameTitle} type="checkbox" />
-      </p>
-    </div>
-  );
-};
+import CartItem from "./cartItem/cartItem";
 
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cartItems);
