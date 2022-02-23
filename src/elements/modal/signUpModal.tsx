@@ -75,7 +75,7 @@ const SignUpModal: React.FC<{ onClose: () => void }> = (props) => {
       });
 
       if (error) {
-        console.log(error);
+        return;
       }
 
       if (response.ok) {

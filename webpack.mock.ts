@@ -200,7 +200,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.post("/api/saveImage", (req, res) => {
-    console.log(req.body);
     res.status(200);
   });
 
