@@ -6,7 +6,7 @@ export type CartState = {
     gameLogo: string;
     gameTitle: string;
     gamePrice: number;
-    gamePlatformsImg: string[];
+    gamePlatformsImages: string[];
     gamePlatforms: string[];
     gameDescription: string;
     ageLimit: number;

@@ -11,7 +11,7 @@ export type Props = {
     gameTitle: string;
     gamePrice: number;
     gamePlatforms: string[];
-    gamePlatformsImg: string[];
+    gamePlatformsImages: string[];
     gameDescription: string;
     ageLimit: number;
     rating: number;
@@ -19,7 +19,7 @@ export type Props = {
 };
 
 const GameCard: React.FC<Props> = (props) => {
-  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating, gamePlatformsImg } =
+  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating, gamePlatformsImages } =
     props.game;
 
   const userIsLogged = useSelector((state: { user: userState }) => state.user.isLogged);
@@ -43,7 +43,7 @@ const GameCard: React.FC<Props> = (props) => {
       <div className="game">
         <div className="game__front">
           <div className="game-platforms">
-            {gamePlatformsImg.map((platform) => (
+            {gamePlatformsImages.map((platform) => (
               <img key={Math.random()} className="game-platforms__logo" alt="platform" src={platform} />
             ))}
           </div>
