@@ -47,10 +47,10 @@ const NavBar: React.FC = () => {
         <img className="logo" src={profileLogo} alt="profile-icon" />
         <Link linkPath="/profile" linkText={username} />
       </div>
-      <li>
-        <NavLink to="/cart">
-          <img className="logo" src={cartLogo} alt="cart-logo" />
-          {`${cartTotalAmount}$`}
+      <li style={{ minWidth: "64px", width: "auto" }}>
+        <NavLink style={{ display: "flex", alignItems: "center" }} to="/cart">
+          <img style={{ marginRight: "5px" }} className="logo" src={cartLogo} alt="cart-logo" />
+          <p>{`${cartTotalAmount}$`}</p>
         </NavLink>
       </li>
       <li>
