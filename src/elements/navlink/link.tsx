@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-type Props = { linkText: string; linkPath: string; modalToggler?: () => void };
+type Props = { linkText: string; linkPath: string };
 
 const Link: React.FC<Props> = (props) => {
   const { linkText, linkPath } = props;

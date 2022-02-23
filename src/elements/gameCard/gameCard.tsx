@@ -5,18 +5,21 @@ import Button from "../button/button";
 import { cartActions } from "@/redux/slices/cart";
 
 export type Props = {
-  gameLogo: string;
-  gameTitle: string;
-  gamePrice: number;
-  gamePlatformsImg: string[];
-  gamePlatforms: string[];
-  gameDescription: string;
-  ageLimit: number;
-  rating: number;
+  game: {
+    gameLogo: string;
+    gameTitle: string;
+    gamePrice: number;
+    gamePlatforms: string[];
+    gamePlatformsImg: string[];
+    gameDescription: string;
+    ageLimit: number;
+    rating: number;
+  };
 };
 
 const GameCard: React.FC<Props> = (props) => {
-  const { gameLogo, gameTitle, gamePrice, gamePlatformsImg, gameDescription, ageLimit, rating, gamePlatforms } = props;
+  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating, gamePlatformsImg } =
+    props.game;
 
   const dispatch = useDispatch();
 

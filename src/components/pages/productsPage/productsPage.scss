@@ -67,6 +67,12 @@
     form {
       margin-top: 1rem;
     }
+
+    &__option {
+      & label {
+        text-transform: capitalize;
+      }
+    }
   }
 }
 

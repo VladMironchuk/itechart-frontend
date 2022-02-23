@@ -13,18 +13,19 @@ const PrivateRoute: React.FC<Props> = (props) => {
   return (
     <Route
       path={path}
-      render={({ location }) => {
-        return isLogged ? (
+      render={({ location }) =>
+        isLogged ? (
           children
         ) : (
           <Redirect
             to={{
-              pathname: "#login",
+              pathname: "/",
+              hash: "#login",
               state: { from: location },
             }}
           />
-        );
-      }}
+        )
+      }
     />
   );
 };
