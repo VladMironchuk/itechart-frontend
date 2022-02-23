@@ -6,7 +6,7 @@ type Props = {
   inputValue: string;
   onChange: ChangeEventHandler;
   errorMessage: string;
-  isPassword?: boolean;
+  isPassword: boolean;
 };
 
 const FormInput: React.FC<Props> = (props) => {

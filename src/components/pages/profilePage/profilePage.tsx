@@ -4,7 +4,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import useFetch from "use-http";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import Button from "@/elements/button/button";
-import Input from "@/elements/formInput/formInput";
+import FormInput from "@/elements/formInput/formInput";
 import ChangePasswordModal from "@/elements/modal/changePasswordModal";
 import { userActions, userState } from "@/redux/slices/user";
 
@@ -58,11 +58,12 @@ const ProfilePage = () => {
           </div>
           <div>
             <form onSubmit={saveUserInfoHandler} className="user-profile__description">
-              <Input
+              <FormInput
                 label="Username"
                 inputValue={usernameInputValue}
                 onChange={changeUsernameHandler}
                 errorMessage=""
+                isPassword={false}
               />
               <p>Profile description</p>
               <textarea

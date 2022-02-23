@@ -71,7 +71,13 @@ const SignInModal: React.FC<{ onClose: () => void }> = (props) => {
   return (
     <Modal onClose={props.onClose} title="Authorization">
       <form action="/" onSubmit={submitHandler}>
-        <FormInput label="Login" onChange={loginChangeHandler} inputValue={login} errorMessage={loginErrorMessage} />
+        <FormInput
+          isPassword={false}
+          label="Login"
+          onChange={loginChangeHandler}
+          inputValue={login}
+          errorMessage={loginErrorMessage}
+        />
         <FormInput
           label="Password"
           onChange={passwordChangeHandler}
