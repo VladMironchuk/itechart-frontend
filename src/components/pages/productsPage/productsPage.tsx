@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { lazy, Suspense } from "react";
 import { Oval } from "react-loader-spinner";
 import SearchBar from "@/elements/searchBar/searchBar";
-import FilterSidebar from "./filterSidebar";
+import FilterSidebar from "./filteSidebar/filterSidebar";
 
 const Games = lazy(() => new Promise((resolve) => setTimeout(resolve, 5000)).then(() => import("./games")));
 

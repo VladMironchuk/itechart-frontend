@@ -11,7 +11,7 @@ import psLogo from "../../../assets/images/ps.png";
 import xboxLogo from "../../../assets/images/xbox.png";
 
 const HomePage: React.FC = () => {
-  const [{ games }, setGames] = useState<{ games: GameCardContent["game"][] }>({ games: [] });
+  const [games, setGames] = useState<GameCardContent["game"][]>([]);
 
   const { get, response, loading, error } = useFetch("/api/getTopProducts");
 
@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
     (async () => {
       const initGames = await get("/");
       if (response.ok) {
-        setGames(initGames);
+        setGames(initGames.games);
       }
     })();
   }, []);
