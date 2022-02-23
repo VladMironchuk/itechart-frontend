@@ -185,7 +185,6 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get("/api/getProfile/:login", (req, res) => {
-    console.log("get user");
     const { login } = req.params;
     const currentUserIndex = users.findIndex((user) => user.login === login);
     res.json(users[currentUserIndex]);

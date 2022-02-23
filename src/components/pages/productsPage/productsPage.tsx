@@ -1,4 +1,5 @@
 import "./productsPage.scss";
+import "react-dropdown/style.css";
 import { useParams } from "react-router";
 import { ChangeEventHandler, Suspense, useEffect, useState } from "react";
 import useFetch from "use-http";
