@@ -10,7 +10,7 @@ import { userState } from "@/redux/slices/user";
 import SubmitOrderModal from "@/elements/modal/submitOrderModal";
 
 type Props = {
-  cartItem: GameCardContent & { amount: number; orderDate: Date };
+  cartItem: GameCardContent["game"] & { amount: number; orderDate: Date };
   onChange: ChangeEventHandler<HTMLInputElement>;
 };
 

@@ -1,7 +1,7 @@
 import "./navbar.scss";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
@@ -11,7 +11,6 @@ import { userState, userActions } from "@/redux/slices/user";
 import { CartState } from "@/redux/slices/cart";
 import SignInModal from "@/elements/modal/signInModal";
 import SignUpModal from "@/elements/modal/signUpModal";
-import { NavLink } from "react-router-dom";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
