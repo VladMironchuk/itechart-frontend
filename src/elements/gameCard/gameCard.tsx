@@ -3,17 +3,19 @@ import star from "../../assets/images/star.png";
 import Button from "../button/button";
 
 export type Props = {
-  gameLogo: string;
-  gameTitle: string;
-  gamePrice: number;
-  gamePlatforms: string[];
-  gameDescription: string;
-  ageLimit: number;
-  rating: number;
+  game: {
+    gameLogo: string;
+    gameTitle: string;
+    gamePrice: number;
+    gamePlatforms: string[];
+    gameDescription: string;
+    ageLimit: number;
+    rating: number;
+  };
 };
 
 const GameCard: React.FC<Props> = (props) => {
-  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating } = props;
+  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating } = props.game;
 
   return (
     <div className="game-container">
