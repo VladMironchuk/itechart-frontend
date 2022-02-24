@@ -3,15 +3,15 @@ import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react
 import useFetch from "use-http";
 import Modal from "../overlay/modal";
 import Button from "../../button/button";
-import FormInput from "../../formInput/formInput";
-import crossIcon from "@/assets/images/cross-icon.png";
 import "@/elements/modal/modal.scss";
+import SubmitDeletingModal from "./submitDeletingModal";
+import GameInfoForm from "../gameInfoForm";
 
 type GameCardContent = {
   gameLogo: string;
   gameTitle: string;
   gamePrice: number;
-  gamePlatformsImg: string[];
+  gamePlatformsImages: string[];
   gamePlatforms: string[];
   gameDescription: string;
   ageLimit: number;
@@ -37,6 +37,10 @@ const EditGameModal: React.FC<Props> = (props) => {
   const [gamePlatforms, setGamePlatforms] = useState<string[]>([]);
 
   const [isSubmitDeletingModalVisible, setIsSubmitDeletingModalVisible] = useState(false);
+
+  const onToggleSubmitDeletingModal = () => {
+    setIsSubmitDeletingModalVisible((prevState) => !prevState);
+  };
 
   const onChangeGameName: ChangeEventHandler<HTMLInputElement> = (event) => {
     setGameName(event.target.value);
@@ -107,90 +111,35 @@ const EditGameModal: React.FC<Props> = (props) => {
   return (
     <Modal className="edit-game" title="Edit card" onClose={onClose}>
       {isSubmitDeletingModalVisible && (
-        <div className="modal submit-deleting">
-          <div className="wrapper">
-            <h3 className="modal__title">Submit deleting</h3>
-            <button
-              type="button"
-              onClick={() => {
-                setIsSubmitDeletingModalVisible(false);
-              }}
-              className="cancel-button"
-            >
-              <img className="cancel" src={crossIcon} alt="cancel" />
-            </button>
-          </div>
-          <Button onClick={onDeleteCard} title="Yes" />
-          <Button
-            onClick={() => {
-              setIsSubmitDeletingModalVisible(false);
-            }}
-            title="No"
-          />
-        </div>
+        <SubmitDeletingModal onDelete={onDeleteCard} onClose={onToggleSubmitDeletingModal} />
       )}
       {loading && <div>Loading...</div>}
       {!loading && !error && (
-        <div>
-          <div style={{ display: "flex" }}>
-            <div>
-              <p>Cart Image</p>
-              <img src={gameImg} alt="game" style={{ width: "150px", height: "200px" }} />
-            </div>
-            <form className="game-info" onSubmit={onSaveGameInfo}>
-              <p>Information</p>
-              <FormInput type="text" label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
-              <FormInput
-                type="text"
-                label="Category"
-                inputValue={gameCategory}
-                onChange={onChangeGameCategory}
-                errorMessage=""
-              />
-              <FormInput
-                type="text"
-                label="Price"
-                inputValue={gamePrice.toString()}
-                onChange={onChangeGamePrice}
-                errorMessage=""
-              />
-              <FormInput type="text" label="Image" inputValue={gameImg} onChange={onChangeGameImg} errorMessage="" />
-              <label className="game-info__description" htmlFor="description">
-                Description
-                <textarea
-                  cols={30}
-                  rows={10}
-                  value={gameDescription}
-                  onChange={onChangeGameDescription}
-                  id="description"
-                />
-              </label>
-              <label htmlFor="age">
-                Age
-                <select className="game_info__age" value={gameAgeLimit} onChange={onChangeGameAgeLimit} id="age">
-                  <option value="all">All</option>
-                  <option value="3">3+</option>
-                  <option value="6">6+</option>
-                  <option value="12">12+</option>
-                  <option value="18">18+</option>
-                </select>
-              </label>
+        <div style={{ display: "flex" }}>
+          <div>
+            <p>Cart Image</p>
+            <img src={gameImg} alt="game" style={{ width: "150px", height: "200px" }} />
+          </div>
+          <div>
+            <p>Information</p>
+            <GameInfoForm
+              onSubmit={onSaveGameInfo}
+              name={gameName}
+              onChangeName={onChangeGameName}
+              category={gameCategory}
+              onChangeCategory={onChangeGameCategory}
+              price={gamePrice.toString()}
+              onChangePrice={onChangeGamePrice}
+              imageUrl={gameImg}
+              onChangeImageUrl={onChangeGameImg}
+              ageLimit={gameAgeLimit}
+              onChangeAgeLimit={onChangeGameAgeLimit}
+              description={gameDescription}
+              onChangeDescription={onChangeGameDescription}
+              platforms={gamePlatforms}
+              onChangePlatforms={onChangeGamePlatforms}
+            >
               <div style={{ display: "flex" }}>
-                <p>Platform</p>
-                {["pc", "ps", "xbox"].map((platform) => (
-                  <label htmlFor={platform} key={platform}>
-                    {platform.toUpperCase()}
-                    <input
-                      onChange={onChangeGamePlatforms}
-                      checked={gamePlatforms.includes(platform)}
-                      id={platform}
-                      type="checkbox"
-                      value={platform}
-                    />
-                  </label>
-                ))}
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <Button isSubmit title="Submit" />
                 <Button
                   onClick={() => {
@@ -199,7 +148,7 @@ const EditGameModal: React.FC<Props> = (props) => {
                   title="Delete card"
                 />
               </div>
-            </form>
+            </GameInfoForm>
           </div>
         </div>
       )}

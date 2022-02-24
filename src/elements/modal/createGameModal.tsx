@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import useFetch from "use-http";
 import Button from "../button/button";
-import FormInput from "../formInput/formInput";
+import GameInfoForm from "./gameInfoForm";
 import "./modal.scss";
 import Modal from "./overlay/modal";
 
@@ -75,62 +75,29 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
 
   return (
     <Modal title="Create game" onClose={onClose}>
-      <form onSubmit={onSubmitHandler}>
-        <FormInput label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
-        <FormInput label="Category" inputValue={gameCategory} onChange={onChangeGameCategory} errorMessage="" />
-        <FormInput label="Price" inputValue={gamePrice.toString()} onChange={onChangeGamePrice} errorMessage="" />
-        <FormInput label="Image" inputValue={gameImg} onChange={onChangeGameImg} errorMessage="" />
+      <GameInfoForm
+        onSubmit={onSubmitHandler}
+        name={gameName}
+        onChangeName={onChangeGameName}
+        category={gameCategory}
+        onChangeCategory={onChangeGameCategory}
+        price={gamePrice.toString()}
+        onChangePrice={onChangeGamePrice}
+        imageUrl={gameImg}
+        onChangeImageUrl={onChangeGameImg}
+        ageLimit={gameAgeLimit}
+        onChangeAgeLimit={onChangeGameAgeLimit}
+        description={gameDescription}
+        onChangeDescription={onChangeGameDescription}
+        platforms={gamePlatforms}
+        onChangePlatforms={onChangeGamePlatforms}
+      >
         <label htmlFor="rating">
           Rating
           <input id="rating" value={gameRating} onChange={onChangeGameRating} type="number" min={1} max={5} />
         </label>
-        <label htmlFor="description">
-          Description
-          <textarea cols={30} rows={10} value={gameDescription} onChange={onChangeGameDescription} id="description" />
-        </label>
-        <label htmlFor="age">
-          Age
-          <select value={gameAgeLimit} onChange={onChangeGameAgeLimit} id="age">
-            <option value="all">All</option>
-            <option value="3">3+</option>
-            <option value="6">6+</option>
-            <option value="12">12+</option>
-            <option value="18">18+</option>
-          </select>
-        </label>
-        <p>Platform</p>
-        <label htmlFor="pc">
-          PC
-          <input
-            onChange={onChangeGamePlatforms}
-            checked={gamePlatforms.includes("pc")}
-            id="pc"
-            type="checkbox"
-            value="pc"
-          />
-        </label>
-        <label htmlFor="ps">
-          PS
-          <input
-            onChange={onChangeGamePlatforms}
-            checked={gamePlatforms.includes("ps")}
-            id="ps"
-            type="checkbox"
-            value="ps"
-          />
-        </label>
-        <label htmlFor="xbox">
-          XBox
-          <input
-            onChange={onChangeGamePlatforms}
-            checked={gamePlatforms.includes("xbox")}
-            id="xbox"
-            type="checkbox"
-            value="xbox"
-          />
-        </label>
         <Button isSubmit title="Add game" />
-      </form>
+      </GameInfoForm>
     </Modal>
   );
 };

@@ -5,7 +5,7 @@ export type ProductsState = {
     gameLogo: string;
     gameTitle: string;
     gamePrice: number;
-    gamePlatformsImg: string[];
+    gamePlatformsImages: string[];
     gamePlatforms: string[];
     gameDescription: string;
     ageLimit: number;

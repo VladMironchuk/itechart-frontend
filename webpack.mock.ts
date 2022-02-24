@@ -251,7 +251,7 @@ export default webpackMockServer.add((app, helper) => {
     const currentGameIndex = games.findIndex((game) => game.gameTitle === product);
     games[currentGameIndex] = {
       ...req.body,
-      gamePlatformsImg: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
+      gamePlatformsImages: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
       rating: games[currentGameIndex].rating,
     };
     res.json(games[currentGameIndex]);
@@ -260,7 +260,7 @@ export default webpackMockServer.add((app, helper) => {
   app.post("/api/products", (req, res) => {
     games.push({
       ...req.body,
-      gamePlatformsImg: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
+      gamePlatformsImages: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
     });
     res.status(201).json({ message: "game was created" });
   });

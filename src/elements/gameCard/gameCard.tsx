@@ -77,7 +77,7 @@ const GameCard: React.FC<Props> = (props) => {
               {userIsLogged && (
                 <Button onClick={addGameToCart} className="game__back_wrapper_button" title="Add to Cart" />
               )}
-              {userIsAdmin && <Button onClick={onToggleEditGameModal} title="Edit" />}
+              {userIsAdmin && <Button className="edit-game-button" onClick={onToggleEditGameModal} title="Edit" />}
             </div>
           </div>
         </div>
