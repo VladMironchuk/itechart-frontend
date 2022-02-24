@@ -11,6 +11,7 @@ import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
 import { AppProps } from "./redux/redux";
+import CartPage from "./components/pages/cartPage/cartPage";
 
 function mapStateToProps(state: AppProps) {
   return state;
@@ -33,6 +34,9 @@ class App extends Component<AppProps> {
           </PrivateRoute>
           <PrivateRoute path="/profile">
             <ProfilePage />
+          </PrivateRoute>
+          <PrivateRoute path="/cart">
+            <CartPage />
           </PrivateRoute>
           <Route path="/">
             <HomePage />

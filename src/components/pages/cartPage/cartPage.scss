@@ -1,0 +1,55 @@
+.cart-items {
+  width: 90%;
+
+  &__content {
+    &-rows {
+      display: grid;
+      grid-template-columns: 28.6vw 19.06vw 9.53vw 9.53vw 9.53vw 9.53vw;
+      text-align: center;
+
+      &::after {
+        display: block;
+        content: "";
+        background: wheat;
+        width: 84.8vw;
+        height: 1px;
+      }
+
+      p {
+        margin: 0 auto;
+        padding: 1rem 0;
+        width: 100%;
+
+        select {
+          background: none;
+          color: white;
+          width: 40%;
+          padding: 0.25rem 0;
+          outline: none;
+          border: 1px solid white;
+
+          & {
+            background: black;
+          }
+        }
+
+        input[type="number"] {
+          width: 45%;
+          background: none;
+          color: white;
+          outline: none;
+          border: 1px solid white;
+        }
+      }
+    }
+
+    &__remove {
+      padding: 0.5rem 1.5rem;
+      margin: 0.5rem 77.5vw;
+    }
+
+    &__buy {
+      padding: 0.75rem 2rem;
+    }
+  }
+}

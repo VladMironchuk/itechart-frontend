@@ -1,13 +1,14 @@
 import "./navbar.scss";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import Link from "@/elements/navlink/link";
 import Dropdown from "@/elements/dropdown/dropdown";
 import profileLogo from "@/assets/images/profile.png";
 import cartLogo from "@/assets/images/cart.png";
 import logoutLogo from "@/assets/images/logout.png";
 import { userState, userActions } from "@/redux/slices/user";
+import { CartState } from "@/redux/slices/cart";
 import SignInModal from "@/elements/modal/signInModal";
 import SignUpModal from "@/elements/modal/signUpModal";
 
@@ -16,6 +17,9 @@ const NavBar: React.FC = () => {
 
   const isLogged = useSelector((state: { user: userState }) => state.user.isLogged);
   const username = useSelector((state: { user: userState }) => state.user.username);
+
+  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+
   const location = useLocation();
 
   const [isSignInModalVisible, setIsSignInModalVisible] = useState(false);
@@ -43,8 +47,11 @@ const NavBar: React.FC = () => {
         <img className="logo" src={profileLogo} alt="profile-icon" />
         <Link linkPath="/profile" linkText={username} />
       </div>
-      <li>
-        <img className="logo" src={cartLogo} alt="cart-logo" />0
+      <li style={{ minWidth: "64px", width: "auto" }}>
+        <NavLink style={{ display: "flex", alignItems: "center" }} to="/cart">
+          <img style={{ marginRight: "5px" }} className="logo" src={cartLogo} alt="cart-logo" />
+          <p>{`${cartTotalAmount}$`}</p>
+        </NavLink>
       </li>
       <li>
         <button type="button" onClick={toggleLogging}>

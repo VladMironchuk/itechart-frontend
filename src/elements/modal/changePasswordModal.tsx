@@ -3,12 +3,12 @@ import React, { ChangeEventHandler, useState, FormEventHandler } from "react";
 import { useSelector } from "react-redux";
 import useFetch from "use-http";
 import Modal from "./overlay/modal";
-import Input from "../formInput/formInput";
+import FormInput from "../formInput/formInput";
 import Button from "../button/button";
-import { AppProps } from "@/redux/redux";
+import { userState } from "@/redux/slices/user";
 
 const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ changePasswordToggler }) => {
-  const login = useSelector((state: { user: AppProps }) => state.user.login);
+  const login = useSelector((state: { user: userState }) => state.user.login);
   const { post, response, error } = useFetch();
 
   const [password, setPassword] = useState("");
@@ -50,12 +50,19 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
   return (
     <Modal onClose={changePasswordToggler} title="Change password">
       <form action="/" onSubmit={submitHandler}>
-        <Input label="Password" onChange={passwordChangeHandler} inputValue={password} errorMessage="" />
-        <Input
+        <FormInput
+          type="password"
+          label="Password"
+          onChange={passwordChangeHandler}
+          inputValue={password}
+          errorMessage=""
+        />
+        <FormInput
           label="Repeate password"
           onChange={repeatedPasswordChangeHandler}
           inputValue={repeatedPassword}
           errorMessage={passwordErrorMessage}
+          type="password"
         />
         <Button isSubmit className="modal__button" title="Submit" />
       </form>

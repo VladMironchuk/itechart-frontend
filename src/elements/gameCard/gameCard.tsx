@@ -1,6 +1,9 @@
 import "./gameCard.scss";
+import { useDispatch, useSelector } from "react-redux";
 import star from "../../assets/images/star.png";
 import Button from "../button/button";
+import { cartActions } from "@/redux/slices/cart";
+import { userState } from "@/redux/slices/user";
 
 export type Props = {
   game: {
@@ -8,6 +11,7 @@ export type Props = {
     gameTitle: string;
     gamePrice: number;
     gamePlatforms: string[];
+    gamePlatformsImages: string[];
     gameDescription: string;
     ageLimit: number;
     rating: number;
@@ -15,14 +19,31 @@ export type Props = {
 };
 
 const GameCard: React.FC<Props> = (props) => {
-  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating } = props.game;
+  const { gameLogo, gameTitle, gamePrice, gamePlatforms, gameDescription, ageLimit, rating, gamePlatformsImages } =
+    props.game;
+
+  const userIsLogged = useSelector((state: { user: userState }) => state.user.isLogged);
+
+  const dispatch = useDispatch();
+
+  const addGameToCart = () => {
+    dispatch(
+      cartActions.addItemToCart({
+        item: {
+          gameTitle,
+          gamePrice,
+          gamePlatforms,
+        },
+      })
+    );
+  };
 
   return (
     <div className="game-container">
       <div className="game">
         <div className="game__front">
           <div className="game-platforms">
-            {gamePlatforms.map((platform) => (
+            {gamePlatformsImages.map((platform) => (
               <img key={Math.random()} className="game-platforms__logo" alt="platform" src={platform} />
             ))}
           </div>
@@ -41,7 +62,9 @@ const GameCard: React.FC<Props> = (props) => {
           <div className="game__back_wrapper">
             <p className="game__back_wrapper_text">{gameDescription}</p>
             <p className="game__back_wrapper_age">{ageLimit}+</p>
-            <Button className="game__back_wrapper_button" title="Add to Cart" />
+            {userIsLogged && (
+              <Button onClick={addGameToCart} className="game__back_wrapper_button" title="Add to Cart" />
+            )}
           </div>
         </div>
       </div>
