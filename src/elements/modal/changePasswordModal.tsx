@@ -51,7 +51,7 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
     <Modal onClose={changePasswordToggler} title="Change password">
       <form action="/" onSubmit={submitHandler}>
         <FormInput
-          isPassword={false}
+          type="password"
           label="Password"
           onChange={passwordChangeHandler}
           inputValue={password}
@@ -62,7 +62,7 @@ const ChangePasswordModal: React.FC<{ changePasswordToggler: () => void }> = ({ 
           onChange={repeatedPasswordChangeHandler}
           inputValue={repeatedPassword}
           errorMessage={passwordErrorMessage}
-          isPassword={false}
+          type="password"
         />
         <Button isSubmit className="modal__button" title="Submit" />
       </form>

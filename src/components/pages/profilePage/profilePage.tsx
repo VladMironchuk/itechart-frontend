@@ -63,7 +63,7 @@ const ProfilePage = () => {
                 inputValue={usernameInputValue}
                 onChange={changeUsernameHandler}
                 errorMessage=""
-                isPassword={false}
+                type="text"
               />
               <p>Profile description</p>
               <textarea
