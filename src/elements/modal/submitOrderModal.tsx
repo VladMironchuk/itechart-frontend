@@ -17,7 +17,7 @@ const SubmitOrderModal: React.FC<{ onClose: () => void }> = (props) => {
   };
 
   return (
-    <Modal title="Order" onClose={props.onClose}>
+    <Modal title="Submit order" onClose={props.onClose}>
       {totalAmount > userBalance ? (
         <div>No money</div>
       ) : (

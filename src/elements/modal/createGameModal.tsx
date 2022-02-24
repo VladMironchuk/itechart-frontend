@@ -26,7 +26,7 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
   const onChangeGameCategory: ChangeEventHandler<HTMLInputElement> = (event) => {
     setGameCategory(event.target.value);
   };
-  //TODO: add validation
+  // TODO: add validation
   const onChangeGamePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
     setGamePrice(event.target.value);
   };

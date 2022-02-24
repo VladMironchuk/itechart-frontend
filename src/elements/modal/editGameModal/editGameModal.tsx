@@ -93,14 +93,14 @@ const EditGameModal: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    get(`/api/products/${game}`).then((game: GameCardContent & { genre: string }) => {
-      setGameName(game.gameTitle);
-      setGameCategory(game.genre);
-      setGamePrice(game.gamePrice);
-      setGameImg(game.gameLogo);
-      setGameDescription(game.gameDescription);
-      setGameAgeLimit(game.ageLimit.toString());
-      setGamePlatforms(game.gamePlatforms);
+    get(`/api/products/${game}`).then((curGame: GameCardContent & { genre: string }) => {
+      setGameName(curGame.gameTitle);
+      setGameCategory(curGame.genre);
+      setGamePrice(curGame.gamePrice);
+      setGameImg(curGame.gameLogo);
+      setGameDescription(curGame.gameDescription);
+      setGameAgeLimit(curGame.ageLimit.toString());
+      setGamePlatforms(curGame.gamePlatforms);
     });
   }, []);
 
@@ -139,10 +139,22 @@ const EditGameModal: React.FC<Props> = (props) => {
             </div>
             <form className="game-info" onSubmit={onSaveGameInfo}>
               <p>Information</p>
-              <FormInput label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
-              <FormInput label="Category" inputValue={gameCategory} onChange={onChangeGameCategory} errorMessage="" />
-              <FormInput label="Price" inputValue={gamePrice.toString()} onChange={onChangeGamePrice} errorMessage="" />
-              <FormInput label="Image" inputValue={gameImg} onChange={onChangeGameImg} errorMessage="" />
+              <FormInput type="text" label="Name" inputValue={gameName} onChange={onChangeGameName} errorMessage="" />
+              <FormInput
+                type="text"
+                label="Category"
+                inputValue={gameCategory}
+                onChange={onChangeGameCategory}
+                errorMessage=""
+              />
+              <FormInput
+                type="text"
+                label="Price"
+                inputValue={gamePrice.toString()}
+                onChange={onChangeGamePrice}
+                errorMessage=""
+              />
+              <FormInput type="text" label="Image" inputValue={gameImg} onChange={onChangeGameImg} errorMessage="" />
               <label className="game-info__description" htmlFor="description">
                 Description
                 <textarea
@@ -166,7 +178,7 @@ const EditGameModal: React.FC<Props> = (props) => {
               <div style={{ display: "flex" }}>
                 <p>Platform</p>
                 {["pc", "ps", "xbox"].map((platform) => (
-                  <label key={platform}>
+                  <label htmlFor={platform} key={platform}>
                     {platform.toUpperCase()}
                     <input
                       onChange={onChangeGamePlatforms}

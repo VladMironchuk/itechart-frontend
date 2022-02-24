@@ -6,7 +6,7 @@ export type CartState = {
     gameLogo: string;
     gameTitle: string;
     gamePrice: number;
-    gamePlatformsImg: string[];
+    gamePlatformsImages: string[];
     gamePlatforms: string[];
     gameDescription: string;
     ageLimit: number;
@@ -31,10 +31,10 @@ const cartSlice = createSlice({
       const gameIndex = cartState.cartItems.findIndex((game) => game.gameTitle === item.gameTitle);
       if (gameIndex === -1) {
         cartState.cartItems.push({ ...item, amount: 1, orderDate: new Date(Date.now()) });
-        cartState.totalAmount += item.gamePrice;
+        cartState.totalAmount = +(cartState.totalAmount + item.gamePrice).toFixed(2);
       } else {
         cartState.cartItems[gameIndex].amount++;
-        cartState.totalAmount += cartState.cartItems[gameIndex].gamePrice;
+        cartState.totalAmount = +(cartState.totalAmount + +cartState.cartItems[gameIndex].gamePrice).toFixed(2);
       }
     },
     changeItemAmount(state, action) {
@@ -44,14 +44,14 @@ const cartSlice = createSlice({
       cartState.totalAmount = +(
         cartState.totalAmount +
         (currentItemAmount - cartState.cartItems[gameIndex].amount) * cartState.cartItems[gameIndex].gamePrice
-      ).toPrecision(4);
+      ).toFixed(2);
       cartState.cartItems[gameIndex].amount = currentItemAmount;
     },
     removeItemsFromCart(state, action) {
       const cartState = state;
       const { itemsToRemove } = action.payload;
       cartState.cartItems = cartState.cartItems.filter((item) => !itemsToRemove.includes(item.gameTitle));
-      cartState.totalAmount = cartState.cartItems.reduce((acc, cur) => acc + cur.gamePrice * cur.amount, 0);
+      cartState.totalAmount = +cartState.cartItems.reduce((acc, cur) => acc + cur.gamePrice * cur.amount, 0).toFixed(2);
     },
     submitOrder(state) {
       const cartState = state;

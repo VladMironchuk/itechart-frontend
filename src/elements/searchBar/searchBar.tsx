@@ -1,7 +1,8 @@
 import "./searchBar.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEventHandler } from "react";
 import { Oval } from "react-loader-spinner";
 import useFetch from "use-http";
+import useDebounce from "@/hooks/useDebounce";
 
 type Props = { placeholder: string };
 
@@ -12,25 +13,28 @@ const SearchBar: React.FC<Props> = (props) => {
   const [{ games }, setGames] = useState<{ games: string[] }>({ games: [] });
 
   const { get, response, error, loading } = useFetch();
+  const debouncedSearchTerm = useDebounce(inputValue, 500);
+
+  const onChangeFoundGames: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setInputValue(event.target.value);
+  };
 
   useEffect(() => {
-    if (inputValue === "") {
+    if (debouncedSearchTerm === "") {
       return;
     }
     (async () => {
-      const initGames = await get(`/api/search/${inputValue}`);
+      const initGames = await get(`/api/search/${debouncedSearchTerm}`);
       if (response.ok) {
         setGames(initGames);
       }
     })();
-  }, [inputValue]);
+  }, [debouncedSearchTerm]);
 
   return (
     <div className="search-wrapper">
       <input
-        onChange={(event) => {
-          setInputValue(event.target.value);
-        }}
+        onChange={onChangeFoundGames}
         value={inputValue}
         className="search-bar"
         type="text"

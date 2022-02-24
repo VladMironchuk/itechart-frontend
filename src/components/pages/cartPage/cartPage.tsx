@@ -2,54 +2,18 @@ import "./cartPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeEventHandler, useState } from "react";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import { Props as GameCardContent } from "@/elements/gameCard/gameCard";
 import { cartActions, CartState } from "@/redux/slices/cart";
 
 import Button from "@/elements/button/button";
 import { userState } from "@/redux/slices/user";
 import SubmitOrderModal from "@/elements/modal/submitOrderModal";
-
-const CartItem: React.FC<{
-  cartItem: GameCardContent & { amount: number; orderDate: Date };
-  onChange: ChangeEventHandler<HTMLInputElement>;
-}> = (props) => {
-  const { gameTitle, amount, gamePlatforms, orderDate, gamePrice } = props.cartItem;
-  const { onChange } = props;
-
-  const dispatch = useDispatch();
-
-  const [itemAmount, setItemAmount] = useState(amount);
-
-  const changeItemAmount: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setItemAmount(+event.target.value);
-    dispatch(cartActions.changeItemAmount({ itemTitle: event.target.name, currentItemAmount: +event.target.value }));
-  };
-
-  return (
-    <div className="cart-items__content-rows">
-      <p>{gameTitle}</p>
-      <p>
-        <select>
-          {gamePlatforms.map((gamePlatform) => (
-            <option key={gameTitle + gamePlatform}>{gamePlatform}</option>
-          ))}
-        </select>
-      </p>
-      <p>{orderDate.toLocaleDateString("en-US")}</p>
-      <p>
-        <input onChange={changeItemAmount} type="number" name={gameTitle} min={1} value={itemAmount} />
-      </p>
-      <p>{gamePrice}</p>
-      <p>
-        <input onChange={onChange} value={gameTitle} type="checkbox" />
-      </p>
-    </div>
-  );
-};
+import CartItem from "./cartItem/cartItem";
 
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cartItems);
   const userBalance = useSelector((state: { user: userState }) => state.user.userBalance);
+  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+
   const dispatch = useDispatch();
 
   const [itemsToRemove, setItemsToRemove] = useState<string[]>([]);
@@ -66,20 +30,17 @@ const CartPage: React.FC = () => {
   const onRemoveItems = () => {
     dispatch(cartActions.removeItemsFromCart({ itemsToRemove }));
   };
-  const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
+
+  const onToggleOrderModal = () => {
+    setIsOrderModalVisible((prevState) => !prevState);
+  };
 
   return (
     <>
-      {isOrderModalVisible && (
-        <SubmitOrderModal
-          onClose={() => {
-            setIsOrderModalVisible(false);
-          }}
-        />
-      )}
+      {isOrderModalVisible && <SubmitOrderModal onClose={onToggleOrderModal} />}
       <SectionContainer classname="cart-items" title="Cart page">
         {cartItems.length === 0 ? (
-          <div>Cart is empty</div>
+          <div style={{ marginTop: "1rem" }}>Cart is empty</div>
         ) : (
           <div className="cart-items__content">
             <div className="cart-items__content-rows">
@@ -97,13 +58,7 @@ const CartPage: React.FC = () => {
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
               <div>Games cost: {cartTotalAmount}$</div>
               <div>Your balance: {userBalance}$</div>
-              <Button
-                onClick={() => {
-                  setIsOrderModalVisible(true);
-                }}
-                className="cart-items__content__buy"
-                title="Buy"
-              />
+              <Button onClick={onToggleOrderModal} className="cart-items__content__buy" title="Buy" />
             </div>
           </div>
         )}
