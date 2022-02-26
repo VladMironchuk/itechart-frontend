@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type ProductsState = {
+export type GamesState = {
   games: {
     gameLogo: string;
     gameTitle: string;
@@ -11,20 +11,24 @@ export type ProductsState = {
     ageLimit: number;
     rating: number;
     genre: string;
+    date: number;
   }[];
 };
 
-const initialState: ProductsState = {
+const initialState: GamesState = {
   games: [],
 };
 
-const productsSlice = createSlice({
+const gamesSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addProducts(state, action) {
-      const productsState = state;
-      productsState.games = action.payload.games;
+    updateGames(state, action) {
+      const gamesState = state;
+      gamesState.games = action.payload.games;
     },
   },
 });
+
+export const gamesActions = gamesSlice.actions;
+export default gamesSlice;

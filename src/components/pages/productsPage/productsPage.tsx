@@ -10,7 +10,7 @@ import { userState } from "@/redux/slices/user";
 import CreateGameModal from "@/elements/modal/createGameModal";
 import Button from "@/elements/button/button";
 
-const Games = lazy(() => new Promise((resolve) => setTimeout(resolve, 5000)).then(() => import("./games")));
+const Games = lazy(() => new Promise((resolve) => setTimeout(resolve, 500)).then(() => import("./games")));
 
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();

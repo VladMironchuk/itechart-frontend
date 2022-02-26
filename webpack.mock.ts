@@ -151,10 +151,6 @@ export default webpackMockServer.add((app, helper) => {
     });
   });
 
-  app.get("/api/getTopProducts", (_req, res) => {
-    res.json({ games: games.sort((a, b) => b.date - a.date).slice(0, 3) });
-  });
-
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });
   });
@@ -199,50 +195,18 @@ export default webpackMockServer.add((app, helper) => {
     res.json(users[currentUserIndex]);
   });
 
-  app.post("/api/saveImage", (req, res) => {
+  app.post("/api/saveImage", (_, res) => {
     res.status(200);
   });
 
-  app.get("/api/products", (req, res) => {
-    const { age, genre, criteria, order, platform } = req.query;
-    let initGames = games;
-    initGames = initGames.filter((game) => game.gamePlatforms.includes(platform as string));
-    initGames = initGames.filter((game) => game.ageLimit <= +(age as string));
-    initGames = initGames.filter((game) => (genre !== "all" ? game.genre === genre : game));
-    switch (criteria) {
-      case "rating":
-        initGames.sort((firstGame, secondGame) => firstGame.rating - secondGame.rating);
-        break;
-      case "gamePrice":
-        initGames.sort((firstGame, secondGame) => firstGame.gamePrice - secondGame.gamePrice);
-        break;
-      default:
-        initGames.sort((firstGame, secondGame) => {
-          if (firstGame.gameTitle < secondGame.gameTitle) {
-            return -1;
-          }
-          if (firstGame.gameTitle > secondGame.gameTitle) {
-            return 1;
-          }
-          return 0;
-        });
-    }
-    if (order === "desc") {
-      initGames.reverse();
-    }
-    res.json(initGames);
-  });
-
-  app.get("/api/products/:product", (req, res) => {
-    const { product } = req.params;
-    const gameIndex = games.findIndex((game) => game.gameTitle === product);
-    res.json(games[gameIndex]);
+  app.get("/api/products", (_, res) => {
+    res.json(games);
   });
 
   app.delete("/api/products/:product", (req, res) => {
     const { product } = req.params;
     games = games.filter((game) => game.gameTitle !== product);
-    res.status(200);
+    res.status(200).json(games);
   });
 
   app.put("/api/products/:product", (req, res) => {
@@ -254,7 +218,7 @@ export default webpackMockServer.add((app, helper) => {
       gamePlatformsImages: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
       rating: games[currentGameIndex].rating,
     };
-    res.json(games[currentGameIndex]);
+    res.json(games);
   });
 
   app.post("/api/products", (req, res) => {
@@ -262,6 +226,6 @@ export default webpackMockServer.add((app, helper) => {
       ...req.body,
       gamePlatformsImages: req.body.gamePlatforms.map((platform: "pc" | "xbox" | "ps") => GamePlatforms[`${platform}`]),
     });
-    res.status(201).json({ message: "game was created" });
+    res.status(201).json(games);
   });
 });

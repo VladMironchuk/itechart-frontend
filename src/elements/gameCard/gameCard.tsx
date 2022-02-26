@@ -50,7 +50,7 @@ const GameCard: React.FC<Props> = (props) => {
 
   return (
     <>
-      {isEditGameModalVisible && <EditGameModal game={gameTitle} onClose={onToggleEditGameModal} />}
+      {isEditGameModalVisible && <EditGameModal curGameName={gameTitle} onClose={onToggleEditGameModal} />}
       <div className="game-container">
         <div className="game">
           <div className="game__front">

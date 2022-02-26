@@ -1,5 +1,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { useDispatch } from "react-redux";
 import useFetch from "use-http";
+import { gamesActions } from "@/redux/slices/games";
 import Button from "../button/button";
 import GameInfoForm from "./gameInfoForm";
 import "./modal.scss";
@@ -7,6 +9,8 @@ import Modal from "./overlay/modal";
 
 const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
   const { onClose } = props;
+
+  const dispatch = useDispatch();
 
   const { post } = useFetch();
 
@@ -68,7 +72,7 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
       genre: gameCategory,
       date: Date.now(),
     }).then((data) => {
-      console.log(data);
+      dispatch(gamesActions.updateGames({ games: data }));
       onClose();
     });
   };
