@@ -6,7 +6,7 @@ import Modal from "../overlay/modal";
 import Button from "../../button/button";
 import "@/elements/modal/modal.scss";
 import SubmitDeletingModal from "./submitDeletingModal";
-import GameInfoForm from "../gameInfoForm";
+import GameInfoForm from "../gameInfoForm/gameInfoForm";
 import { gamesActions, GamesState } from "@/redux/slices/games";
 
 type Props = {
@@ -52,15 +52,16 @@ const EditGameModal: React.FC<Props> = (props) => {
       {isSubmitDeletingModalVisible && (
         <SubmitDeletingModal onDelete={onDeleteCard} onClose={onToggleSubmitDeletingModal} />
       )}
-      <div style={{ display: "flex" }}>
+      <div className="edit-game-modal">
         <div>
           <p>Cart Image</p>
-          <img src={gameImg} alt="game" style={{ width: "150px", height: "200px" }} />
+          <img src={gameImg} alt="game" className="edit-game-modal__game-image" />
         </div>
-        <div>
+        <div className="edit-game-modal__info">
           <p>Information</p>
           <GameInfoForm submitButtonText="Submit" sendRequest={sendRequest} currentGameName={curGameName}>
             <Button
+              className="edit-game-modal__info__submit"
               onClick={() => {
                 setIsSubmitDeletingModalVisible(true);
               }}

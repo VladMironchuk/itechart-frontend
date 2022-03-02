@@ -1,8 +1,9 @@
+import "./gameInfoForm.scss";
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GamesState } from "@/redux/slices/games";
-import Button from "../button/button";
-import FormInput from "../formInput/formInput";
+import Button from "../../button/button";
+import FormInput from "../../formInput/formInput";
 
 type Props = {
   submitButtonText: string;
@@ -104,7 +105,7 @@ const GameInfoForm: React.FC<Props> = (props) => {
       </label>
       <label htmlFor="age">
         Age
-        <select className="game_info__age" value={ageLimit} onChange={onChangeAgeLimit} id="age">
+        <select className="game-info__age" value={ageLimit} onChange={onChangeAgeLimit} id="age">
           <option value="all">All</option>
           <option value="3">3+</option>
           <option value="6">6+</option>
@@ -112,10 +113,10 @@ const GameInfoForm: React.FC<Props> = (props) => {
           <option value="18">18+</option>
         </select>
       </label>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <p style={{ marginRight: "4.9rem" }}>Platform</p>
+      <div className="game-info__platforms">
+        <p>Platform</p>
         {["pc", "ps", "xbox"].map((platform) => (
-          <label style={{ margin: "0 10px" }} htmlFor={platform} key={platform}>
+          <label htmlFor={platform} key={platform}>
             {platform.toUpperCase()}
             <input
               onChange={onChangePlatforms}
@@ -128,7 +129,7 @@ const GameInfoForm: React.FC<Props> = (props) => {
         ))}
       </div>
       {children}
-      <Button isSubmit title={submitButtonText} />
+      <Button className="game-info__submit" isSubmit title={submitButtonText} />
     </form>
   );
 };

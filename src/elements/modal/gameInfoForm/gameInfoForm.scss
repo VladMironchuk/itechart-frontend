@@ -1,0 +1,35 @@
+.game-info {
+  &__description {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__platforms {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-right: 3.4rem;
+    }
+
+    label {
+      margin: 0 10px;
+    }
+  }
+
+  &__submit {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+#age {
+  margin-left: 6rem;
+
+  & {
+    background: black;
+    outline: none;
+    color: white;
+    border: 1px solid white;
+  }
+}

@@ -14,8 +14,10 @@ const SubmitDeletingModal: React.FC<Props> = (props) => (
         <img className="cancel" src={crossIcon} alt="cancel" />
       </button>
     </div>
-    <Button onClick={props.onDelete} title="Yes" />
-    <Button onClick={props.onClose} title="No" />
+    <div className="submit-deleting__buttons">
+      <Button onClick={props.onDelete} title="Yes" />
+      <Button onClick={props.onClose} title="No" />
+    </div>
   </div>
 );
 

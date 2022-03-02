@@ -2,7 +2,7 @@ import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import useFetch from "use-http";
 import { gamesActions } from "@/redux/slices/games";
-import GameInfoForm from "./gameInfoForm";
+import GameInfoForm from "./gameInfoForm/gameInfoForm";
 import "./modal.scss";
 import Modal from "./overlay/modal";
 

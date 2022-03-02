@@ -6,26 +6,43 @@
 }
 
 .submit-deleting {
-  top: 0;
-  left: 0;
-}
+  top: 20%;
+  left: 20%;
 
-.game-info {
-  margin-left: 4rem;
-
-  &__description {
+  &__buttons {
     display: flex;
     justify-content: space-between;
+    margin-top: 1rem;
+
+    button {
+      padding: 0.5rem 2rem;
+    }
   }
 }
 
-#age {
-  margin-left: 7.5rem;
+.edit-game-modal {
+  display: flex;
 
-  & {
-    background: black;
-    outline: none;
-    color: white;
-    border: 1px solid white;
+  &__game-image {
+    width: 150px;
+    height: 200px;
+  }
+
+  &__info {
+    margin-left: 4rem;
+
+    &__submit {
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  #age {
+    margin-left: 7.5rem;
+  }
+
+  .game-info__platforms {
+    p {
+      margin-right: 5rem;
+    }
   }
 }
