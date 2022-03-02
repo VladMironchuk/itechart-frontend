@@ -1,50 +1,103 @@
-import { ChangeEventHandler, FormEventHandler } from "react";
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { GamesState } from "@/redux/slices/games";
+import Button from "../button/button";
 import FormInput from "../formInput/formInput";
 
 type Props = {
-  onSubmit: FormEventHandler;
-  name: string;
-  onChangeName: ChangeEventHandler<HTMLInputElement>;
-  category: string;
-  onChangeCategory: ChangeEventHandler<HTMLInputElement>;
-  price: string;
-  onChangePrice: ChangeEventHandler<HTMLInputElement>;
-  imageUrl: string;
-  onChangeImageUrl: ChangeEventHandler<HTMLInputElement>;
-  description: string;
-  onChangeDescription: ChangeEventHandler<HTMLTextAreaElement>;
-  ageLimit: string;
-  onChangeAgeLimit: ChangeEventHandler<HTMLSelectElement>;
-  platforms: string[];
-  onChangePlatforms: ChangeEventHandler<HTMLInputElement>;
+  submitButtonText: string;
+  currentGameName: string;
+  sendRequest: (body: { [keyof: string]: string | string[] }) => void;
 };
 
 const GameInfoForm: React.FC<Props> = (props) => {
-  const {
-    onSubmit,
-    name,
-    onChangeAgeLimit,
-    onChangeCategory,
-    onChangeDescription,
-    onChangeImageUrl,
-    onChangeName,
-    onChangePlatforms,
-    onChangePrice,
-    category,
-    price,
-    imageUrl,
-    platforms,
-    ageLimit,
-    description,
-    children,
-  } = props;
+  const { submitButtonText, currentGameName, children, sendRequest } = props;
+
+  const games = useSelector((state: { products: GamesState }) => state.products.games);
+
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const [ageLimit, setAgeLimit] = useState("all");
+  const [platforms, setPlatforms] = useState<string[]>([]);
+
+  const [priceErrorMessage, setPriceErrorMessage] = useState("");
+
+  const onChangeName: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setName(event.target.value);
+  };
+
+  const onChangeCategory: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const onChangePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setPrice(event.target.value);
+  };
+
+  const onChangeImageUrl: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setImage(event.target.value);
+  };
+
+  const onChangeDescription: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const onChangeAgeLimit: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setAgeLimit(event.target.value);
+  };
+
+  const onChangePlatforms: ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (!platforms.includes(event.target.value)) {
+      setPlatforms((prevState) => [...prevState, event.target.value]);
+    } else {
+      setPlatforms((prevState) => prevState.filter((platform) => platform !== event.target.value));
+    }
+  };
+
+  const onSaveGameInfo: FormEventHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (Number.isNaN(+price)) {
+      setPriceErrorMessage("Invalid format");
+      return;
+    }
+    sendRequest({
+      gameTitle: name,
+      gameLogo: image,
+      gamePrice: price,
+      gamePlatforms: platforms,
+      gameDescription: description,
+      ageLimit,
+      genre: category,
+    });
+  };
+
+  useEffect(() => {
+    const curGameIndex = games.findIndex((game) => game.gameTitle === currentGameName);
+    const curGame = games[curGameIndex];
+    setName(curGame?.gameTitle || "");
+    setCategory(curGame?.genre || "");
+    setPrice(curGame?.gamePrice.toString() || "");
+    setImage(curGame?.gameLogo || "");
+    setDescription(curGame?.gameDescription || "");
+    setAgeLimit(curGame?.ageLimit.toString() || "");
+    setPlatforms(curGame?.gamePlatforms || "");
+  }, []);
 
   return (
-    <form className="game-info" onSubmit={onSubmit}>
+    <form className="game-info" onSubmit={onSaveGameInfo}>
       <FormInput type="text" label="Name" inputValue={name} onChange={onChangeName} errorMessage="" />
       <FormInput type="text" label="Category" inputValue={category} onChange={onChangeCategory} errorMessage="" />
-      <FormInput type="text" label="Price" inputValue={price} onChange={onChangePrice} errorMessage="" />
-      <FormInput type="text" label="Image" inputValue={imageUrl} onChange={onChangeImageUrl} errorMessage="" />
+      <FormInput
+        type="text"
+        label="Price"
+        inputValue={price}
+        onChange={onChangePrice}
+        errorMessage={priceErrorMessage}
+      />
+      <FormInput type="text" label="Image" inputValue={image} onChange={onChangeImageUrl} errorMessage="" />
       <label className="game-info__description" htmlFor="description">
         Description
         <textarea cols={30} rows={10} value={description} onChange={onChangeDescription} id="description" />
@@ -75,6 +128,7 @@ const GameInfoForm: React.FC<Props> = (props) => {
         ))}
       </div>
       {children}
+      <Button isSubmit title={submitButtonText} />
     </form>
   );
 };

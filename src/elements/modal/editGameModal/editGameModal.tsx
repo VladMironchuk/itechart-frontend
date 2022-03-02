@@ -1,7 +1,7 @@
 import "./editGameModal.scss";
-import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
-import useFetch from "use-http";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useFetch from "use-http";
 import Modal from "../overlay/modal";
 import Button from "../../button/button";
 import "@/elements/modal/modal.scss";
@@ -17,56 +17,18 @@ type Props = {
 const EditGameModal: React.FC<Props> = (props) => {
   const { onClose, curGameName } = props;
 
-  const games = useSelector((state: { products: GamesState }) => state.products.games);
-
   const dispatch = useDispatch();
 
   const { put } = useFetch();
 
-  const [gameName, setGameName] = useState("");
-  const [gameCategory, setGameCategory] = useState("");
-  const [gamePrice, setGamePrice] = useState(0);
-  const [gameImg, setGameImg] = useState("");
-  const [gameDescription, setGameDescription] = useState("");
-  const [gameAgeLimit, setGameAgeLimit] = useState("all");
-  const [gamePlatforms, setGamePlatforms] = useState<string[]>([]);
+  const games = useSelector((state: { products: GamesState }) => state.products.games);
+
+  const gameImg = games.find((game) => game.gameTitle === curGameName)?.gameLogo;
 
   const [isSubmitDeletingModalVisible, setIsSubmitDeletingModalVisible] = useState(false);
 
   const onToggleSubmitDeletingModal = () => {
     setIsSubmitDeletingModalVisible((prevState) => !prevState);
-  };
-
-  const onChangeGameName: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameName(event.target.value);
-  };
-
-  const onChangeGameCategory: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameCategory(event.target.value);
-  };
-
-  const onChangeGamePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGamePrice(+event.target.value);
-  };
-
-  const onChangeGameImg: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameImg(event.target.value);
-  };
-
-  const onChangeGameDescription: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    setGameDescription(event.target.value);
-  };
-
-  const onChangeGameAgeLimit: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setGameAgeLimit(event.target.value);
-  };
-
-  const onChangeGamePlatforms: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (!gamePlatforms.includes(event.target.value)) {
-      setGamePlatforms((prevState) => [...prevState, event.target.value]);
-    } else {
-      setGamePlatforms((prevState) => prevState.filter((platform) => platform !== event.target.value));
-    }
   };
 
   const onDeleteCard = () => {
@@ -78,33 +40,12 @@ const EditGameModal: React.FC<Props> = (props) => {
     onClose();
   };
 
-  const onSaveGameInfo: FormEventHandler = (event) => {
-    event.preventDefault();
-    put(`/api/products/${curGameName}`, {
-      gameTitle: gameName,
-      gameLogo: gameImg,
-      gamePrice,
-      gamePlatforms,
-      gameDescription,
-      ageLimit: gameAgeLimit,
-      genre: gameCategory,
-    }).then((data) => {
+  const sendRequest = (body: { [keyof: string]: string | string[] }) => {
+    put(`/api/products/${curGameName}`, body).then((data) => {
       dispatch(gamesActions.updateGames({ games: data }));
       onClose();
     });
   };
-
-  useEffect(() => {
-    const curGameIndex = games.findIndex((game) => game.gameTitle === curGameName);
-    const curGame = games[curGameIndex];
-    setGameName(curGame.gameTitle);
-    setGameCategory(curGame.genre);
-    setGamePrice(curGame.gamePrice);
-    setGameImg(curGame.gameLogo);
-    setGameDescription(curGame.gameDescription);
-    setGameAgeLimit(curGame.ageLimit.toString());
-    setGamePlatforms(curGame.gamePlatforms);
-  }, []);
 
   return (
     <Modal className="edit-game" title="Edit card" onClose={onClose}>
@@ -118,32 +59,13 @@ const EditGameModal: React.FC<Props> = (props) => {
         </div>
         <div>
           <p>Information</p>
-          <GameInfoForm
-            onSubmit={onSaveGameInfo}
-            name={gameName}
-            onChangeName={onChangeGameName}
-            category={gameCategory}
-            onChangeCategory={onChangeGameCategory}
-            price={gamePrice.toString()}
-            onChangePrice={onChangeGamePrice}
-            imageUrl={gameImg}
-            onChangeImageUrl={onChangeGameImg}
-            ageLimit={gameAgeLimit}
-            onChangeAgeLimit={onChangeGameAgeLimit}
-            description={gameDescription}
-            onChangeDescription={onChangeGameDescription}
-            platforms={gamePlatforms}
-            onChangePlatforms={onChangeGamePlatforms}
-          >
-            <div style={{ display: "flex" }}>
-              <Button isSubmit title="Submit" />
-              <Button
-                onClick={() => {
-                  setIsSubmitDeletingModalVisible(true);
-                }}
-                title="Delete card"
-              />
-            </div>
+          <GameInfoForm submitButtonText="Submit" sendRequest={sendRequest} currentGameName={curGameName}>
+            <Button
+              onClick={() => {
+                setIsSubmitDeletingModalVisible(true);
+              }}
+              title="Delete card"
+            />
           </GameInfoForm>
         </div>
       </div>

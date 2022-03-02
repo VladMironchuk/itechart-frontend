@@ -1,8 +1,7 @@
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import useFetch from "use-http";
 import { gamesActions } from "@/redux/slices/games";
-import Button from "../button/button";
 import GameInfoForm from "./gameInfoForm";
 import "./modal.scss";
 import Modal from "./overlay/modal";
@@ -14,64 +13,14 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
 
   const { post } = useFetch();
 
-  const [gameName, setGameName] = useState("");
-  const [gameCategory, setGameCategory] = useState("");
-  const [gamePrice, setGamePrice] = useState("0");
-  const [gameRating, setGameRating] = useState(0);
-  const [gameImg, setGameImg] = useState("");
-  const [gameDescription, setGameDescription] = useState("");
-  const [gameAgeLimit, setGameAgeLimit] = useState("all");
-  const [gamePlatforms, setGamePlatforms] = useState<string[]>([]);
+  const [rating, setRating] = useState(1);
 
-  const onChangeGameName: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameName(event.target.value);
+  const onChangeRating: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setRating(+event.target.value);
   };
 
-  const onChangeGameCategory: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameCategory(event.target.value);
-  };
-  // TODO: add validation
-  const onChangeGamePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGamePrice(event.target.value);
-  };
-
-  const onChangeGameImg: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameImg(event.target.value);
-  };
-
-  const onChangeGameDescription: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    setGameDescription(event.target.value);
-  };
-
-  const onChangeGameAgeLimit: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setGameAgeLimit(event.target.value);
-  };
-
-  const onChangeGamePlatforms: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (!gamePlatforms.includes(event.target.value)) {
-      setGamePlatforms((prevState) => [...prevState, event.target.value]);
-    } else {
-      setGamePlatforms((prevState) => prevState.filter((platform) => platform !== event.target.value));
-    }
-  };
-
-  const onChangeGameRating: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setGameRating(+event.target.value);
-  };
-
-  const onSubmitHandler: FormEventHandler = (event) => {
-    event.preventDefault();
-    post("/api/products", {
-      gameTitle: gameName,
-      gameLogo: gameImg,
-      gamePrice: +gamePrice,
-      gamePlatforms,
-      gameDescription,
-      ageLimit: gameAgeLimit,
-      rating: gameRating,
-      genre: gameCategory,
-      date: Date.now(),
-    }).then((data) => {
+  const sendRequest = (body: { [keyof: string]: string | string[] }) => {
+    post("/api/products", { ...body, rating }).then((data) => {
       dispatch(gamesActions.updateGames({ games: data }));
       onClose();
     });
@@ -79,28 +28,11 @@ const CreateGameModal: React.FC<{ onClose: () => void }> = (props) => {
 
   return (
     <Modal title="Create game" onClose={onClose}>
-      <GameInfoForm
-        onSubmit={onSubmitHandler}
-        name={gameName}
-        onChangeName={onChangeGameName}
-        category={gameCategory}
-        onChangeCategory={onChangeGameCategory}
-        price={gamePrice.toString()}
-        onChangePrice={onChangeGamePrice}
-        imageUrl={gameImg}
-        onChangeImageUrl={onChangeGameImg}
-        ageLimit={gameAgeLimit}
-        onChangeAgeLimit={onChangeGameAgeLimit}
-        description={gameDescription}
-        onChangeDescription={onChangeGameDescription}
-        platforms={gamePlatforms}
-        onChangePlatforms={onChangeGamePlatforms}
-      >
+      <GameInfoForm submitButtonText="Add game" currentGameName="" sendRequest={sendRequest}>
         <label htmlFor="rating">
           Rating
-          <input id="rating" value={gameRating} onChange={onChangeGameRating} type="number" min={1} max={5} />
+          <input id="rating" value={rating} onChange={onChangeRating} type="number" min={1} max={5} />
         </label>
-        <Button isSubmit title="Add game" />
       </GameInfoForm>
     </Modal>
   );
