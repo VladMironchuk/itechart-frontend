@@ -1,6 +1,6 @@
 import "./cartPage.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, memo, useState } from "react";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import { cartActions, CartState } from "@/redux/slices/cart";
 
@@ -9,7 +9,7 @@ import { userState } from "@/redux/slices/user";
 import SubmitOrderModal from "@/elements/modal/submitOrderModal";
 import CartItem from "./cartItem/cartItem";
 
-const CartPage: React.FC = () => {
+const CartPage = memo(() => {
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cartItems);
   const userBalance = useSelector((state: { user: userState }) => state.user.userBalance);
   const cartTotalAmount = useSelector((state: { cart: CartState }) => state.cart.totalAmount);
@@ -65,6 +65,6 @@ const CartPage: React.FC = () => {
       </SectionContainer>
     </>
   );
-};
+});
 
 export default CartPage;

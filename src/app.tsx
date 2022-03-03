@@ -1,19 +1,18 @@
 import "./styles/main.css";
 import "./styles/main.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { Component, lazy } from "react";
+import { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Layout from "./components/layout";
 import HomePage from "./components/pages/homePage/homePage";
+import AboutPage from "./components/pages/aboutPage/aboutPage";
+import ProductsPage from "./components/pages/productsPage/productsPage";
+import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
 import { AppDispatch, AppProps } from "./redux/redux";
+import CartPage from "./components/pages/cartPage/cartPage";
 import { gamesActions, GamesState } from "./redux/slices/games";
-
-const ProductsPage = lazy(() => import("./components/pages/productsPage/productsPage"));
-const ProfilePage = lazy(() => import("./components/pages/profilePage/profilePage"));
-const CartPage = lazy(() => import("./components/pages/cartPage/cartPage"));
-const AboutPage = lazy(() => import("./components/pages/aboutPage/aboutPage"));
 
 function mapStateToProps(state: AppProps) {
   return state;

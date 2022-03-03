@@ -1,6 +1,6 @@
 import "./profilePage.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, memo, useState } from "react";
 import useFetch from "use-http";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
 import Button from "@/elements/button/button";
@@ -8,7 +8,7 @@ import FormInput from "@/elements/formInput/formInput";
 import ChangePasswordModal from "@/elements/modal/changePasswordModal";
 import { userActions, userState } from "@/redux/slices/user";
 
-const ProfilePage = () => {
+const ProfilePage = memo(() => {
   const login = useSelector((state: { user: userState }) => state.user.login);
   const currentUserName = useSelector((state: { user: userState }) => state.user.username);
   const currentUserDescription = useSelector((state: { user: userState }) => state.user.description);
@@ -87,6 +87,6 @@ const ProfilePage = () => {
       </SectionContainer>
     </>
   );
-};
+});
 
 export default ProfilePage;
