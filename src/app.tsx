@@ -10,14 +10,31 @@ import AboutPage from "./components/pages/aboutPage/aboutPage";
 import ProductsPage from "./components/pages/productsPage/productsPage";
 import ProfilePage from "./components/pages/profilePage/profilePage";
 import PrivateRoute from "./elements/privateRoute/privateRoute";
-import { AppProps } from "./redux/redux";
+import { AppDispatch, AppProps } from "./redux/redux";
 import CartPage from "./components/pages/cartPage/cartPage";
+import { gamesActions, GamesState } from "./redux/slices/games";
 
 function mapStateToProps(state: AppProps) {
   return state;
 }
 
+function mapDispatchToProps(dispatch: AppDispatch) {
+  return {
+    updateGames: (games: GamesState["games"]) => {
+      dispatch(gamesActions.updateGames(games));
+    },
+  };
+}
+
 class App extends Component<AppProps> {
+  componentDidMount() {
+    fetch("/api/products")
+      .then((response) => response.json())
+      .then((data) => {
+        this.props.updateGames({ games: data });
+      });
+  }
+
   componentDidCatch() {
     console.error("error");
   }
@@ -50,4 +67,4 @@ class App extends Component<AppProps> {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

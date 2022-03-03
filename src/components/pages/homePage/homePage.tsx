@@ -1,28 +1,21 @@
 import "./homePage.scss";
-import useFetch from "use-http";
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CategoryCard from "@/elements/categoryCard/categoryCard";
 import SectionContainer from "@/elements/sectionContainer/sectionContainer";
-import GameCard, { Props as GameCardContent } from "@/elements/gameCard/gameCard";
+import GameCard from "@/elements/gameCard/gameCard";
 import SearchBar from "@/elements/searchBar/searchBar";
 import windowsLogo from "../../../assets/images/icone-windows-gris.png";
 import psLogo from "../../../assets/images/ps.png";
 import xboxLogo from "../../../assets/images/xbox.png";
+import { GamesState } from "@/redux/slices/games";
+
+const getThreeNewGames = (games: GamesState["games"]) =>
+  [...games].sort((firstGame, secondGame) => secondGame.date - firstGame.date).slice(0, 3);
 
 const HomePage: React.FC = () => {
-  const [games, setGames] = useState<GameCardContent["game"][]>([]);
-
-  const { get, response, loading, error } = useFetch("/api/getTopProducts");
-
-  useEffect(() => {
-    (async () => {
-      const initGames = await get("/");
-      if (response.ok) {
-        setGames(initGames.games);
-      }
-    })();
-  }, []);
+  const games = useSelector((state: { products: GamesState }) => state.products.games);
+  const threeNewGames = getThreeNewGames(games);
 
   return (
     <>
@@ -42,9 +35,9 @@ const HomePage: React.FC = () => {
       </SectionContainer>
       <SectionContainer title="New games">
         <div className="cards_wrapper section__gamesCards">
-          {loading && <div>Loading</div>}
-          {error && <div>{error.message}</div>}
-          {!error && games.map((game) => <GameCard key={game.gameTitle} game={game} />)}
+          {threeNewGames.map((game) => (
+            <GameCard key={game.gameTitle} game={game} />
+          ))}
         </div>
       </SectionContainer>
     </>

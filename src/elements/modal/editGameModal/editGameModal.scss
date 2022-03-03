@@ -1,0 +1,48 @@
+.edit-game {
+  left: 30vw;
+  top: 5vh;
+  width: 40rem;
+  height: 48rem;
+}
+
+.submit-deleting {
+  top: 20%;
+  left: 20%;
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    button {
+      padding: 0.5rem 2rem;
+    }
+  }
+}
+
+.edit-game-modal {
+  display: flex;
+
+  &__game-image {
+    width: 150px;
+    height: 200px;
+  }
+
+  &__info {
+    margin-left: 4rem;
+
+    &__submit {
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  #age {
+    margin-left: 7.5rem;
+  }
+
+  .game-info__platforms {
+    p {
+      margin-right: 5rem;
+    }
+  }
+}
