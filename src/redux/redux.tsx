@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import filterSlice, { FilterState } from "./slices/filter";
-import modalSlice, { ModalState } from "./slices/modal";
-import userSlice, { userState } from "./slices/user";
-import cartSlice, { CartState } from "./slices/cart";
-import gamesSlice, { GamesState } from "./slices/games";
-
-export type AppProps = userState & ModalState & FilterState & CartState & GamesState;
+import filterSlice from "./slices/filter";
+import modalSlice from "./slices/modal";
+import userSlice from "./slices/user";
+import cartSlice from "./slices/cart";
+import gamesSlice from "./slices/games";
 
 const store = configureStore({
   reducer: {

@@ -1,6 +1,6 @@
 import webpackMockServer from "webpack-mock-server";
 
-enum GamePlatforms {
+const enum GamePlatforms {
   pc = "https://icones.pro/wp-content/uploads/2021/06/icone-windows-gris.png",
   ps = "https://www.pinclipart.com/picdir/big/391-3919045_file-playstation-logo-svg-playstation-logo-png-clipart.png",
   xbox = "https://www.pngall.com/wp-content/uploads/2016/07/Xbox-Transparent.png",
