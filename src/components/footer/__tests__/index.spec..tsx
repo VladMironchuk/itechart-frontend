@@ -1,5 +1,5 @@
-import Footer from "../footer";
 import { screen, render } from "@testing-library/react";
+import Footer from "../footer";
 
 describe("Footer", () => {
   it("number of images in footer test", () => {
